@@ -1,0 +1,6 @@
+[book]
+authors = ["Ray Britton"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Maikor Docs"
