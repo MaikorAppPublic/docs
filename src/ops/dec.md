@@ -1,19 +1,19 @@
-# INC
+# DEC
 
-Increases value in register or value at memory address in pointer by 1.
+Decreases value in register or value at memory address in pointer by 1.
 
 ## Format 
 
-`INC value`
+`DEC value`
 
 ## Variations
 
 ```
-INC.B (R) (I) (A)
-INC.W (E) (I) (A)
+DEC.B (R) (I) (A)
+DEC.W (E) (I) (A)
 ```
 
-#### INC.B
+#### DEC.B
 
 | Opcode | Operands | Cycles |
 |--------|----------|--------|
@@ -21,7 +21,7 @@ INC.W (E) (I) (A)
 | 2C     | Indirect | 6      |
 | 2E     | Address  | 2      |
 
-#### INC.W
+#### DEC.W
 
 | Opcode | Operands      | Cycles |
 |--------|---------------|--------|
@@ -42,9 +42,9 @@ value++
 ## Examples
 
 ```
-INC.B AL      # Increase AL by 1
-INC.B $6003   # Increase value at 6003 by 1
-INC.B (AX)    # Increase value at address in AX by 1
-INC.W AX      # Increase AX by 1
-INC.W $6700   # Increase value at [6700,6701] by 1
+DEC.B AL      # Decrease AL by 1
+DEC.B $6003   # Decrease value at 6003 by 1
+DEC.B (AX)    # Decrease value at address in AX by 1
+DEC.W AX      # Decrease AX by 1
+DEC.W $6700   # Decrease value at [6700,6701] by 1
 ```
