@@ -30,3 +30,7 @@
 ## Main pages
 
 [Instructions](./ops.md)
+
+[Bytes](./bytes.md)
+
+[Memory](./mem.md)

@@ -15,21 +15,21 @@ SWAP.W (EE) (EI) (IE) (II)
 
 #### SWAP.B
 
-|Operands|Cycles|
-|--------|------|
-|Register, Register|1|
-|Register, Indirect|8|
-|Indirect, Register|8|
-|Indirect, Indirect|12|
+| Opcode | Operands           | Cycles |
+|--------|--------------------|--------|
+| 06     | Register, Register | 1      |
+| 06     | Register, Indirect | 8      |
+| 06     | Indirect, Register | 8      |
+| 06     | Indirect, Indirect | 12     |
 
 #### INC.W
 
-|Operands|Cycles|
-|--------|------|
-|Ext. Register, Ext. Register|1|
-|Ext. Register, Indirect|12|
-|Indirect, Ext. Register|12|
-|Ext. Register, Ext. Register|16|
+| Opcode | Operands                     | Cycles |
+|--------|------------------------------|--------|
+| 07     | Ext. Register, Ext. Register | 1      |
+| 07     | Ext. Register, Indirect      | 12     |
+| 07     | Indirect, Ext. Register      | 12     |
+| 07     | Ext. Register, Ext. Register | 16     |
 
 ## Flags
 
