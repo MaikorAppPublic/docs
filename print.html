@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="ops.html"><strong aria-hidden="true">1.</strong> Instructions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ops/inc.html"><strong aria-hidden="true">1.1.</strong> INC</a></li><li class="chapter-item expanded "><a href="ops/swap.html"><strong aria-hidden="true">1.2.</strong> SWAP</a></li><li class="chapter-item expanded "><a href="ops/add.html"><strong aria-hidden="true">1.3.</strong> ADD</a></li></ol></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="ops.html"><strong aria-hidden="true">1.</strong> Instructions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ops/inc.html"><strong aria-hidden="true">1.1.</strong> INC</a></li><li class="chapter-item expanded "><a href="ops/dec.html"><strong aria-hidden="true">1.2.</strong> DEC</a></li><li class="chapter-item expanded "><a href="ops/swap.html"><strong aria-hidden="true">1.3.</strong> SWAP</a></li><li class="chapter-item expanded "><a href="ops/add.html"><strong aria-hidden="true">1.4.</strong> ADD</a></li></ol></li><li class="chapter-item expanded "><a href="bytes.html"><strong aria-hidden="true">2.</strong> Bytes</a></li><li class="chapter-item expanded "><a href="mem.html"><strong aria-hidden="true">3.</strong> Memory</a></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -171,6 +171,8 @@
 </ul>
 <h2 id="main-pages"><a class="header" href="#main-pages">Main pages</a></h2>
 <p><a href="./ops.html">Instructions</a></p>
+<p><a href="./bytes.html">Bytes</a></p>
+<p><a href="./mem.html">Memory</a></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="instructions"><a class="header" href="#instructions">Instructions</a></h1>
 <blockquote>
 <p>Also called commands, operations and ops</p>
@@ -179,13 +181,13 @@
 <blockquote>
 <p>Also called args and params, operands</p>
 </blockquote>
-<table><thead><tr><th>Key</th><th>Name</th><th>Examples</th></tr></thead><tbody>
-<tr><td><code>R</code></td><td>Register</td><td><code>AL</code>, <code>CH</code></td></tr>
-<tr><td><code>E</code></td><td>Extended Register</td><td><code>BX</code>, <code>CX</code></td></tr>
-<tr><td><code>I</code></td><td>Indirect Register</td><td><code>(AX)</code>, <code>(BX)</code></td></tr>
-<tr><td><code>B</code></td><td>Byte</td><td><code>45</code>, <code>xF1</code></td></tr>
-<tr><td><code>W</code></td><td>Word</td><td><code>451</code>, <code>x3A0</code></td></tr>
-<tr><td><code>A</code></td><td>Address</td><td><code>$1102</code>,<code>$xFF12</code></td></tr>
+<table><thead><tr><th>Key</th><th>Name</th><th>Examples</th><th>Bytes</th></tr></thead><tbody>
+<tr><td><code>R</code></td><td>Register</td><td><code>AL</code>, <code>CH</code></td><td>1</td></tr>
+<tr><td><code>E</code></td><td>Extended Register</td><td><code>BX</code>, <code>CX</code></td><td>1</td></tr>
+<tr><td><code>I</code></td><td>Indirect Register</td><td><code>(AX)</code>, <code>(BX)</code></td><td>1</td></tr>
+<tr><td><code>B</code></td><td>Byte</td><td><code>45</code>, <code>xF1</code></td><td>1</td></tr>
+<tr><td><code>W</code></td><td>Word</td><td><code>451</code>, <code>x3A0</code></td><td>2</td></tr>
+<tr><td><code>A</code></td><td>Address</td><td><code>$1102</code>,<code>$xFF12</code></td><td>2</td></tr>
 </tbody></table>
 <h3 id="ppid"><a class="header" href="#ppid">PPID</a></h3>
 <blockquote>
@@ -211,10 +213,11 @@ CPY.B AH AL-
 <li><code>AH</code> is set to 5</li>
 <li><code>AL</code> is set to 4</li>
 </ul>
-<p>PPID works on any <code>R</code>, <code>E</code>, or <code>I</code> args in any instruction.</p>
+<p>PPID works on any <code>R</code>, <code>E</code>, or <code>I</code> args in any instruction. Increments and decrements are wrapping, and the flags are set based on the result of an operation before the post inc/dec changes.</p>
 <h2 id="list"><a class="header" href="#list">List</a></h2>
 <table><thead><tr><th>Name</th><th>Size variants</th><th>Args</th><th>Cycles</th></tr></thead><tbody>
 <tr><td><a href="./ops/inc.html">INC</a></td><td><code>B</code>, <code>W</code></td><td><code>(R)</code>, <code>(E)</code>, <code>(I)</code>, <code>(A)</code></td><td>2-8</td></tr>
+<tr><td><a href="./ops/dec.html">DEC</a></td><td><code>B</code>, <code>W</code></td><td><code>(R)</code>, <code>(E)</code>, <code>(I)</code>, <code>(A)</code></td><td>2-8</td></tr>
 <tr><td><a href="./ops/swap.html">SWAP</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code></td><td>1-16</td></tr>
 <tr><td><a href="./ops/add.html">ADD</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
 </tbody></table>
@@ -227,21 +230,21 @@ CPY.B AH AL-
 INC.W (E) (I) (A)
 </code></pre>
 <h4 id="incb"><a class="header" href="#incb">INC.B</a></h4>
-<table><thead><tr><th>Operands</th><th>Cycles</th></tr></thead><tbody>
-<tr><td>Register</td><td>2</td></tr>
-<tr><td>Indirect</td><td>6</td></tr>
-<tr><td>Address</td><td>2</td></tr>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th></tr></thead><tbody>
+<tr><td>2C</td><td>Register</td><td>2</td></tr>
+<tr><td>2C</td><td>Indirect</td><td>6</td></tr>
+<tr><td>2E</td><td>Address</td><td>2</td></tr>
 </tbody></table>
 <h4 id="incw"><a class="header" href="#incw">INC.W</a></h4>
-<table><thead><tr><th>Operands</th><th>Cycles</th></tr></thead><tbody>
-<tr><td>Ext. Register</td><td>4</td></tr>
-<tr><td>Indirect</td><td>8</td></tr>
-<tr><td>Address</td><td>4</td></tr>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th></tr></thead><tbody>
+<tr><td>2D</td><td>Ext. Register</td><td>4</td></tr>
+<tr><td>2D</td><td>Indirect</td><td>8</td></tr>
+<tr><td>2F</td><td>Address</td><td>4</td></tr>
 </tbody></table>
 <h2 id="flags"><a class="header" href="#flags">Flags</a></h2>
 <p>No changes</p>
 <h2 id="code-equivalent"><a class="header" href="#code-equivalent">Code equivalent</a></h2>
-<pre><code>var++
+<pre><code>value++
 </code></pre>
 <h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
 <pre><code>INC.B AL      # Increase AL by 1
@@ -250,79 +253,111 @@ INC.B (AX)    # Increase value at address in AX by 1
 INC.W AX      # Increase AX by 1
 INC.W $6700   # Increase value at [6700,6701] by 1
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="swap"><a class="header" href="#swap">SWAP</a></h1>
-<p>Swap values in registers or values at memory addresses in pointers.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="dec"><a class="header" href="#dec">DEC</a></h1>
+<p>Decreases value in register or value at memory address in pointer by 1.</p>
 <h2 id="format-1"><a class="header" href="#format-1">Format</a></h2>
-<p><code>SWAP lhs rhs</code></p>
+<p><code>DEC value</code></p>
 <h2 id="variations-1"><a class="header" href="#variations-1">Variations</a></h2>
-<pre><code>SWAP.B (RR) (RI) (IR) (II)
-SWAP.W (EE) (EI) (IE) (II)
+<pre><code>DEC.B (R) (I) (A)
+DEC.W (E) (I) (A)
 </code></pre>
-<h4 id="swapb"><a class="header" href="#swapb">SWAP.B</a></h4>
-<table><thead><tr><th>Operands</th><th>Cycles</th></tr></thead><tbody>
-<tr><td>Register, Register</td><td>1</td></tr>
-<tr><td>Register, Indirect</td><td>8</td></tr>
-<tr><td>Indirect, Register</td><td>8</td></tr>
-<tr><td>Indirect, Indirect</td><td>12</td></tr>
+<h4 id="decb"><a class="header" href="#decb">DEC.B</a></h4>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th></tr></thead><tbody>
+<tr><td>2C</td><td>Register</td><td>2</td></tr>
+<tr><td>2C</td><td>Indirect</td><td>6</td></tr>
+<tr><td>2E</td><td>Address</td><td>2</td></tr>
 </tbody></table>
-<h4 id="incw-1"><a class="header" href="#incw-1">INC.W</a></h4>
-<table><thead><tr><th>Operands</th><th>Cycles</th></tr></thead><tbody>
-<tr><td>Ext. Register, Ext. Register</td><td>1</td></tr>
-<tr><td>Ext. Register, Indirect</td><td>12</td></tr>
-<tr><td>Indirect, Ext. Register</td><td>12</td></tr>
-<tr><td>Ext. Register, Ext. Register</td><td>16</td></tr>
+<h4 id="decw"><a class="header" href="#decw">DEC.W</a></h4>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th></tr></thead><tbody>
+<tr><td>2D</td><td>Ext. Register</td><td>4</td></tr>
+<tr><td>2D</td><td>Indirect</td><td>8</td></tr>
+<tr><td>2F</td><td>Address</td><td>4</td></tr>
 </tbody></table>
 <h2 id="flags-1"><a class="header" href="#flags-1">Flags</a></h2>
 <p>No changes</p>
 <h2 id="code-equivalent-1"><a class="header" href="#code-equivalent-1">Code equivalent</a></h2>
+<pre><code>value++
+</code></pre>
+<h2 id="examples-1"><a class="header" href="#examples-1">Examples</a></h2>
+<pre><code>DEC.B AL      # Decrease AL by 1
+DEC.B $6003   # Decrease value at 6003 by 1
+DEC.B (AX)    # Decrease value at address in AX by 1
+DEC.W AX      # Decrease AX by 1
+DEC.W $6700   # Decrease value at [6700,6701] by 1
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="swap"><a class="header" href="#swap">SWAP</a></h1>
+<p>Swap values in registers or values at memory addresses in pointers.</p>
+<h2 id="format-2"><a class="header" href="#format-2">Format</a></h2>
+<p><code>SWAP lhs rhs</code></p>
+<h2 id="variations-2"><a class="header" href="#variations-2">Variations</a></h2>
+<pre><code>SWAP.B (RR) (RI) (IR) (II)
+SWAP.W (EE) (EI) (IE) (II)
+</code></pre>
+<h4 id="swapb"><a class="header" href="#swapb">SWAP.B</a></h4>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th></tr></thead><tbody>
+<tr><td>06</td><td>Register, Register</td><td>1</td></tr>
+<tr><td>06</td><td>Register, Indirect</td><td>8</td></tr>
+<tr><td>06</td><td>Indirect, Register</td><td>8</td></tr>
+<tr><td>06</td><td>Indirect, Indirect</td><td>12</td></tr>
+</tbody></table>
+<h4 id="incw-1"><a class="header" href="#incw-1">INC.W</a></h4>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th></tr></thead><tbody>
+<tr><td>07</td><td>Ext. Register, Ext. Register</td><td>1</td></tr>
+<tr><td>07</td><td>Ext. Register, Indirect</td><td>12</td></tr>
+<tr><td>07</td><td>Indirect, Ext. Register</td><td>12</td></tr>
+<tr><td>07</td><td>Ext. Register, Ext. Register</td><td>16</td></tr>
+</tbody></table>
+<h2 id="flags-2"><a class="header" href="#flags-2">Flags</a></h2>
+<p>No changes</p>
+<h2 id="code-equivalent-2"><a class="header" href="#code-equivalent-2">Code equivalent</a></h2>
 <pre><code>temp = lhs
 lhs = rhs
 rhs = temp
 </code></pre>
-<h2 id="examples-1"><a class="header" href="#examples-1">Examples</a></h2>
+<h2 id="examples-2"><a class="header" href="#examples-2">Examples</a></h2>
 <pre><code>SWAP.B AL AH    # Swap values in AL and AH
 SWAP.W AX BX    # Swap values in AX and BX
 SWAP.B (AX) DH  # Swap values in DH and at memory address in AX
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="add"><a class="header" href="#add">ADD</a></h1>
 <p>Add values from destination and source together and store result in destination.</p>
-<h2 id="format-2"><a class="header" href="#format-2">Format</a></h2>
+<h2 id="format-3"><a class="header" href="#format-3">Format</a></h2>
 <p><code>ADD dst src</code></p>
-<h2 id="variations-2"><a class="header" href="#variations-2">Variations</a></h2>
+<h2 id="variations-3"><a class="header" href="#variations-3">Variations</a></h2>
 <pre><code>ADD.B (R, B) (R, R) (R, I) (I, R) (I, I) (A, I) (A, R) (A, A) (A, B) (I, A) (R, A) (I, B)
 ADD.W (E, W) (E, E) (E, I) (I, E) (I, I) (A, I) (A, E) (A, A) (A, W) (I, A) (E, A) (I, W)
 </code></pre>
 <h4 id="incb-1"><a class="header" href="#incb-1">INC.B</a></h4>
-<table><thead><tr><th>Operands</th><th>Cycles</th></tr></thead><tbody>
-<tr><td>Register, Byte</td><td>2</td></tr>
-<tr><td>Register, Register</td><td>3</td></tr>
-<tr><td>Register, Indirect</td><td>5</td></tr>
-<tr><td>Indirect, Register</td><td>7</td></tr>
-<tr><td>Indirect, Indirect</td><td>9</td></tr>
-<tr><td>Address, Indirect</td><td>5</td></tr>
-<tr><td>Address, Register</td><td>3</td></tr>
-<tr><td>Address, Address</td><td>3</td></tr>
-<tr><td>Address, Byte</td><td>2</td></tr>
-<tr><td>Indirect, Address</td><td>7</td></tr>
-<tr><td>Indirect, Byte</td><td>6</td></tr>
-<tr><td>Register, Address</td><td>3</td></tr>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th></tr></thead><tbody>
+<tr><td>22</td><td>Register, Byte</td><td>2</td></tr>
+<tr><td>20</td><td>Register, Register</td><td>3</td></tr>
+<tr><td>20</td><td>Register, Indirect</td><td>5</td></tr>
+<tr><td>20</td><td>Indirect, Register</td><td>7</td></tr>
+<tr><td>20</td><td>Indirect, Indirect</td><td>9</td></tr>
+<tr><td>26</td><td>Address, Indirect</td><td>5</td></tr>
+<tr><td>26</td><td>Address, Register</td><td>3</td></tr>
+<tr><td>2A</td><td>Address, Address</td><td>3</td></tr>
+<tr><td>28</td><td>Address, Byte</td><td>2</td></tr>
+<tr><td>24</td><td>Indirect, Address</td><td>7</td></tr>
+<tr><td>22</td><td>Indirect, Byte</td><td>6</td></tr>
+<tr><td>24</td><td>Register, Address</td><td>3</td></tr>
 </tbody></table>
 <h4 id="incw-2"><a class="header" href="#incw-2">INC.W</a></h4>
-<table><thead><tr><th>Operands</th><th>Cycles</th></tr></thead><tbody>
-<tr><td>Ext. Register, Word</td><td>4</td></tr>
-<tr><td>Ext. Register, Ext. Register</td><td>6</td></tr>
-<tr><td>Ext. Register, Indirect</td><td>8</td></tr>
-<tr><td>Indirect, Ext. Register</td><td>10</td></tr>
-<tr><td>Indirect, Indirect</td><td>12</td></tr>
-<tr><td>Address, Indirect</td><td>8</td></tr>
-<tr><td>Address, Ext. Register</td><td>6</td></tr>
-<tr><td>Address, Address</td><td>6</td></tr>
-<tr><td>Address, Word</td><td>4</td></tr>
-<tr><td>Indirect, Address</td><td>10</td></tr>
-<tr><td>Indirect, Word</td><td>8</td></tr>
-<tr><td>Ext. Register, Address</td><td>6</td></tr>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th></tr></thead><tbody>
+<tr><td>23</td><td>Ext. Register, Word</td><td>4</td></tr>
+<tr><td>21</td><td>Ext. Register, Ext. Register</td><td>6</td></tr>
+<tr><td>21</td><td>Ext. Register, Indirect</td><td>8</td></tr>
+<tr><td>21</td><td>Indirect, Ext. Register</td><td>10</td></tr>
+<tr><td>21</td><td>Indirect, Indirect</td><td>12</td></tr>
+<tr><td>27</td><td>Address, Indirect</td><td>8</td></tr>
+<tr><td>27</td><td>Address, Ext. Register</td><td>6</td></tr>
+<tr><td>2B</td><td>Address, Address</td><td>6</td></tr>
+<tr><td>29</td><td>Address, Word</td><td>4</td></tr>
+<tr><td>25</td><td>Indirect, Address</td><td>10</td></tr>
+<tr><td>23</td><td>Indirect, Word</td><td>8</td></tr>
+<tr><td>25</td><td>Ext. Register, Address</td><td>6</td></tr>
 </tbody></table>
-<h2 id="flags-2"><a class="header" href="#flags-2">Flags</a></h2>
+<h2 id="flags-3"><a class="header" href="#flags-3">Flags</a></h2>
 <table><thead><tr><th>Flag</th><th>Update condition</th></tr></thead><tbody>
 <tr><td>Zero</td><td>Set if result is 0, otherwise cleared</td></tr>
 <tr><td>Signed</td><td>Matches first bit of result</td></tr>
@@ -332,12 +367,263 @@ ADD.W (E, W) (E, E) (E, I) (I, E) (I, I) (A, I) (A, E) (A, A) (A, W) (I, A) (E, 
 <tr><td>Overflow</td><td>Set if the dst and result first bit are different, otherwise cleared</td></tr>
 <tr><td>Interrupts</td><td>-</td></tr>
 </tbody></table>
-<h2 id="code-equivalent-2"><a class="header" href="#code-equivalent-2">Code equivalent</a></h2>
+<h2 id="code-equivalent-3"><a class="header" href="#code-equivalent-3">Code equivalent</a></h2>
 <pre><code>result = lhs + rhs
 </code></pre>
-<h2 id="examples-2"><a class="header" href="#examples-2">Examples</a></h2>
-<pre><code>ADD.B AL 5    # Store result of AL + 5 in AL
+<h2 id="examples-3"><a class="header" href="#examples-3">Examples</a></h2>
+<pre><code>ADD.B AL 5       # Store result of AL + 5 in AL
+ADD.W (BX) $500  # Store the result of adding the values at the address in BX and at 500 at the address stored in BX 
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="bytes"><a class="header" href="#bytes">Bytes</a></h1>
+<h2 id="instructions-1"><a class="header" href="#instructions-1">Instructions</a></h2>
+<table><thead><tr><th></th><th align="center">x0</th><th align="center">x1</th><th align="center">x2</th><th align="center">x3</th><th align="center">x4</th><th align="center">x5</th><th align="center">x6</th><th align="center">x7</th><th align="center">x8</th><th align="center">x9</th><th align="center">xA</th><th align="center">xB</th><th align="center">xC</th><th align="center">xD</th><th align="center">xE</th><th align="center">xF</th></tr></thead><tbody>
+<tr><td>0x</td><td align="center">NOP</td><td align="center">HALT</td><td align="center">CALL<br>(A)</td><td align="center">CALL<br>(E) (I)</td><td align="center">RET</td><td align="center">RETI</td><td align="center">SWAP.B<br>(R,R)</td><td align="center">SWAP.W<br>(R,R)</td><td align="center">MCPY<br>(A,A,B)</td><td align="center">MCPY<br>(A,E,B) (A,I,B)</td><td align="center">MCPY<br>(E,A,B) (I,A,B)</td><td align="center">MCPY<br>(E,E,B) (I,E,B) (E,I,C) (I,I,C)</td><td align="center">MCPY<br>(A,A,R)</td><td align="center">MCPY<br>(A,E,R) (A,I,R)</td><td align="center">MCPY<br>(E,A,R) (I,A,R)</td><td align="center">MCPY<br>(E,E,R) (I,E,R) (E,I,R) (I,I,R)</td></tr>
+<tr><td>1x</td><td align="center">CPY.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">CPY.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">CPY.B<br>(A,R) (A,I)</td><td align="center">CPY.W<br>(A,E) (A,I)</td><td align="center">CPY.B<br>(R,A) (I,A)</td><td align="center">CPY.W<br>(E,A) (I,A)</td><td align="center">CPY.B<br>(A,A)</td><td align="center">CPY.W<br>(A,A)</td><td align="center">CPY.B<br>(R,B) (I,B)</td><td align="center">CPY.W<br>(E,W) (I,w)</td><td align="center">CPY.B<br>(A,B)</td><td align="center">CPY.W<br>(A,W)</td><td align="center">CMP.B<br>(R,A) (I,A)</td><td align="center">CMP.W<br>(E,A) (I,A)</td><td align="center">CMPS.B<br>(R,A) (I,A)</td><td align="center">CMPS.W<br>(E,A) (I,A)</td></tr>
+<tr><td>2x</td><td align="center">ADD.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">ADD.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">ADD.B<br>(R,B) (I,B)</td><td align="center">ADD.W<br>(E,W) (I,W)</td><td align="center">ADD.B<br>(R,A) (I,A)</td><td align="center">ADD.W<br>(E,A) (I,A)</td><td align="center">ADD.B<br>(A,R) (A,I)</td><td align="center">ADD.W<br>(A,E) (A,I)</td><td align="center">ADD.B<br>(A,B)</td><td align="center">ADD.W<br>(A,W)</td><td align="center">ADD.B<br>(A,A)</td><td align="center">ADD.W<br>(A,A)</td><td align="center">INC.B<br>(R) (I)</td><td align="center">INC.W<br>(E) (I)</td><td align="center">INC.B<br>(A)</td><td align="center">INC.W<br>(A)</td></tr>
+<tr><td>3x</td><td align="center">SUB.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">SUB.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">SUB.B<br>(R,B) (I,B)</td><td align="center">SUB.W<br>(E,W) (I,W)</td><td align="center">SUB.B<br>(R,A) (I,A)</td><td align="center">SUB.W<br>(E,A) (I,A)</td><td align="center">SUB.B<br>(A,R) (A,I)</td><td align="center">SUB.W<br>(A,E) (A,I)</td><td align="center">SUB.B<br>(A,B)</td><td align="center">SUB.W<br>(A,W)</td><td align="center">SUB.B<br>(A,A)</td><td align="center">SUB.W<br>(A,A)</td><td align="center">DEC.B<br>(R) (I)</td><td align="center">DEC.W<br>(E) (I)</td><td align="center">DEC.B<br>(A)</td><td align="center">DEC.W<br>(A)</td></tr>
+<tr><td>4x</td><td align="center">NOT.B<br>(R) (I)</td><td align="center">NOT.W<br>(E) (I)</td><td align="center">OR.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">OR.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">OR.B<br>(R,B) (I,B)</td><td align="center">OR.W<br>(E,W) (I,W)</td><td align="center">XOR.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">XOR.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">XOR.B<br>(R,B) (I,B)</td><td align="center">XOR.W<br>(E,W) (I,W)</td><td align="center">AND.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">AND.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">AND.B<br>(R,B) (I,B)</td><td align="center">AND.W<br>(E,W) (I,W)</td><td align="center">JRF<br>(B)</td><td align="center">JRB<br>(B)</td></tr>
+<tr><td>5x</td><td align="center">ASL.B<br>(R,B) (I,B)</td><td align="center">ASL.W<br>(E,W) (I,W)</td><td align="center">ASL.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">ASL.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">ASL.B<br>(A)</td><td align="center">ASL.W<br>(A)</td><td align="center">ASR.B<br>(R,B) (I,B)</td><td align="center">ASR.W<br>(E,W) (I,W)</td><td align="center">ASR.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">ASR.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">ASR.B<br>(A)</td><td align="center">ASR.W<br>(A)</td><td align="center">LSR.B<br>(R,B) (I,B)</td><td align="center">LSR.W<br>(E,W) (I,W)</td><td align="center">LSR.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">LSR.W<br>(E,E) (E,I) (I,E) (I,I)</td></tr>
+<tr><td>6x</td><td align="center">LSR.B<br>(A)</td><td align="center">LSR.W<br>(A)</td><td align="center">ROL.B<br>(R,B) (I,B)</td><td align="center">ROL.W<br>(E,W) (I,W)</td><td align="center">ROL.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">ROL.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">ROL.B<br>(A)</td><td align="center">ROL.W<br>(A)</td><td align="center">ROR.B<br>(R,B) (I,B)</td><td align="center">ROR.W<br>(E,W) (I,W)</td><td align="center">ROR.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">ROR.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">ROR.B<br>(A)</td><td align="center">ROR.W<br>(A)</td><td align="center">-</td><td align="center">-</td></tr>
+<tr><td>7x</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr>
+<tr><td>8x</td><td align="center">MUL.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">MUL.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">MUL.B<br>(R,B) (I,B)</td><td align="center">MUL.W<br>(E,W) (I,W)</td><td align="center">MUL.B<br>(R,A) (I,A)</td><td align="center">MUL.W<br>(E,A) (I,A)</td><td align="center">MUL.B<br>(A,R) (A,I)</td><td align="center">MUL.W<br>(A,E) (A,I)</td><td align="center">MUL.B<br>(A,B)</td><td align="center">MUL.W<br>(A,W)</td><td align="center">MUL.B<br>(A,A)</td><td align="center">MUL.W<br>(A,A)</td><td align="center">MULS.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">MULS.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">MULS.B<br>(R,B) (I,B)</td><td align="center">MULS.W<br>(E,W) (I,W)</td></tr>
+<tr><td>9x</td><td align="center">MULS.B<br>(R,A) (I,A)</td><td align="center">MULS.W<br>(E,A) (I,A)</td><td align="center">MULS.B<br>(A,R) (A,I)</td><td align="center">MULS.W<br>(A,E) (A,I)</td><td align="center">MULS.B<br>(A,B)</td><td align="center">MULS.W<br>(A,W)</td><td align="center">MULS.B<br>(A,A)</td><td align="center">MULS.W<br>(A,A)</td><td align="center">DIV.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">DIV.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">DIV.B<br>(R,B) (I,B)</td><td align="center">DIV.W<br>(E,W) (I,W)</td><td align="center">DIV.B<br>(R,A) (I,A)</td><td align="center">DIV.W<br>(E,A) (I,A)</td><td align="center">DIV.B<br>(A,R) (A,I)</td><td align="center">DIV.W<br>(A,E) (A,I)</td></tr>
+<tr><td>Ax</td><td align="center">DIV.B<br>(A,B)</td><td align="center">DIV.W<br>(A,W)</td><td align="center">DIV.B<br>(A,A)</td><td align="center">DIV.W<br>(A,A)</td><td align="center">DIVS.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">DIVS.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">DIVS.B<br>(R,B) (I,B)</td><td align="center">DIVS.W<br>(E,W) (I,W)</td><td align="center">DIVS.B<br>(R,A) (I,A)</td><td align="center">DIVS.W<br>(E,A) (I,A)</td><td align="center">DIVS.B<br>(A,R) (A,I)</td><td align="center">DIVS.W<br>(A,E) (A,I)</td><td align="center">DIVS.B<br>(A,B)</td><td align="center">DIVS.W<br>(A,W)</td><td align="center">DIVS.B<br>(A,A)</td><td align="center">DIVS.W<br>(A,A)</td></tr>
+<tr><td>Bx</td><td align="center">JMP<br>(A)</td><td align="center">JMP<br>(E) (I)</td><td align="center">JE<br>(A)</td><td align="center">JE<br>(E) (I)</td><td align="center">JNE<br>(A)</td><td align="center">JNE<br>(E) (I)</td><td align="center">JL<br>(A)</td><td align="center">JL<br>(E) (I)</td><td align="center">JG<br>(A)</td><td align="center">JG<br>(E) (I)</td><td align="center">JLE<br>(A)</td><td align="center">JLE<br>(E) (I)</td><td align="center">JGE<br>(A)</td><td align="center">JGE<br>(E) (I)</td><td align="center">-</td><td align="center">-</td></tr>
+<tr><td>Cx</td><td align="center">CMP.B<br>(R,B) (I,B)</td><td align="center">CMP.W<br>(E,W) (I,W)</td><td align="center">CMP.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">CMP.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">CMPS.B<br>(R,B) (I,B)</td><td align="center">CMPS.W<br>(E,W) (I,W)</td><td align="center">CMPS.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">CMPS.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">JBC<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">JBS<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">JBC<br>(A,R) (A,I)</td><td align="center">JBS<br>(A,R) (A,I)</td><td align="center">JBC<br>(R,B) (I,B)</td><td align="center">JBS<br>(R,B) (I,B)</td><td align="center">JBC<br>(A,B)</td><td align="center">JBS<br>(A,B)</td></tr>
+<tr><td>Dx</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr>
+<tr><td>Ex</td><td align="center">ADDC.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">ADDC.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">ADDC.B<br>(R,B) (I,B)</td><td align="center">ADDC.W<br>(E,W) (I,W)</td><td align="center">ADDC.B<br>(R,A) (I,A)</td><td align="center">ADDC.W<br>(E,A) (I,A)</td><td align="center">ADDC.B<br>(A,R) (A,I)</td><td align="center">ADDC.W<br>(A,E) (A,I)</td><td align="center">ADDC.B<br>(A,B)</td><td align="center">ADDC.W<br>(A,W)</td><td align="center">ADDC.B<br>(A,A)</td><td align="center">ADDC.W<br>(A,A)</td><td align="center">SUBC.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">SUBC.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">SUBC.B<br>(R,B) (I,B)</td><td align="center">SUBC.W<br>(E,W) (I,W)</td></tr>
+<tr><td>Fx</td><td align="center">SUBC.B<br>(R,A) (I,A)</td><td align="center">SUBC.W<br>(E,A) (I,A)</td><td align="center">SUBC.B<br>(A,R) (A,I)</td><td align="center">SUBC.W<br>(A,E) (A,I)</td><td align="center">SUBC.B<br>(A,B)</td><td align="center">SUBC.W<br>(A,W)</td><td align="center">SUBC.B<br>(A,A)</td><td align="center">SUBC.W<br>(A,A)</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">EHALT</td><td align="center">SLEEP</td></tr>
+</tbody></table>
+<h2 id="registers"><a class="header" href="#registers">Registers</a></h2>
+<table><thead><tr><th>Name</th><th>Value</th><th>Hex</th><th>Offset</th><th>Size</th></tr></thead><tbody>
+<tr><td>AH</td><td>0</td><td>00</td><td>0</td><td>1</td></tr>
+<tr><td>AL</td><td>1</td><td>01</td><td>1</td><td>1</td></tr>
+<tr><td>BH</td><td>2</td><td>02</td><td>2</td><td>1</td></tr>
+<tr><td>BL</td><td>3</td><td>03</td><td>3</td><td>1</td></tr>
+<tr><td>CH</td><td>4</td><td>04</td><td>4</td><td>1</td></tr>
+<tr><td>CL</td><td>5</td><td>05</td><td>5</td><td>1</td></tr>
+<tr><td>DH</td><td>6</td><td>06</td><td>6</td><td>1</td></tr>
+<tr><td>DL</td><td>7</td><td>07</td><td>7</td><td>1</td></tr>
+<tr><td>FLG</td><td>8</td><td>08</td><td>8</td><td>1</td></tr>
+<tr><td>AX</td><td>9</td><td>09</td><td>0</td><td>2</td></tr>
+<tr><td>BX</td><td>10</td><td>0A</td><td>2</td><td>2</td></tr>
+<tr><td>CX</td><td>11</td><td>0B</td><td>4</td><td>2</td></tr>
+<tr><td>dX</td><td>12</td><td>0C</td><td>6</td><td>2</td></tr>
+</tbody></table>
+<h2 id="ppid-1"><a class="header" href="#ppid-1">PPID</a></h2>
+<table><thead><tr><th>Value</th><th>Hex</th><th>Indirect</th><th>Pre</th><th>Post</th><th>Inc</th><th>Dec</th></tr></thead><tbody>
+<tr><td>0</td><td>00</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+<tr><td>128</td><td>80</td><td>x</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+<tr><td>64</td><td>40</td><td>-</td><td>-</td><td>x</td><td>x</td><td>-</td></tr>
+<tr><td>80</td><td>50</td><td>-</td><td>-</td><td>x</td><td>-</td><td>x</td></tr>
+<tr><td>96</td><td>60</td><td>-</td><td>x</td><td>-</td><td>x</td><td>-</td></tr>
+<tr><td>112</td><td>70</td><td>-</td><td>x</td><td>-</td><td>-</td><td>x</td></tr>
+<tr><td>129</td><td>C0</td><td>x</td><td>-</td><td>x</td><td>x</td><td>-</td></tr>
+<tr><td>208</td><td>D0</td><td>x</td><td>-</td><td>x</td><td>-</td><td>x</td></tr>
+<tr><td>224</td><td>E0</td><td>x</td><td>x</td><td>-</td><td>x</td><td>-</td></tr>
+<tr><td>240</td><td>F0</td><td>x</td><td>x</td><td>-</td><td>-</td><td>x</td></tr>
+</tbody></table>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="memory"><a class="header" href="#memory">Memory</a></h1>
+<h2 id="interrupt-addresses"><a class="header" href="#interrupt-addresses">Interrupt Addresses</a></h2>
+<table><thead><tr><th>Name</th><th>Description</th><th>Control Bit</th><th>Int</th><th>Hex</th><th>ASM Constant</th></tr></thead><tbody>
+<tr><td>Input</td><td>Called when value at <a href="mem.html#input">Input</a> changes</td><td>0</td><td>1280</td><td>500</td><td>IRQ_INPUT</td></tr>
+<tr><td>Line Drawn</td><td>Called after a line has been drawn</td><td>1</td><td>1344</td><td>540</td><td>IRQ_LINE_DRAW</td></tr>
+<tr><td>Screen Drawn</td><td>Called after the screen has finished being drawn</td><td>2</td><td>1408</td><td>580</td><td>IRQ_SCREEN_DRAW</td></tr>
+<tr><td>Timer</td><td>Called after a timer overflows</td><td>3</td><td>1472</td><td>5C0</td><td>IRQ_TIMER</td></tr>
+<tr><td>Controller Changed</td><td>Called after the controller type changed</td><td>4</td><td>1536</td><td>600</td><td>IRQ_CONTROLLER</td></tr>
+</tbody></table>
+<p>Also see <a href="mem.html#interrupt-control">Interrupt control</a></p>
+<h2 id="addresses"><a class="header" href="#addresses">Addresses</a></h2>
+<table><thead><tr><th>Name</th><th>Description</th><th align="left">Int</th><th align="left">Hex</th><th>ASM Constant</th><th align="left">Length</th></tr></thead><tbody>
+<tr><td><a href="mem.html#code">Code</a></td><td>Main game code</td><td align="left">0</td><td align="left">0</td><td><code>MAIN_CODE</code></td><td align="left">8700</td></tr>
+<tr><td><a href="mem.html#banked-code">Banked Code</a></td><td>Switchable game code, controlled via <a href="mem.html#code-bank-id">Code Bank ID</a></td><td align="left">8700</td><td align="left">21FC</td><td><code>BANK_CODE</code></td><td align="left">8700</td></tr>
+<tr><td><a href="mem.html#ram">RAM</a></td><td>Main RAM</td><td align="left">17400</td><td align="left">43F8</td><td><code>RAM</code></td><td align="left">8700</td></tr>
+<tr><td><a href="mem.html#banked-ram">Banked RAM</a></td><td>Banked RAM, controlled via <a href="mem.html#ram-bank-id">RAM Bank ID</a></td><td align="left">26100</td><td align="left">65F4</td><td><code>RAM</code></td><td align="left">8700</td></tr>
+<tr><td><a href="mem.html#input">Input</a></td><td>12 bits in 2 bytes to check if buttons are pressed</td><td align="left">34800</td><td align="left">87F0</td><td><code>INPUT</code></td><td align="left">2</td></tr>
+<tr><td><a href="mem.html#sound">Sound</a></td><td>Sound control bytes</td><td align="left">34802</td><td align="left">87F2</td><td><code>SOUND</code></td><td align="left">30</td></tr>
+<tr><td><a href="mem.html#save-bank-id">Save Bank ID</a></td><td>Controls which save data bank is loaded at <a href="mem.html#save-bank">Save Bank</a></td><td align="left">34832</td><td align="left">8810</td><td><code>SAVE_BANK_ID</code></td><td align="left">1</td></tr>
+<tr><td><a href="mem.html#save-bank">Save Bank</a></td><td>Banked save data, also see <a href="mem.html#save-control">Save Control</a></td><td align="left">34833</td><td align="left">8811</td><td><code>SAVE_BANK</code></td><td align="left">4096</td></tr>
+<tr><td><a href="mem.html#atlas-1">Atlas 1</a></td><td>Atlas Bank 1, controlled by <a href="mem.html#atlas-1-bank-id">Atlas 1 Bank ID</a></td><td align="left">38929</td><td align="left">9811</td><td><code>ATLAS1</code></td><td align="left">8000</td></tr>
+<tr><td><a href="mem.html#atlas-2">Atlas 2</a></td><td>Atlas Bank 2, controlled by <a href="mem.html#atlas-2-bank-id">Atlas 2 Bank ID</a></td><td align="left">46929</td><td align="left">B751</td><td><code>ATLAS2</code></td><td align="left">8000</td></tr>
+<tr><td><a href="mem.html#palettes">Palettes</a></td><td>4 palettes, each made of 15 colors (3 bytes)</td><td align="left">54929</td><td align="left">D691</td><td><code>PALETTES</code></td><td align="left">180</td></tr>
+<tr><td><a href="mem.html#sprite-table">Sprite Table</a></td><td>Table of 255 sprites, made of 5 bytes each</td><td align="left">55121</td><td align="left">D751</td><td><code>SPRITE_TABLE</code></td><td align="left">1275</td></tr>
+<tr><td><a href="mem.html#layer-headers">Layer Headers</a></td><td>Headers for the 3 background layers</td><td align="left">56396</td><td align="left">DC4C</td><td><code>LAYER_HEADERS</code></td><td align="left">9</td></tr>
+<tr><td><a href="mem.html#layer-contents">Layer Contents</a></td><td>Contents for the 3 background layers</td><td align="left">56405</td><td align="left">DC55</td><td><code>LAYER_CONTENTS</code></td><td align="left">7920</td></tr>
+<tr><td><a href="mem.html#code-bank-id">Code Bank ID</a></td><td>Controls which code bank is loaded at <a href="mem.html#banked-code">Banked Code</a></td><td align="left">64325</td><td align="left">FB45</td><td><code>CODE_BANK_ID</code></td><td align="left">1</td></tr>
+<tr><td><a href="mem.html#ram-bank-id">RAM Bank ID</a></td><td>Controls which RAM bank is loaded at <a href="mem.html#banked-ram">Banked RAM</a></td><td align="left">64326</td><td align="left">FB46</td><td><code>RAM_BANK_ID</code></td><td align="left">1</td></tr>
+<tr><td><a href="mem.html#atlas-1-bank-id">Atlas 1 Bank ID</a></td><td>Controls which atlas bank is loaded at <a href="mem.html#atlas-1">Atlas 1</a></td><td align="left">64327</td><td align="left">FB47</td><td><code>ATLAS1_BANK_ID</code></td><td align="left">1</td></tr>
+<tr><td><a href="mem.html#atlas-2-bank-id">Atlas 2 Bank ID</a></td><td>Controls which atlas bank is loaded at <a href="mem.html#atlas-2">Atlas 2</a></td><td align="left">64328</td><td align="left">FB48</td><td><code>ATLAS2_BANK_ID</code></td><td align="left">1</td></tr>
+<tr><td><a href="mem.html#sp">SP</a></td><td>Stack Pointer</td><td align="left">64329</td><td align="left">FB49</td><td><code>SP</code></td><td align="left">2</td></tr>
+<tr><td><a href="mem.html#fp">FP</a></td><td>Frame Pointer</td><td align="left">64331</td><td align="left">FB4B</td><td><code>FP</code></td><td align="left">2</td></tr>
+<tr><td><a href="mem.html#timer-control">Timer Control</a></td><td>Control bytes for timers</td><td align="left">64333</td><td align="left">FB4D</td><td><code>TIMER_CONTROL</code></td><td align="left">2</td></tr>
+<tr><td><a href="mem.html#timer-1">Timer 1</a></td><td>Value of timer 1</td><td align="left">64335</td><td align="left">FB4F</td><td><code>TIMER1</code></td><td align="left">1</td></tr>
+<tr><td><a href="mem.html#timer-2">Timer 2</a></td><td>Value of timer 2</td><td align="left">64336</td><td align="left">FB50</td><td><code>TIMER2</code></td><td align="left">1</td></tr>
+<tr><td><a href="mem.html#timer-3">Timer 3</a></td><td>Value of timer 3</td><td align="left">64337</td><td align="left">FB51</td><td><code>TIMER3</code></td><td align="left">1</td></tr>
+<tr><td><a href="mem.html#timer-4">Timer 4</a></td><td>Value of timer 4</td><td align="left">64338</td><td align="left">FB52</td><td><code>TIMER4</code></td><td align="left">1</td></tr>
+<tr><td><a href="mem.html#vline">VLine</a></td><td>Next line to be drawn</td><td align="left">64349</td><td align="left">FB5D</td><td><code>VLINE</code></td><td align="left">1</td></tr>
+<tr><td><a href="mem.html#controller-type">Controller Type</a></td><td>Active controller type ID</td><td align="left">64350</td><td align="left">FB5E</td><td><code>INPUT_TYPE</code></td><td align="left">1</td></tr>
+<tr><td><a href="mem.html#controller-graphics">Controller Graphics</a></td><td>Graphics for controller buttons</td><td align="left">64351</td><td align="left">FB5F</td><td><code>INPUT_GRAPHICS</code></td><td align="left">88</td></tr>
+<tr><td><a href="mem.html#controller-palette">Controller Palette</a></td><td>Palette used when drawing controller buttons</td><td align="left">64439</td><td align="left">FBB7</td><td><code>INPUT_PALETTE</code></td><td align="left">12</td></tr>
+<tr><td><a href="mem.html#controller-sprite-table">Controller Sprite Table</a></td><td>Sprite table for controller buttons</td><td align="left">64451</td><td align="left">FBC3</td><td><code>INPUT_TABLE</code></td><td align="left">24</td></tr>
+<tr><td><a href="mem.html#interrupt-control">Interrupt Control</a></td><td>Control byte for interrupts</td><td align="left">64475</td><td align="left">FBDB</td><td><code>IRQ_CONTROL</code></td><td align="left">1</td></tr>
+<tr><td><a href="mem.html#save-control">Save Control</a></td><td>Control byte for save data</td><td align="left">64476</td><td align="left">FBDC</td><td><code>SAVE_CONTROL</code></td><td align="left">1</td></tr>
+<tr><td><a href="mem.html#date-time">Date time</a></td><td>Date time in bytes</td><td align="left">64477</td><td align="left">FBDD</td><td><code>DATETIME</code></td><td align="left">6</td></tr>
+<tr><td><a href="mem.html#rand">Rand</a></td><td>Regularly changing random value</td><td align="left">64483</td><td align="left">FBE3</td><td><code>RAND</code></td><td align="left">1</td></tr>
+<tr><td><a href="mem.html#stack">Stack</a></td><td>The Stack</td><td align="left">64635</td><td align="left">FC7B</td><td><code>STACK</code></td><td align="left">900</td></tr>
+</tbody></table>
+<h2 id="code"><a class="header" href="#code">Code</a></h2>
+<p><code>0</code> <code>x0</code> <code>MAIN_CODE</code> 8700 bytes</p>
+<h2 id="banked-code"><a class="header" href="#banked-code">Banked Code</a></h2>
+<p><code>8700</code> <code>x21FC</code> <code>BANK_CODE</code> 8700 bytes</p>
+<h2 id="ram"><a class="header" href="#ram">RAM</a></h2>
+<p><code>17400</code> <code>x43F8</code> <code>RAM</code> 8700 bytes</p>
+<h2 id="banked-ram"><a class="header" href="#banked-ram">Banked RAM</a></h2>
+<p><code>26100</code> <code>x65F4</code> <code>BANK_RAM</code> 8700 bytes</p>
+<h2 id="input"><a class="header" href="#input">Input</a></h2>
+<p><code>$34800</code> <code>$x87F0</code> <code>INPUT</code> <code>2 bytes</code>
+<code>$34800</code> <code>$x87F0</code> <code>DIR_INPUT</code> <code>1 byte</code>
+<code>$34801</code> <code>$x87F1</code> <code>ACTION_INPUT</code> <code>1 byte</code></p>
+<p>Bits are set to true when the button is pressed, and cleared when it's released.
+This has to be polled, to get an interrupt set the input bit in <a href="mem.html#interrupt-control">Interrupt control</a> and code at <a href="mem.html#interrupt-addresses">Interrupts</a>.</p>
+<h4 id="byte-0"><a class="header" href="#byte-0">Byte 0</a></h4>
+<table><thead><tr><th>Bit</th><th>Name</th></tr></thead><tbody>
+<tr><td>7</td><td>Up</td></tr>
+<tr><td>6</td><td>Down</td></tr>
+<tr><td>5</td><td>Left</td></tr>
+<tr><td>4</td><td>Right</td></tr>
+</tbody></table>
+<h4 id="byte-1"><a class="header" href="#byte-1">Byte 1</a></h4>
+<table><thead><tr><th>Bit</th><th>Name</th></tr></thead><tbody>
+<tr><td>7</td><td>A</td></tr>
+<tr><td>6</td><td>B</td></tr>
+<tr><td>5</td><td>START</td></tr>
+<tr><td>4</td><td>L</td></tr>
+<tr><td>3</td><td>R</td></tr>
+<tr><td>2</td><td>X</td></tr>
+<tr><td>1</td><td>Y</td></tr>
+</tbody></table>
+<h2 id="sound"><a class="header" href="#sound">Sound</a></h2>
+<p><code>34802</code> <code>x87F2</code> <code>SOUND</code> 30 bytes</p>
+<h2 id="save-bank-id"><a class="header" href="#save-bank-id">Save Bank ID</a></h2>
+<p><code>34832</code> <code>x8810</code> <code>SAVE_BANK_ID</code> 1 byte</p>
+<p>Controls which save data bank is loaded at <a href="mem.html#save-bank">Save Bank</a>. Changing this value immediately loads the data.</p>
+<p>Valid values are 0-15.</p>
+<h2 id="save-bank"><a class="header" href="#save-bank">Save Bank</a></h2>
+<p><code>34833</code> <code>x8811</code> <code>SAVE_BANK</code> 4096 bytes</p>
+<p>Save data for the game. Games can use all bytes in all banks however they want.</p>
+<p>See <a href="mem.html#save-control">Save Control</a></p>
+<h2 id="atlas-1"><a class="header" href="#atlas-1">Atlas 1</a></h2>
+<p><code>38929</code> <code>x9811</code> <code>ATLAS1</code> 8000 bytes</p>
+<h2 id="atlas-2"><a class="header" href="#atlas-2">Atlas 2</a></h2>
+<p><code>46929</code> <code>xB751</code> <code>ATLAS2</code> 8000 bytes</p>
+<p>Background tiles must come from this atlas.</p>
+<h2 id="palettes"><a class="header" href="#palettes">Palettes</a></h2>
+<p><code>54929</code> <code>xD691</code> <code>PALETTES</code> 192 bytes</p>
+<p><code>54929</code> <code>xD691</code> 48 bytes Palette 1
+<code>54989</code> <code>xD6CD</code> 48 bytes Palette 2
+<code>55049</code> <code>xD709</code> 48 bytes Palette 3
+<code>55049</code> <code>xD709</code> 48 bytes Palette 3</p>
+<p>Each palette is made of 16 3 byte RGB colors.</p>
+<h2 id="sprite-table"><a class="header" href="#sprite-table">Sprite Table</a></h2>
+<p><code>55121</code> <code>xD751</code> <code>SPRITE_TABLE</code> 1275 bytes</p>
+<p>255 </p>
+<h2 id="layer-headers"><a class="header" href="#layer-headers">Layer Headers</a></h2>
+<p><code>56396</code> <code>xDC4C</code> <code>LAYER_HEADERS</code> 9 bytes</p>
+<h2 id="layer-contents"><a class="header" href="#layer-contents">Layer Contents</a></h2>
+<p><code>56405</code> <code>xDC55</code> <code>LAYER_CONTENTS</code> 7920 bytes</p>
+<h2 id="code-bank-id"><a class="header" href="#code-bank-id">Code Bank ID</a></h2>
+<p><code>64325</code> <code>xFB45</code> <code>CODE_BANK_ID</code> 1 byte</p>
+<p>Controls which code bank is loaded at <a href="mem.html#banked-code">Banked code</a>. Changing this value immediately loads the code.</p>
+<p>Valid values are the number of code banks included in the game.</p>
+<h2 id="ram-bank-id"><a class="header" href="#ram-bank-id">RAM Bank ID</a></h2>
+<p><code>64326</code> <code>xFB46</code> <code>RAM_BANK_ID</code> 1 byte</p>
+<p>Controls which RAM bank is loaded at <a href="mem.html#banked-ram">Banked RAM</a>. Changing this value immediately loads the data.</p>
+<p>Valid values are the number of rAM banks requested by the game.</p>
+<h2 id="atlas-1-bank-id"><a class="header" href="#atlas-1-bank-id">Atlas 1 Bank ID</a></h2>
+<p><code>64327</code> <code>xFB47</code> <code>ATLAS1_BANK_ID</code> 1 byte</p>
+<p>Controls which atlas bank is loaded at <a href="mem.html#atlas-1">Atlas 1</a>. Changing this value immediately loads the data.</p>
+<p>Valid values are the number of atlas banks included in the game.</p>
+<h2 id="atlas-2-bank-id"><a class="header" href="#atlas-2-bank-id">Atlas 2 Bank ID</a></h2>
+<p><code>64328</code> <code>xFB48</code> <code>ATLAS2_BANK_ID</code> 1 byte</p>
+<p>Controls which atlas bank is loaded at <a href="mem.html#atlas-2">Atlas 2</a>. Changing this value immediately loads the data.</p>
+<p>Valid values are the number of atlas banks included in the game.</p>
+<h2 id="sp"><a class="header" href="#sp">SP</a></h2>
+<p><code>64329</code> <code>xFB49</code> <code>SP</code> 2 bytes</p>
+<p>Points to the end of the <a href="mem.html#stack">Stack</a></p>
+<h2 id="fp"><a class="header" href="#fp">FP</a></h2>
+<p><code>64331</code> <code>xFB4B</code> <code>FP</code> 2 bytes</p>
+<p>Points to the start of the current in the <a href="mem.html#stack">Stack</a></p>
+<h2 id="timer-control"><a class="header" href="#timer-control">Timer Control</a></h2>
+<p><code>64333</code> <code>xFB4D</code> <code>TIMER_CONTROL</code> 2 bytes</p>
+<h2 id="timer-1"><a class="header" href="#timer-1">Timer 1</a></h2>
+<p><code>64335</code> <code>xFB4F</code> <code>TIMER1</code> 1 byte</p>
+<h2 id="timer-2"><a class="header" href="#timer-2">Timer 2</a></h2>
+<p><code>64336</code> <code>xFB50</code> <code>TIMER2</code> 1 byte</p>
+<h2 id="timer-3"><a class="header" href="#timer-3">Timer 3</a></h2>
+<p><code>64337</code> <code>xFB51</code> <code>TIMER3</code> 1 byte</p>
+<h2 id="timer-4"><a class="header" href="#timer-4">Timer 4</a></h2>
+<p><code>64338</code> <code>xFB52</code> <code>TIMER4</code> 1 byte</p>
+<h2 id="vline"><a class="header" href="#vline">VLine</a></h2>
+<p><code>64349</code> <code>xFB5D</code> <code>VLINE</code> 1 byte</p>
+<p>Line (0-159) on the screen that be drawn next. It is automatically updated by the host before it calls <code>IRQ_LINE_DRAW</code>.</p>
+<h2 id="controller-type"><a class="header" href="#controller-type">Controller Type</a></h2>
+<p><code>64350</code> <code>xFB5E</code> <code>INPUT_TYPE</code> 1 byte</p>
+<p>ID of current active controller type.</p>
+<p>This is set automatically by the host. Updating it will cause the controller graphics to load.</p>
+<table><thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead><tbody>
+<tr><td>Unknown</td><td>0</td><td>Default value, graphics should match Maikor buttons</td></tr>
+<tr><td>XBOX</td><td>1</td><td>XBox controller</td></tr>
+<tr><td>Playstation</td><td>2</td><td>Playstation 4/5 controller</td></tr>
+<tr><td>Switch</td><td>3</td><td>Switch Pro controller</td></tr>
+<tr><td>Screen</td><td>4</td><td>Touch screen controls</td></tr>
+<tr><td>Keyboard 1</td><td>5</td><td>WASD+IOKL keys</td></tr>
+<tr><td>Keyboard 2</td><td>6</td><td>UDLR+QWAS keys</td></tr>
+<tr><td>Keyboard 3</td><td>7</td><td>?+? keys</td></tr>
+<tr><td>Keyboard 4</td><td>8</td><td>?+? keys</td></tr>
+</tbody></table>
+<h2 id="controller-graphics"><a class="header" href="#controller-graphics">Controller Graphics</a></h2>
+<p><code>64351</code> <code>xFB5F</code> <code>INPUT_GRAPHICS</code> 88 bytes</p>
+<h2 id="controller-palette"><a class="header" href="#controller-palette">Controller Palette</a></h2>
+<p><code>64439</code> <code>xFBB7</code> <code>INPUT_PALETTE</code> 12 bytes</p>
+<h2 id="controller-sprite-table"><a class="header" href="#controller-sprite-table">Controller Sprite Table</a></h2>
+<p><code>64451</code> <code>xFBC3</code> <code>INPUT_TABLE</code> 24 bytes</p>
+<h2 id="interrupt-control"><a class="header" href="#interrupt-control">Interrupt Control</a></h2>
+<p><code>64475</code> <code>xFBDB</code> <code>IRQ_CONTROL</code> 1 byte</p>
+<p>Control byte for interrupts, if a bit is set then that interrupt can be called.</p>
+<table><thead><tr><th>Name</th><th>Bit</th><th>Default</th><th>Description</th></tr></thead><tbody>
+<tr><td>Input</td><td>0</td><td>1</td><td>Call <code>IRQ_INPUT</code> when <a href="mem.html#input">Input</a> changes</td></tr>
+<tr><td>Line Drawn</td><td>1</td><td>0</td><td>Call <code>IRQ_LINE_DRAW</code> when a line has been drawn to the screen</td></tr>
+<tr><td>Screen Drawn</td><td>2</td><td>0</td><td>Call <code>IRQ_SCREEN_DRAW</code> when last last has been drawn to the screen</td></tr>
+<tr><td>Timer</td><td>3</td><td>0</td><td>Call <code>IRQ_TIMER</code> when any timer overflows</td></tr>
+<tr><td>Controller Changed</td><td>4</td><td>0</td><td>Call <code>IRQ_CONTROLLER</code> when the controller type changes</td></tr>
+</tbody></table>
+<h2 id="save-control"><a class="header" href="#save-control">Save Control</a></h2>
+<p><code>64476</code> <code>xFBDC</code> <code>SAVE_CONTROL</code> 1 byte</p>
+<table><thead><tr><th>Name</th><th>Bit</th><th>Default</th><th>Description</th></tr></thead><tbody>
+<tr><td>Auto save</td><td>4</td><td>0</td><td>When set, any value written to <a href="mem.html#save-bank">Save Bank</a> is also written to disk</td></tr>
+<tr><td>Write</td><td>0</td><td>0</td><td>When set, the host will write <a href="mem.html#save-bank">Save Bank</a> to disk and then clear the bit. If it remains set then the save fail, and may be retried (although most likely the issue will be permissions, etc and retrying won't help)</td></tr>
+</tbody></table>
+<h2 id="date-time"><a class="header" href="#date-time">Date time</a></h2>
+<p><code>64477</code> <code>xFBDD</code> <code>DATETIME</code> 6 bytes</p>
+<p>This updates during each second and so may be up to 1 second off.</p>
+<table><thead><tr><th>Name</th><th>Byte</th><th>Range</th><th>Description</th></tr></thead><tbody>
+<tr><td>Year</td><td>0</td><td>0-255</td><td>Covers years 2000-2255</td></tr>
+<tr><td>Month</td><td>1</td><td>1-12</td><td>January = 1, December = 12</td></tr>
+<tr><td>Day</td><td>2</td><td>1-31</td><td>Day of month</td></tr>
+<tr><td>Hour</td><td>3</td><td>0-23</td><td>Hour of day</td></tr>
+<tr><td>Minute</td><td>4</td><td>0-59</td><td>Minute of hour</td></tr>
+<tr><td>Second</td><td>5</td><td>0-59</td><td>Second of minute</td></tr>
+</tbody></table>
+<h2 id="rand"><a class="header" href="#rand">Rand</a></h2>
+<p><code>64483</code> <code>xFBE3</code> <code>RAND</code> 1 byte</p>
+<p>This byte contains a random value that updates regularly. It should not be used for secure/cryptographic purposes.</p>
+<h2 id="stack"><a class="header" href="#stack">Stack</a></h2>
+<p><code>64635</code> <code>xFC71</code> <code>STACK</code> 900 bytes</p>
+<p>The stack grows upwards from xFC71 to xFFFF.</p>
+<h2 id="reserved"><a class="header" href="#reserved">Reserved</a></h2>
+<p><code>64327</code> <code>xFB47</code> <code>-</code> 10 bytes
+<code>64465</code> <code>xFBE4</code> <code>-</code> 151 bytes</p>
+<p>Do not change or rely on values in this space.</p>
 
                     </main>
 

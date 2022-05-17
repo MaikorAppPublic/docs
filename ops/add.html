@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="../ops.html"><strong aria-hidden="true">1.</strong> Instructions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../ops/inc.html"><strong aria-hidden="true">1.1.</strong> INC</a></li><li class="chapter-item expanded "><a href="../ops/swap.html"><strong aria-hidden="true">1.2.</strong> SWAP</a></li><li class="chapter-item expanded "><a href="../ops/add.html" class="active"><strong aria-hidden="true">1.3.</strong> ADD</a></li></ol></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="../ops.html"><strong aria-hidden="true">1.</strong> Instructions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../ops/inc.html"><strong aria-hidden="true">1.1.</strong> INC</a></li><li class="chapter-item expanded "><a href="../ops/dec.html"><strong aria-hidden="true">1.2.</strong> DEC</a></li><li class="chapter-item expanded "><a href="../ops/swap.html"><strong aria-hidden="true">1.3.</strong> SWAP</a></li><li class="chapter-item expanded "><a href="../ops/add.html" class="active"><strong aria-hidden="true">1.4.</strong> ADD</a></li></ol></li><li class="chapter-item expanded "><a href="../bytes.html"><strong aria-hidden="true">2.</strong> Bytes</a></li><li class="chapter-item expanded "><a href="../mem.html"><strong aria-hidden="true">3.</strong> Memory</a></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -152,34 +152,34 @@
 ADD.W (E, W) (E, E) (E, I) (I, E) (I, I) (A, I) (A, E) (A, A) (A, W) (I, A) (E, A) (I, W)
 </code></pre>
 <h4 id="incb"><a class="header" href="#incb">INC.B</a></h4>
-<table><thead><tr><th>Operands</th><th>Cycles</th></tr></thead><tbody>
-<tr><td>Register, Byte</td><td>2</td></tr>
-<tr><td>Register, Register</td><td>3</td></tr>
-<tr><td>Register, Indirect</td><td>5</td></tr>
-<tr><td>Indirect, Register</td><td>7</td></tr>
-<tr><td>Indirect, Indirect</td><td>9</td></tr>
-<tr><td>Address, Indirect</td><td>5</td></tr>
-<tr><td>Address, Register</td><td>3</td></tr>
-<tr><td>Address, Address</td><td>3</td></tr>
-<tr><td>Address, Byte</td><td>2</td></tr>
-<tr><td>Indirect, Address</td><td>7</td></tr>
-<tr><td>Indirect, Byte</td><td>6</td></tr>
-<tr><td>Register, Address</td><td>3</td></tr>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th></tr></thead><tbody>
+<tr><td>22</td><td>Register, Byte</td><td>2</td></tr>
+<tr><td>20</td><td>Register, Register</td><td>3</td></tr>
+<tr><td>20</td><td>Register, Indirect</td><td>5</td></tr>
+<tr><td>20</td><td>Indirect, Register</td><td>7</td></tr>
+<tr><td>20</td><td>Indirect, Indirect</td><td>9</td></tr>
+<tr><td>26</td><td>Address, Indirect</td><td>5</td></tr>
+<tr><td>26</td><td>Address, Register</td><td>3</td></tr>
+<tr><td>2A</td><td>Address, Address</td><td>3</td></tr>
+<tr><td>28</td><td>Address, Byte</td><td>2</td></tr>
+<tr><td>24</td><td>Indirect, Address</td><td>7</td></tr>
+<tr><td>22</td><td>Indirect, Byte</td><td>6</td></tr>
+<tr><td>24</td><td>Register, Address</td><td>3</td></tr>
 </tbody></table>
 <h4 id="incw"><a class="header" href="#incw">INC.W</a></h4>
-<table><thead><tr><th>Operands</th><th>Cycles</th></tr></thead><tbody>
-<tr><td>Ext. Register, Word</td><td>4</td></tr>
-<tr><td>Ext. Register, Ext. Register</td><td>6</td></tr>
-<tr><td>Ext. Register, Indirect</td><td>8</td></tr>
-<tr><td>Indirect, Ext. Register</td><td>10</td></tr>
-<tr><td>Indirect, Indirect</td><td>12</td></tr>
-<tr><td>Address, Indirect</td><td>8</td></tr>
-<tr><td>Address, Ext. Register</td><td>6</td></tr>
-<tr><td>Address, Address</td><td>6</td></tr>
-<tr><td>Address, Word</td><td>4</td></tr>
-<tr><td>Indirect, Address</td><td>10</td></tr>
-<tr><td>Indirect, Word</td><td>8</td></tr>
-<tr><td>Ext. Register, Address</td><td>6</td></tr>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th></tr></thead><tbody>
+<tr><td>23</td><td>Ext. Register, Word</td><td>4</td></tr>
+<tr><td>21</td><td>Ext. Register, Ext. Register</td><td>6</td></tr>
+<tr><td>21</td><td>Ext. Register, Indirect</td><td>8</td></tr>
+<tr><td>21</td><td>Indirect, Ext. Register</td><td>10</td></tr>
+<tr><td>21</td><td>Indirect, Indirect</td><td>12</td></tr>
+<tr><td>27</td><td>Address, Indirect</td><td>8</td></tr>
+<tr><td>27</td><td>Address, Ext. Register</td><td>6</td></tr>
+<tr><td>2B</td><td>Address, Address</td><td>6</td></tr>
+<tr><td>29</td><td>Address, Word</td><td>4</td></tr>
+<tr><td>25</td><td>Indirect, Address</td><td>10</td></tr>
+<tr><td>23</td><td>Indirect, Word</td><td>8</td></tr>
+<tr><td>25</td><td>Ext. Register, Address</td><td>6</td></tr>
 </tbody></table>
 <h2 id="flags"><a class="header" href="#flags">Flags</a></h2>
 <table><thead><tr><th>Flag</th><th>Update condition</th></tr></thead><tbody>
@@ -195,7 +195,8 @@ ADD.W (E, W) (E, E) (E, I) (I, E) (I, I) (A, I) (A, E) (A, A) (A, W) (I, A) (E, 
 <pre><code>result = lhs + rhs
 </code></pre>
 <h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
-<pre><code>ADD.B AL 5    # Store result of AL + 5 in AL
+<pre><code>ADD.B AL 5       # Store result of AL + 5 in AL
+ADD.W (BX) $500  # Store the result of adding the values at the address in BX and at 500 at the address stored in BX 
 </code></pre>
 
                     </main>
@@ -206,6 +207,9 @@ ADD.W (E, W) (E, E) (E, I) (I, E) (I, I) (A, I) (A, E) (A, A) (A, W) (I, A) (E, 
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
+                                                    <a rel="next" href="../bytes.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         
                         <div style="clear: both"></div>
                     </nav>
@@ -217,6 +221,9 @@ ADD.W (E, W) (E, E) (E, I) (I, E) (I, I) (A, I) (A, E) (A, A) (A, W) (I, A) (E, 
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
+                                    <a rel="next" href="../bytes.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                             </nav>
 
         </div>
