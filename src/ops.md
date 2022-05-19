@@ -43,12 +43,26 @@ CPY.B AH AL-
 
 PPID works on any `R`, `E`, or `I` args in any instruction. Increments and decrements are wrapping, and the flags are set based on the result of an operation before the post inc/dec changes.
 
+## Cycles
+
+Each instruction has a base time cost shown below and on the instruction pages. Using index addressing adds the following cost:
+
+| Variant | Cost | Example |
+|----|----|----|
+|with reg|1|`(ax+al)`|
+|with ext reg|2|`(ax+bx)`|
+|with num|1|`(ax+10)`|
 
 ## List
 
-| Name                  | Size variants | Args                                                                                                                                                                               | Cycles |
+| Name                  | Size variants | Args                                                                                                                                                                               | Base cycles |
 |-----------------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------|
 | [INC](./ops/inc.md)   | `B`, `W`      | `(R)`, `(E)`, `(I)`, `(A)`                                                                                                                                                         | 2-8    |
 | [DEC](./ops/dec.md)   | `B`, `W`      | `(R)`, `(E)`, `(I)`, `(A)`                                                                                                                                                         | 2-8    |
 | [SWAP](./ops/swap.md) | `B`, `W`      | `(R,R)`, `(R,I)`, `(I,R)`, `(I,I)`, `(E,E)`, `(E,I)`, `(I,E)`                                                                                                                      | 1-16   |
 | [ADD](./ops/add.md)   | `B`, `W`      | `(R,B)`, `(R,R)`, `(R,I)`, `(I,R)`, `(I,I)`, `(R,A)`, `(I,A)`, `(A,I)`, `(A,R)`, `(A,B)`, `(E,W)`, `(E,E)`, `(E,I)`, `(I,E)`, `(A,E)`, `(A,A)`, `(A,W)`, `(E,A)`, `(I,B)`, `(I,W)` | 2-12   |
+| [SUB](./ops/sub.md)   | `B`, `W`      | `(R,B)`, `(R,R)`, `(R,I)`, `(I,R)`, `(I,I)`, `(R,A)`, `(I,A)`, `(A,I)`, `(A,R)`, `(A,B)`, `(E,W)`, `(E,E)`, `(E,I)`, `(I,E)`, `(A,E)`, `(A,A)`, `(A,W)`, `(E,A)`, `(I,B)`, `(I,W)` | 2-12   |
+| [MUL](./ops/mul.md)   | `B`, `W`      | `(R,B)`, `(R,R)`, `(R,I)`, `(I,R)`, `(I,I)`, `(R,A)`, `(I,A)`, `(A,I)`, `(A,R)`, `(A,B)`, `(E,W)`, `(E,E)`, `(E,I)`, `(I,E)`, `(A,E)`, `(A,A)`, `(A,W)`, `(E,A)`, `(I,B)`, `(I,W)` | 2-12   |
+| [DIV](./ops/div.md)   | `B`, `W`      | `(R,B)`, `(R,R)`, `(R,I)`, `(I,R)`, `(I,I)`, `(R,A)`, `(I,A)`, `(A,I)`, `(A,R)`, `(A,B)`, `(E,W)`, `(E,E)`, `(E,I)`, `(I,E)`, `(A,E)`, `(A,A)`, `(A,W)`, `(E,A)`, `(I,B)`, `(I,W)` | 2-12   |
+| [MULS](./ops/muls.md)   | `B`, `W`      | `(R,B)`, `(R,R)`, `(R,I)`, `(I,R)`, `(I,I)`, `(R,A)`, `(I,A)`, `(A,I)`, `(A,R)`, `(A,B)`, `(E,W)`, `(E,E)`, `(E,I)`, `(I,E)`, `(A,E)`, `(A,A)`, `(A,W)`, `(E,A)`, `(I,B)`, `(I,W)` | 2-12   |
+| [DIVS](./ops/divs.md)   | `B`, `W`      | `(R,B)`, `(R,R)`, `(R,I)`, `(I,R)`, `(I,I)`, `(R,A)`, `(I,A)`, `(A,I)`, `(A,R)`, `(A,B)`, `(E,W)`, `(E,E)`, `(E,I)`, `(I,E)`, `(A,E)`, `(A,A)`, `(A,W)`, `(E,A)`, `(I,B)`, `(I,W)` | 2-12   |

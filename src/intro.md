@@ -31,6 +31,8 @@
 
 [Instructions](./ops.md)
 
+[Maikor ASM Basics](./basics.md)
+
 [Bytes](./bytes.md)
 
 [Memory](./mem.md)

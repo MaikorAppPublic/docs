@@ -4,7 +4,7 @@ Add values from destination and source together and store result in destination.
 
 ## Format 
 
-`ADD dst src`
+`ADD dst, src`
 
 ## Variations
 
@@ -68,6 +68,6 @@ result = lhs + rhs
 ## Examples
 
 ```
-ADD.B AL 5       # Store result of AL + 5 in AL
-ADD.W (BX) $500  # Store the result of adding the values at the address in BX and at 500 at the address stored in BX 
+ADD.B AL, 5       # Store result of AL + 5 in AL
+ADD.W (BX), $500  # Store the result of adding the values at the address in BX and at 500 at the address stored in BX 
 ```
