@@ -4,7 +4,7 @@ Swap values in registers or values at memory addresses in pointers.
 
 ## Format 
 
-`SWAP lhs rhs`
+`SWAP lhs, rhs`
 
 ## Variations
 
@@ -46,7 +46,7 @@ rhs = temp
 ## Examples
 
 ```
-SWAP.B AL AH    # Swap values in AL and AH
-SWAP.W AX BX    # Swap values in AX and BX
-SWAP.B (AX) DH  # Swap values in DH and at memory address in AX
+SWAP.B AL, AH    # Swap values in AL and AH
+SWAP.W AX, BX    # Swap values in AX and BX
+SWAP.B (AX), DH  # Swap values in DH and at memory address in AX
 ```
