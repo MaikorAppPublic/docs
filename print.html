@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="ops.html"><strong aria-hidden="true">1.</strong> Instructions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ops/inc.html"><strong aria-hidden="true">1.1.</strong> INC</a></li><li class="chapter-item expanded "><a href="ops/dec.html"><strong aria-hidden="true">1.2.</strong> DEC</a></li><li class="chapter-item expanded "><a href="ops/swap.html"><strong aria-hidden="true">1.3.</strong> SWAP</a></li><li class="chapter-item expanded "><a href="ops/add.html"><strong aria-hidden="true">1.4.</strong> ADD</a></li></ol></li><li class="chapter-item expanded "><a href="bytes.html"><strong aria-hidden="true">2.</strong> Bytes</a></li><li class="chapter-item expanded "><a href="mem.html"><strong aria-hidden="true">3.</strong> Memory</a></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="ops.html"><strong aria-hidden="true">1.</strong> Instructions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ops/inc.html"><strong aria-hidden="true">1.1.</strong> INC</a></li><li class="chapter-item expanded "><a href="ops/dec.html"><strong aria-hidden="true">1.2.</strong> DEC</a></li><li class="chapter-item expanded "><a href="ops/swap.html"><strong aria-hidden="true">1.3.</strong> SWAP</a></li><li class="chapter-item expanded "><a href="ops/add.html"><strong aria-hidden="true">1.4.</strong> ADD</a></li></ol></li><li class="chapter-item expanded "><a href="basics.html"><strong aria-hidden="true">2.</strong> Maikor ASM Basics</a></li><li class="chapter-item expanded "><a href="bytes.html"><strong aria-hidden="true">3.</strong> Bytes</a></li><li class="chapter-item expanded "><a href="mem.html"><strong aria-hidden="true">4.</strong> Memory</a></li><li class="chapter-item expanded "><a href="reg_values.html"><strong aria-hidden="true">5.</strong> Register values</a></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -171,6 +171,7 @@
 </ul>
 <h2 id="main-pages"><a class="header" href="#main-pages">Main pages</a></h2>
 <p><a href="./ops.html">Instructions</a></p>
+<p><a href="./basics.html">Maikor ASM Basics</a></p>
 <p><a href="./bytes.html">Bytes</a></p>
 <p><a href="./mem.html">Memory</a></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="instructions"><a class="header" href="#instructions">Instructions</a></h1>
@@ -214,12 +215,24 @@ CPY.B AH AL-
 <li><code>AL</code> is set to 4</li>
 </ul>
 <p>PPID works on any <code>R</code>, <code>E</code>, or <code>I</code> args in any instruction. Increments and decrements are wrapping, and the flags are set based on the result of an operation before the post inc/dec changes.</p>
+<h2 id="cycles"><a class="header" href="#cycles">Cycles</a></h2>
+<p>Each instruction has a base time cost shown below and on the instruction pages. Using index addressing adds the following cost:</p>
+<table><thead><tr><th>Variant</th><th>Cost</th><th>Example</th></tr></thead><tbody>
+<tr><td>with reg</td><td>1</td><td><code>(ax+al)</code></td></tr>
+<tr><td>with ext reg</td><td>2</td><td><code>(ax+bx)</code></td></tr>
+<tr><td>with num</td><td>1</td><td><code>(ax+10)</code></td></tr>
+</tbody></table>
 <h2 id="list"><a class="header" href="#list">List</a></h2>
-<table><thead><tr><th>Name</th><th>Size variants</th><th>Args</th><th>Cycles</th></tr></thead><tbody>
+<table><thead><tr><th>Name</th><th>Size variants</th><th>Args</th><th>Base cycles</th></tr></thead><tbody>
 <tr><td><a href="./ops/inc.html">INC</a></td><td><code>B</code>, <code>W</code></td><td><code>(R)</code>, <code>(E)</code>, <code>(I)</code>, <code>(A)</code></td><td>2-8</td></tr>
 <tr><td><a href="./ops/dec.html">DEC</a></td><td><code>B</code>, <code>W</code></td><td><code>(R)</code>, <code>(E)</code>, <code>(I)</code>, <code>(A)</code></td><td>2-8</td></tr>
 <tr><td><a href="./ops/swap.html">SWAP</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code></td><td>1-16</td></tr>
 <tr><td><a href="./ops/add.html">ADD</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
+<tr><td><a href="./ops/sub.html">SUB</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
+<tr><td><a href="./ops/mul.html">MUL</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
+<tr><td><a href="./ops/div.html">DIV</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
+<tr><td><a href="./ops/muls.html">MULS</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
+<tr><td><a href="./ops/divs.html">DIVS</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
 </tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="inc"><a class="header" href="#inc">INC</a></h1>
 <p>Increases value in register or value at memory address in pointer by 1.</p>
@@ -288,7 +301,7 @@ DEC.W $6700   # Decrease value at [6700,6701] by 1
 <div style="break-before: page; page-break-before: always;"></div><h1 id="swap"><a class="header" href="#swap">SWAP</a></h1>
 <p>Swap values in registers or values at memory addresses in pointers.</p>
 <h2 id="format-2"><a class="header" href="#format-2">Format</a></h2>
-<p><code>SWAP lhs rhs</code></p>
+<p><code>SWAP lhs, rhs</code></p>
 <h2 id="variations-2"><a class="header" href="#variations-2">Variations</a></h2>
 <pre><code>SWAP.B (RR) (RI) (IR) (II)
 SWAP.W (EE) (EI) (IE) (II)
@@ -315,14 +328,14 @@ lhs = rhs
 rhs = temp
 </code></pre>
 <h2 id="examples-2"><a class="header" href="#examples-2">Examples</a></h2>
-<pre><code>SWAP.B AL AH    # Swap values in AL and AH
-SWAP.W AX BX    # Swap values in AX and BX
-SWAP.B (AX) DH  # Swap values in DH and at memory address in AX
+<pre><code>SWAP.B AL, AH    # Swap values in AL and AH
+SWAP.W AX, BX    # Swap values in AX and BX
+SWAP.B (AX), DH  # Swap values in DH and at memory address in AX
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="add"><a class="header" href="#add">ADD</a></h1>
 <p>Add values from destination and source together and store result in destination.</p>
 <h2 id="format-3"><a class="header" href="#format-3">Format</a></h2>
-<p><code>ADD dst src</code></p>
+<p><code>ADD dst, src</code></p>
 <h2 id="variations-3"><a class="header" href="#variations-3">Variations</a></h2>
 <pre><code>ADD.B (R, B) (R, R) (R, I) (I, R) (I, I) (A, I) (A, R) (A, A) (A, B) (I, A) (R, A) (I, B)
 ADD.W (E, W) (E, E) (E, I) (I, E) (I, I) (A, I) (A, E) (A, A) (A, W) (I, A) (E, A) (I, W)
@@ -371,9 +384,27 @@ ADD.W (E, W) (E, E) (E, I) (I, E) (I, I) (A, I) (A, E) (A, A) (A, W) (I, A) (E, 
 <pre><code>result = lhs + rhs
 </code></pre>
 <h2 id="examples-3"><a class="header" href="#examples-3">Examples</a></h2>
-<pre><code>ADD.B AL 5       # Store result of AL + 5 in AL
-ADD.W (BX) $500  # Store the result of adding the values at the address in BX and at 500 at the address stored in BX 
+<pre><code>ADD.B AL, 5       # Store result of AL + 5 in AL
+ADD.W (BX), $500  # Store the result of adding the values at the address in BX and at 500 at the address stored in BX 
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="maikor-asm-basics"><a class="header" href="#maikor-asm-basics">Maikor ASM Basics</a></h1>
+<h2 id="add-two-numbers"><a class="header" href="#add-two-numbers">Add two numbers</a></h2>
+<pre><code>cpy.b ah, 5   # set AH to 5
+cpy.b al, 9   # set AL to 9
+add.b ah, al  # set AH to AH + AL
+</code></pre>
+<h2 id="add-a-series-of-numbers-from-memory"><a class="header" href="#add-a-series-of-numbers-from-memory">Add a series of numbers from memory</a></h2>
+<blockquote>
+<p>Assume starting at $2000 are the numbers 100,100,100,200,300,400</p>
+</blockquote>
+<pre><code>		cpy.w dx, 2000    # set DX to 2000
+loop: 	cpy.b al, (dx)+   # set AL to value at address in DX, then increment DX by 1
+		add.w bx, ax      # set BX to AX + BX
+		cmp.b dx, 2005    # compare DX and 2005
+		jne loop          # if the numbers were not equal, jump to loop
+</code></pre>
+<p>At the end <code>bx</code> will be set to 1200. </p>
+<p>Normally there's no way to add a byte to a word, but by loading the byte into a lower register (e.g. AL) and setting the higher (AH) to 0, then the extended register (AX) allows the byte to be used a word.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="bytes"><a class="header" href="#bytes">Bytes</a></h1>
 <h2 id="instructions-1"><a class="header" href="#instructions-1">Instructions</a></h2>
 <table><thead><tr><th></th><th align="center">x0</th><th align="center">x1</th><th align="center">x2</th><th align="center">x3</th><th align="center">x4</th><th align="center">x5</th><th align="center">x6</th><th align="center">x7</th><th align="center">x8</th><th align="center">x9</th><th align="center">xA</th><th align="center">xB</th><th align="center">xC</th><th align="center">xD</th><th align="center">xE</th><th align="center">xF</th></tr></thead><tbody>
@@ -384,7 +415,7 @@ ADD.W (BX) $500  # Store the result of adding the values at the address in BX an
 <tr><td>4x</td><td align="center">NOT.B<br>(R) (I)</td><td align="center">NOT.W<br>(E) (I)</td><td align="center">OR.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">OR.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">OR.B<br>(R,B) (I,B)</td><td align="center">OR.W<br>(E,W) (I,W)</td><td align="center">XOR.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">XOR.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">XOR.B<br>(R,B) (I,B)</td><td align="center">XOR.W<br>(E,W) (I,W)</td><td align="center">AND.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">AND.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">AND.B<br>(R,B) (I,B)</td><td align="center">AND.W<br>(E,W) (I,W)</td><td align="center">JRF<br>(B)</td><td align="center">JRB<br>(B)</td></tr>
 <tr><td>5x</td><td align="center">ASL.B<br>(R,B) (I,B)</td><td align="center">ASL.W<br>(E,W) (I,W)</td><td align="center">ASL.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">ASL.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">ASL.B<br>(A)</td><td align="center">ASL.W<br>(A)</td><td align="center">ASR.B<br>(R,B) (I,B)</td><td align="center">ASR.W<br>(E,W) (I,W)</td><td align="center">ASR.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">ASR.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">ASR.B<br>(A)</td><td align="center">ASR.W<br>(A)</td><td align="center">LSR.B<br>(R,B) (I,B)</td><td align="center">LSR.W<br>(E,W) (I,W)</td><td align="center">LSR.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">LSR.W<br>(E,E) (E,I) (I,E) (I,I)</td></tr>
 <tr><td>6x</td><td align="center">LSR.B<br>(A)</td><td align="center">LSR.W<br>(A)</td><td align="center">ROL.B<br>(R,B) (I,B)</td><td align="center">ROL.W<br>(E,W) (I,W)</td><td align="center">ROL.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">ROL.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">ROL.B<br>(A)</td><td align="center">ROL.W<br>(A)</td><td align="center">ROR.B<br>(R,B) (I,B)</td><td align="center">ROR.W<br>(E,W) (I,W)</td><td align="center">ROR.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">ROR.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">ROR.B<br>(A)</td><td align="center">ROR.W<br>(A)</td><td align="center">-</td><td align="center">-</td></tr>
-<tr><td>7x</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr>
+<tr><td>7x</td><td align="center">PUSH.B<br>(R) (B)</td><td align="center">PUSH.W<br>(E) (W))</td><td align="center">POP.B<br>(R)</td><td align="center">POP.W<br>(W)</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr>
 <tr><td>8x</td><td align="center">MUL.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">MUL.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">MUL.B<br>(R,B) (I,B)</td><td align="center">MUL.W<br>(E,W) (I,W)</td><td align="center">MUL.B<br>(R,A) (I,A)</td><td align="center">MUL.W<br>(E,A) (I,A)</td><td align="center">MUL.B<br>(A,R) (A,I)</td><td align="center">MUL.W<br>(A,E) (A,I)</td><td align="center">MUL.B<br>(A,B)</td><td align="center">MUL.W<br>(A,W)</td><td align="center">MUL.B<br>(A,A)</td><td align="center">MUL.W<br>(A,A)</td><td align="center">MULS.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">MULS.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">MULS.B<br>(R,B) (I,B)</td><td align="center">MULS.W<br>(E,W) (I,W)</td></tr>
 <tr><td>9x</td><td align="center">MULS.B<br>(R,A) (I,A)</td><td align="center">MULS.W<br>(E,A) (I,A)</td><td align="center">MULS.B<br>(A,R) (A,I)</td><td align="center">MULS.W<br>(A,E) (A,I)</td><td align="center">MULS.B<br>(A,B)</td><td align="center">MULS.W<br>(A,W)</td><td align="center">MULS.B<br>(A,A)</td><td align="center">MULS.W<br>(A,A)</td><td align="center">DIV.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">DIV.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">DIV.B<br>(R,B) (I,B)</td><td align="center">DIV.W<br>(E,W) (I,W)</td><td align="center">DIV.B<br>(R,A) (I,A)</td><td align="center">DIV.W<br>(E,A) (I,A)</td><td align="center">DIV.B<br>(A,R) (A,I)</td><td align="center">DIV.W<br>(A,E) (A,I)</td></tr>
 <tr><td>Ax</td><td align="center">DIV.B<br>(A,B)</td><td align="center">DIV.W<br>(A,W)</td><td align="center">DIV.B<br>(A,A)</td><td align="center">DIV.W<br>(A,A)</td><td align="center">DIVS.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">DIVS.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">DIVS.B<br>(R,B) (I,B)</td><td align="center">DIVS.W<br>(E,W) (I,W)</td><td align="center">DIVS.B<br>(R,A) (I,A)</td><td align="center">DIVS.W<br>(E,A) (I,A)</td><td align="center">DIVS.B<br>(A,R) (A,I)</td><td align="center">DIVS.W<br>(A,E) (A,I)</td><td align="center">DIVS.B<br>(A,B)</td><td align="center">DIVS.W<br>(A,W)</td><td align="center">DIVS.B<br>(A,A)</td><td align="center">DIVS.W<br>(A,A)</td></tr>
@@ -624,6 +655,39 @@ This has to be polled, to get an interrupt set the input bit in <a href="mem.htm
 <p><code>64327</code> <code>xFB47</code> <code>-</code> 10 bytes
 <code>64465</code> <code>xFBE4</code> <code>-</code> 151 bytes</p>
 <p>Do not change or rely on values in this space.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="possible-register-values"><a class="header" href="#possible-register-values">Possible Register Values</a></h2>
+<h4 id="decimal"><a class="header" href="#decimal">Decimal</a></h4>
+<table><thead><tr><th align="center">Reg</th><th align="center">Direct</th><th align="center">Indirect</th><th align="center">Pre Dec</th><th align="center">Pre Inc</th><th align="center">Post Dec</th><th align="center">Post Inc</th><th align="center">Ind Pre Dec</th><th align="center">Ind Pre Inc</th><th align="center">Ind Post Dec</th><th align="center">Ind Post Inc</th><th align="center">Offset with Reg</th><th align="center">Offset with Ext Reg</th><th align="center">Offset with number</th></tr></thead><tbody>
+<tr><td align="center">AH</td><td align="center">0</td><td align="center">-</td><td align="center">112</td><td align="center">96</td><td align="center">80</td><td align="center">64</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr>
+<tr><td align="center">AL</td><td align="center">1</td><td align="center">-</td><td align="center">113</td><td align="center">97</td><td align="center">81</td><td align="center">65</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr>
+<tr><td align="center">BH</td><td align="center">2</td><td align="center">-</td><td align="center">114</td><td align="center">98</td><td align="center">82</td><td align="center">66</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr>
+<tr><td align="center">BL</td><td align="center">3</td><td align="center">-</td><td align="center">115</td><td align="center">99</td><td align="center">83</td><td align="center">67</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr>
+<tr><td align="center">CH</td><td align="center">4</td><td align="center">-</td><td align="center">116</td><td align="center">100</td><td align="center">84</td><td align="center">68</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr>
+<tr><td align="center">CL</td><td align="center">5</td><td align="center">-</td><td align="center">117</td><td align="center">101</td><td align="center">85</td><td align="center">69</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr>
+<tr><td align="center">DH</td><td align="center">6</td><td align="center">-</td><td align="center">118</td><td align="center">102</td><td align="center">86</td><td align="center">70</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr>
+<tr><td align="center">DL</td><td align="center">7</td><td align="center">-</td><td align="center">119</td><td align="center">103</td><td align="center">87</td><td align="center">71</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr>
+<tr><td align="center">FLG</td><td align="center">8</td><td align="center">-</td><td align="center">120</td><td align="center">104</td><td align="center">88</td><td align="center">72</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr>
+<tr><td align="center">AX</td><td align="center">9</td><td align="center">137</td><td align="center">121</td><td align="center">105</td><td align="center">89</td><td align="center">73</td><td align="center">249</td><td align="center">233</td><td align="center">217</td><td align="center">201</td><td align="center">153</td><td align="center">169</td><td align="center">185</td></tr>
+<tr><td align="center">BX</td><td align="center">10</td><td align="center">138</td><td align="center">122</td><td align="center">106</td><td align="center">90</td><td align="center">74</td><td align="center">250</td><td align="center">234</td><td align="center">218</td><td align="center">202</td><td align="center">154</td><td align="center">170</td><td align="center">186</td></tr>
+<tr><td align="center">CX</td><td align="center">11</td><td align="center">139</td><td align="center">123</td><td align="center">107</td><td align="center">91</td><td align="center">75</td><td align="center">251</td><td align="center">235</td><td align="center">219</td><td align="center">203</td><td align="center">155</td><td align="center">171</td><td align="center">187</td></tr>
+<tr><td align="center">DX</td><td align="center">12</td><td align="center">140</td><td align="center">124</td><td align="center">108</td><td align="center">92</td><td align="center">76</td><td align="center">252</td><td align="center">236</td><td align="center">220</td><td align="center">204</td><td align="center">156</td><td align="center">172</td><td align="center">188</td></tr>
+</tbody></table>
+<h4 id="hexadecimal"><a class="header" href="#hexadecimal">Hexadecimal</a></h4>
+<table><thead><tr><th align="center">Reg</th><th align="center">Direct</th><th align="center">Indirect</th><th align="center">Pre Dec</th><th align="center">Pre Inc</th><th align="center">Post Dec</th><th align="center">Post Inc</th><th align="center">Ind Pre Dec</th><th align="center">Ind Pre Inc</th><th align="center">Ind Post Dec</th><th align="center">Ind Post Inc</th><th align="center">Offset with Reg</th><th align="center">Offset with Ext Reg</th><th align="center">Offset with number</th></tr></thead><tbody>
+<tr><td align="center">AH</td><td align="center">00</td><td align="center">-</td><td align="center">70</td><td align="center">60</td><td align="center">50</td><td align="center">40</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr>
+<tr><td align="center">AL</td><td align="center">01</td><td align="center">-</td><td align="center">71</td><td align="center">61</td><td align="center">51</td><td align="center">41</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr>
+<tr><td align="center">BH</td><td align="center">02</td><td align="center">-</td><td align="center">72</td><td align="center">62</td><td align="center">52</td><td align="center">42</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr>
+<tr><td align="center">BL</td><td align="center">03</td><td align="center">-</td><td align="center">73</td><td align="center">63</td><td align="center">53</td><td align="center">43</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr>
+<tr><td align="center">CH</td><td align="center">04</td><td align="center">-</td><td align="center">74</td><td align="center">64</td><td align="center">54</td><td align="center">44</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr>
+<tr><td align="center">CL</td><td align="center">05</td><td align="center">-</td><td align="center">75</td><td align="center">65</td><td align="center">55</td><td align="center">45</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr>
+<tr><td align="center">DH</td><td align="center">06</td><td align="center">-</td><td align="center">76</td><td align="center">66</td><td align="center">56</td><td align="center">46</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr>
+<tr><td align="center">DL</td><td align="center">07</td><td align="center">-</td><td align="center">77</td><td align="center">67</td><td align="center">57</td><td align="center">47</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr>
+<tr><td align="center">FLG</td><td align="center">08</td><td align="center">-</td><td align="center">78</td><td align="center">68</td><td align="center">58</td><td align="center">48</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr>
+<tr><td align="center">AX</td><td align="center">09</td><td align="center">89</td><td align="center">79</td><td align="center">69</td><td align="center">59</td><td align="center">49</td><td align="center">F9</td><td align="center">E9</td><td align="center">D9</td><td align="center">C9</td><td align="center">99</td><td align="center">A9</td><td align="center">B9</td></tr>
+<tr><td align="center">BX</td><td align="center">0A</td><td align="center">8A</td><td align="center">7A</td><td align="center">6A</td><td align="center">5A</td><td align="center">4A</td><td align="center">FA</td><td align="center">EA</td><td align="center">DA</td><td align="center">CA</td><td align="center">9A</td><td align="center">AA</td><td align="center">BA</td></tr>
+<tr><td align="center">CX</td><td align="center">0B</td><td align="center">8B</td><td align="center">7B</td><td align="center">6B</td><td align="center">5B</td><td align="center">4B</td><td align="center">FB</td><td align="center">EB</td><td align="center">DB</td><td align="center">CB</td><td align="center">9B</td><td align="center">AB</td><td align="center">BB</td></tr>
+<tr><td align="center">DX</td><td align="center">0C</td><td align="center">8C</td><td align="center">7C</td><td align="center">6C</td><td align="center">5C</td><td align="center">4C</td><td align="center">FC</td><td align="center">EC</td><td align="center">DC</td><td align="center">CC</td><td align="center">9C</td><td align="center">AC</td><td align="center">BC</td></tr>
+</tbody></table>
 
                     </main>
 

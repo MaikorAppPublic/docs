@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Instructions - Maikor Docs</title>
+        <title>Maikor ASM Basics - Maikor Docs</title>
                 
 
         <!-- Custom HTML head -->
@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="ops.html" class="active"><strong aria-hidden="true">1.</strong> Instructions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ops/inc.html"><strong aria-hidden="true">1.1.</strong> INC</a></li><li class="chapter-item expanded "><a href="ops/dec.html"><strong aria-hidden="true">1.2.</strong> DEC</a></li><li class="chapter-item expanded "><a href="ops/swap.html"><strong aria-hidden="true">1.3.</strong> SWAP</a></li><li class="chapter-item expanded "><a href="ops/add.html"><strong aria-hidden="true">1.4.</strong> ADD</a></li></ol></li><li class="chapter-item expanded "><a href="basics.html"><strong aria-hidden="true">2.</strong> Maikor ASM Basics</a></li><li class="chapter-item expanded "><a href="bytes.html"><strong aria-hidden="true">3.</strong> Bytes</a></li><li class="chapter-item expanded "><a href="mem.html"><strong aria-hidden="true">4.</strong> Memory</a></li><li class="chapter-item expanded "><a href="reg_values.html"><strong aria-hidden="true">5.</strong> Register values</a></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="ops.html"><strong aria-hidden="true">1.</strong> Instructions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ops/inc.html"><strong aria-hidden="true">1.1.</strong> INC</a></li><li class="chapter-item expanded "><a href="ops/dec.html"><strong aria-hidden="true">1.2.</strong> DEC</a></li><li class="chapter-item expanded "><a href="ops/swap.html"><strong aria-hidden="true">1.3.</strong> SWAP</a></li><li class="chapter-item expanded "><a href="ops/add.html"><strong aria-hidden="true">1.4.</strong> ADD</a></li></ol></li><li class="chapter-item expanded "><a href="basics.html" class="active"><strong aria-hidden="true">2.</strong> Maikor ASM Basics</a></li><li class="chapter-item expanded "><a href="bytes.html"><strong aria-hidden="true">3.</strong> Bytes</a></li><li class="chapter-item expanded "><a href="mem.html"><strong aria-hidden="true">4.</strong> Memory</a></li><li class="chapter-item expanded "><a href="reg_values.html"><strong aria-hidden="true">5.</strong> Register values</a></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -143,76 +143,34 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="instructions"><a class="header" href="#instructions">Instructions</a></h1>
-<blockquote>
-<p>Also called commands, operations and ops</p>
-</blockquote>
-<h2 id="arguments"><a class="header" href="#arguments">Arguments</a></h2>
-<blockquote>
-<p>Also called args and params, operands</p>
-</blockquote>
-<table><thead><tr><th>Key</th><th>Name</th><th>Examples</th><th>Bytes</th></tr></thead><tbody>
-<tr><td><code>R</code></td><td>Register</td><td><code>AL</code>, <code>CH</code></td><td>1</td></tr>
-<tr><td><code>E</code></td><td>Extended Register</td><td><code>BX</code>, <code>CX</code></td><td>1</td></tr>
-<tr><td><code>I</code></td><td>Indirect Register</td><td><code>(AX)</code>, <code>(BX)</code></td><td>1</td></tr>
-<tr><td><code>B</code></td><td>Byte</td><td><code>45</code>, <code>xF1</code></td><td>1</td></tr>
-<tr><td><code>W</code></td><td>Word</td><td><code>451</code>, <code>x3A0</code></td><td>2</td></tr>
-<tr><td><code>A</code></td><td>Address</td><td><code>$1102</code>,<code>$xFF12</code></td><td>2</td></tr>
-</tbody></table>
-<h3 id="ppid"><a class="header" href="#ppid">PPID</a></h3>
-<blockquote>
-<p>Pre/Post Inc/Dec</p>
-</blockquote>
-<p>PPID allowed you to increment decrement a register before or after using that register in an op.</p>
-<p>Registers are changed by 1 and extended/indirect registers are changed by 2.</p>
-<p>For example, with</p>
-<pre><code>CPY.W AX 1000
-INC.B -(AX)
+                        <h1 id="maikor-asm-basics"><a class="header" href="#maikor-asm-basics">Maikor ASM Basics</a></h1>
+<h2 id="add-two-numbers"><a class="header" href="#add-two-numbers">Add two numbers</a></h2>
+<pre><code>cpy.b ah, 5   # set AH to 5
+cpy.b al, 9   # set AL to 9
+add.b ah, al  # set AH to AH + AL
 </code></pre>
-<ul>
-<li><code>AX</code> is set to 1000</li>
-<li><code>AX</code> is set to 998</li>
-<li>The value at <code>$998</code> is incremented </li>
-</ul>
-<p>and with</p>
-<pre><code>CPY.B AL 5
-CPY.B AH AL-
+<h2 id="add-a-series-of-numbers-from-memory"><a class="header" href="#add-a-series-of-numbers-from-memory">Add a series of numbers from memory</a></h2>
+<blockquote>
+<p>Assume starting at $2000 are the numbers 100,100,100,200,300,400</p>
+</blockquote>
+<pre><code>		cpy.w dx, 2000    # set DX to 2000
+loop: 	cpy.b al, (dx)+   # set AL to value at address in DX, then increment DX by 1
+		add.w bx, ax      # set BX to AX + BX
+		cmp.b dx, 2005    # compare DX and 2005
+		jne loop          # if the numbers were not equal, jump to loop
 </code></pre>
-<ul>
-<li><code>AL</code> is set to 5</li>
-<li><code>AH</code> is set to 5</li>
-<li><code>AL</code> is set to 4</li>
-</ul>
-<p>PPID works on any <code>R</code>, <code>E</code>, or <code>I</code> args in any instruction. Increments and decrements are wrapping, and the flags are set based on the result of an operation before the post inc/dec changes.</p>
-<h2 id="cycles"><a class="header" href="#cycles">Cycles</a></h2>
-<p>Each instruction has a base time cost shown below and on the instruction pages. Using index addressing adds the following cost:</p>
-<table><thead><tr><th>Variant</th><th>Cost</th><th>Example</th></tr></thead><tbody>
-<tr><td>with reg</td><td>1</td><td><code>(ax+al)</code></td></tr>
-<tr><td>with ext reg</td><td>2</td><td><code>(ax+bx)</code></td></tr>
-<tr><td>with num</td><td>1</td><td><code>(ax+10)</code></td></tr>
-</tbody></table>
-<h2 id="list"><a class="header" href="#list">List</a></h2>
-<table><thead><tr><th>Name</th><th>Size variants</th><th>Args</th><th>Base cycles</th></tr></thead><tbody>
-<tr><td><a href="./ops/inc.html">INC</a></td><td><code>B</code>, <code>W</code></td><td><code>(R)</code>, <code>(E)</code>, <code>(I)</code>, <code>(A)</code></td><td>2-8</td></tr>
-<tr><td><a href="./ops/dec.html">DEC</a></td><td><code>B</code>, <code>W</code></td><td><code>(R)</code>, <code>(E)</code>, <code>(I)</code>, <code>(A)</code></td><td>2-8</td></tr>
-<tr><td><a href="./ops/swap.html">SWAP</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code></td><td>1-16</td></tr>
-<tr><td><a href="./ops/add.html">ADD</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
-<tr><td><a href="./ops/sub.html">SUB</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
-<tr><td><a href="./ops/mul.html">MUL</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
-<tr><td><a href="./ops/div.html">DIV</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
-<tr><td><a href="./ops/muls.html">MULS</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
-<tr><td><a href="./ops/divs.html">DIVS</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
-</tbody></table>
+<p>At the end <code>bx</code> will be set to 1200. </p>
+<p>Normally there's no way to add a byte to a word, but by loading the byte into a lower register (e.g. AL) and setting the higher (AH) to 0, then the extended register (AX) allows the byte to be used a word.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                                                    <a rel="prev" href="intro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                                    <a rel="prev" href="ops/add.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
-                                                    <a rel="next" href="ops/inc.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                                    <a rel="next" href="bytes.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -222,11 +180,11 @@ CPY.B AH AL-
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                                    <a rel="prev" href="intro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                    <a rel="prev" href="ops/add.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
-                                    <a rel="next" href="ops/inc.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                    <a rel="next" href="bytes.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                             </nav>
