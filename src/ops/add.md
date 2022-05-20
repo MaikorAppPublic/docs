@@ -15,37 +15,37 @@ ADD.W (E, W) (E, E) (E, I) (I, E) (I, I) (A, I) (A, E) (A, A) (A, W) (I, A) (E, 
 
 #### INC.B
 
-| Opcode | Operands           | Cycles |
-|--------|--------------------|--------|
-| 22     | Register, Byte     | 2      |
-| 20     | Register, Register | 3      |
-| 20     | Register, Indirect | 5      |
-| 20     | Indirect, Register | 7      |
-| 20     | Indirect, Indirect | 9      |
-| 26     | Address, Indirect  | 5      |
-| 26     | Address, Register  | 3      |
-| 2A     | Address, Address   | 3      |
-| 28     | Address, Byte      | 2      |
-| 24     | Indirect, Address  | 7      |
-| 22     | Indirect, Byte     | 6      |
-| 24     | Register, Address  | 3      |
+| Opcode | Operands           | Cycles | Size  | Byte order                                  |
+|--------|--------------------|--------|-------|---------------------------------------------|
+| 22     | Register, Byte     | 2      | 2     | reg(1) byte(1)                              |
+| 20     | Register, Register | 3      | 2     | reg(1) reg(1)                               |
+| 20     | Register, Indirect | 5      | 2 - 4 | reg(1) reg(1) \<offset>(1-2)                |
+| 20     | Indirect, Register | 7      | 2 - 4 | reg(1) reg(1) \<offset>(1-2)                |
+| 20     | Indirect, Indirect | 9      | 2 - 6 | reg(1) reg(1) \<offset>(1-2) \<offset>(1-2) |
+| 26     | Address, Indirect  | 5      | 3 - 5 | addr(2) reg(1) \<offset>(1-2)               |
+| 26     | Address, Register  | 3      | 3     | addr(2) reg(1)                              |
+| 2A     | Address, Address   | 3      | 4     | addr(2) addr(2)                             |
+| 28     | Address, Byte      | 2      | 3     | addr(2) byte(1)                             |
+| 24     | Indirect, Address  | 7      | 3-5   | reg(1) addr(2) \<offset>(1-2)               |
+| 22     | Indirect, Byte     | 6      | 2-4   | reg(1) byte(1) \<offset>(1-2)               |
+| 24     | Register, Address  | 3      | 3     | reg(1) addr(2)                              |
 
 #### INC.W
 
-| Opcode | Operands                     | Cycles |
-|--------|------------------------------|--------|
-| 23     | Ext. Register, Word          | 4      |
-| 21     | Ext. Register, Ext. Register | 6      |
-| 21     | Ext. Register, Indirect      | 8      |
-| 21     | Indirect, Ext. Register      | 10     |
-| 21     | Indirect, Indirect           | 12     |
-| 27     | Address, Indirect            | 8      |
-| 27     | Address, Ext. Register       | 6      |
-| 2B     | Address, Address             | 6      |
-| 29     | Address, Word                | 4      |
-| 25     | Indirect, Address            | 10     |
-| 23     | Indirect, Word               | 8      |
-| 25     | Ext. Register, Address       | 6      |
+| Opcode | Operands                     | Cycles | Size  | Byte order                                  |
+|--------|------------------------------|--------|-------|---------------------------------------------|
+| 23     | Ext. Register, Word          | 4      | 3     | reg(1) word(2)                              |
+| 21     | Ext. Register, Ext. Register | 6      | 2     | reg(1) reg(1)                               |
+| 21     | Ext. Register, Indirect      | 8      | 2 - 4 | reg(1) reg(1) \<offset>(1-2)                |
+| 21     | Indirect, Ext. Register      | 10     | 2 - 4 | reg(1) reg(1) \<offset>(1-2)                |
+| 21     | Indirect, Indirect           | 12     | 2 - 6 | reg(1) reg(1) \<offset>(1-2) \<offset>(1-2) |
+| 27     | Address, Indirect            | 8      | 3 - 5 | addr(2) reg(1) \<offset>(1-2)               |
+| 27     | Address, Ext. Register       | 6      | 3     | addr(2) reg(1)                              |
+| 2B     | Address, Address             | 6      | 4     | addr(2) addr(2)                             |
+| 29     | Address, Word                | 4      | 4     | addr(2) word(2)                             |
+| 25     | Indirect, Address            | 10     | 3-5   | reg(1) addr(2) \<offset>(1-2)               |
+| 23     | Indirect, Word               | 8      | 3-5   | reg(1) word(2) \<offset>(1-2)               |
+| 25     | Ext. Register, Address       | 6      | 3     | reg(1) addr(2)                              |
 
 ## Flags
 

@@ -53,3 +53,16 @@
 | 208   | D0  | x        | -   | x    | -   | x   |
 | 224   | E0  | x        | x   | -    | x   | -   |
 | 240   | F0  | x        | x   | -    | -   | x   |
+
+## Byte Order
+
+Each instruction must be written in the following order:
+
+`OP ARG1 ARG2.. ARG1_OFFSET ARG2_OFFSET..`
+
+For example:
+
+| Instruction          | Order                      | Bytes               |
+|----------------------|----------------------------|---------------------|
+| `INC.B AL`           | `OP ARG1`                  | `2C 01`             |
+| `ADD.W $200 (AX+10)` | `OP ARG1 ARG2 ARG2_OFFSET` | `27 00 C8 B9 00 0A` |
