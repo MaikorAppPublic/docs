@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="ops.html"><strong aria-hidden="true">1.</strong> Instructions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ops/inc.html"><strong aria-hidden="true">1.1.</strong> INC</a></li><li class="chapter-item expanded "><a href="ops/dec.html"><strong aria-hidden="true">1.2.</strong> DEC</a></li><li class="chapter-item expanded "><a href="ops/swap.html"><strong aria-hidden="true">1.3.</strong> SWAP</a></li><li class="chapter-item expanded "><a href="ops/add.html"><strong aria-hidden="true">1.4.</strong> ADD</a></li></ol></li><li class="chapter-item expanded "><a href="basics.html"><strong aria-hidden="true">2.</strong> Maikor ASM Basics</a></li><li class="chapter-item expanded "><a href="bytes.html"><strong aria-hidden="true">3.</strong> Bytes</a></li><li class="chapter-item expanded "><a href="mem.html"><strong aria-hidden="true">4.</strong> Memory</a></li><li class="chapter-item expanded "><a href="reg_values.html"><strong aria-hidden="true">5.</strong> Register values</a></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="basics.html"><strong aria-hidden="true">1.</strong> Maikor ASM Basics</a></li><li class="chapter-item expanded "><a href="bytes.html"><strong aria-hidden="true">2.</strong> Bytes</a></li><li class="chapter-item expanded "><a href="mem.html"><strong aria-hidden="true">3.</strong> Memory</a></li><li class="chapter-item expanded "><a href="reg_values.html"><strong aria-hidden="true">4.</strong> Register values</a></li><li class="chapter-item expanded "><a href="ops.html"><strong aria-hidden="true">5.</strong> Instructions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ops/inc.html"><strong aria-hidden="true">5.1.</strong> INC</a></li><li class="chapter-item expanded "><a href="ops/dec.html"><strong aria-hidden="true">5.2.</strong> DEC</a></li><li class="chapter-item expanded "><a href="ops/swap.html"><strong aria-hidden="true">5.3.</strong> SWAP</a></li><li class="chapter-item expanded "><a href="ops/add.html"><strong aria-hidden="true">5.4.</strong> ADD</a></li><li class="chapter-item expanded "><a href="ops/sub.html"><strong aria-hidden="true">5.5.</strong> SUB</a></li><li class="chapter-item expanded "><a href="ops/mul.html"><strong aria-hidden="true">5.6.</strong> MUL</a></li><li class="chapter-item expanded "><a href="ops/div.html"><strong aria-hidden="true">5.7.</strong> DIV</a></li></ol></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -174,219 +174,6 @@
 <p><a href="./basics.html">Maikor ASM Basics</a></p>
 <p><a href="./bytes.html">Bytes</a></p>
 <p><a href="./mem.html">Memory</a></p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="instructions"><a class="header" href="#instructions">Instructions</a></h1>
-<blockquote>
-<p>Also called commands, operations and ops</p>
-</blockquote>
-<h2 id="arguments"><a class="header" href="#arguments">Arguments</a></h2>
-<blockquote>
-<p>Also called args and params, operands</p>
-</blockquote>
-<table><thead><tr><th>Key</th><th>Name</th><th>Examples</th><th>Bytes</th></tr></thead><tbody>
-<tr><td><code>R</code></td><td>Register</td><td><code>AL</code>, <code>CH</code></td><td>1</td></tr>
-<tr><td><code>E</code></td><td>Extended Register</td><td><code>BX</code>, <code>CX</code></td><td>1</td></tr>
-<tr><td><code>I</code></td><td>Indirect Register</td><td><code>(AX)</code>, <code>(BX)</code></td><td>1</td></tr>
-<tr><td><code>B</code></td><td>Byte</td><td><code>45</code>, <code>xF1</code></td><td>1</td></tr>
-<tr><td><code>W</code></td><td>Word</td><td><code>451</code>, <code>x3A0</code></td><td>2</td></tr>
-<tr><td><code>A</code></td><td>Address</td><td><code>$1102</code>,<code>$xFF12</code></td><td>2</td></tr>
-</tbody></table>
-<h3 id="ppid"><a class="header" href="#ppid">PPID</a></h3>
-<blockquote>
-<p>Pre/Post Inc/Dec</p>
-</blockquote>
-<p>PPID allowed you to increment decrement a register before or after using that register in an op.</p>
-<p>Registers are changed by 1 and extended/indirect registers are changed by 2.</p>
-<p>For example, with</p>
-<pre><code>CPY.W AX 1000
-INC.B -(AX)
-</code></pre>
-<ul>
-<li><code>AX</code> is set to 1000</li>
-<li><code>AX</code> is set to 998</li>
-<li>The value at <code>$998</code> is incremented </li>
-</ul>
-<p>and with</p>
-<pre><code>CPY.B AL 5
-CPY.B AH AL-
-</code></pre>
-<ul>
-<li><code>AL</code> is set to 5</li>
-<li><code>AH</code> is set to 5</li>
-<li><code>AL</code> is set to 4</li>
-</ul>
-<p>PPID works on any <code>R</code>, <code>E</code>, or <code>I</code> args in any instruction. Increments and decrements are wrapping, and the flags are set based on the result of an operation before the post inc/dec changes.</p>
-<h2 id="cycles"><a class="header" href="#cycles">Cycles</a></h2>
-<p>Each instruction has a base time cost shown below and on the instruction pages. Using index addressing adds the following cost:</p>
-<table><thead><tr><th>Variant</th><th>Cost</th><th>Example</th></tr></thead><tbody>
-<tr><td>with reg</td><td>1</td><td><code>(ax+al)</code></td></tr>
-<tr><td>with ext reg</td><td>2</td><td><code>(ax+bx)</code></td></tr>
-<tr><td>with num</td><td>1</td><td><code>(ax+10)</code></td></tr>
-</tbody></table>
-<h2 id="list"><a class="header" href="#list">List</a></h2>
-<table><thead><tr><th>Name</th><th>Size variants</th><th>Args</th><th>Base cycles</th></tr></thead><tbody>
-<tr><td><a href="./ops/inc.html">INC</a></td><td><code>B</code>, <code>W</code></td><td><code>(R)</code>, <code>(E)</code>, <code>(I)</code>, <code>(A)</code></td><td>2-8</td></tr>
-<tr><td><a href="./ops/dec.html">DEC</a></td><td><code>B</code>, <code>W</code></td><td><code>(R)</code>, <code>(E)</code>, <code>(I)</code>, <code>(A)</code></td><td>2-8</td></tr>
-<tr><td><a href="./ops/swap.html">SWAP</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code></td><td>1-16</td></tr>
-<tr><td><a href="./ops/add.html">ADD</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
-<tr><td><a href="./ops/sub.html">SUB</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
-<tr><td><a href="./ops/mul.html">MUL</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
-<tr><td><a href="./ops/div.html">DIV</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
-<tr><td><a href="./ops/muls.html">MULS</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
-<tr><td><a href="./ops/divs.html">DIVS</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
-</tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="inc"><a class="header" href="#inc">INC</a></h1>
-<p>Increases value in register or value at memory address in pointer by 1.</p>
-<h2 id="format"><a class="header" href="#format">Format</a></h2>
-<p><code>INC value</code></p>
-<h2 id="variations"><a class="header" href="#variations">Variations</a></h2>
-<pre><code>INC.B (R) (I) (A)
-INC.W (E) (I) (A)
-</code></pre>
-<h4 id="incb"><a class="header" href="#incb">INC.B</a></h4>
-<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th></tr></thead><tbody>
-<tr><td>2C</td><td>Register</td><td>2</td></tr>
-<tr><td>2C</td><td>Indirect</td><td>6</td></tr>
-<tr><td>2E</td><td>Address</td><td>2</td></tr>
-</tbody></table>
-<h4 id="incw"><a class="header" href="#incw">INC.W</a></h4>
-<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th></tr></thead><tbody>
-<tr><td>2D</td><td>Ext. Register</td><td>4</td></tr>
-<tr><td>2D</td><td>Indirect</td><td>8</td></tr>
-<tr><td>2F</td><td>Address</td><td>4</td></tr>
-</tbody></table>
-<h2 id="flags"><a class="header" href="#flags">Flags</a></h2>
-<p>No changes</p>
-<h2 id="code-equivalent"><a class="header" href="#code-equivalent">Code equivalent</a></h2>
-<pre><code>value++
-</code></pre>
-<h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
-<pre><code>INC.B AL      # Increase AL by 1
-INC.B $6003   # Increase value at 6003 by 1
-INC.B (AX)    # Increase value at address in AX by 1
-INC.W AX      # Increase AX by 1
-INC.W $6700   # Increase value at [6700,6701] by 1
-</code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="dec"><a class="header" href="#dec">DEC</a></h1>
-<p>Decreases value in register or value at memory address in pointer by 1.</p>
-<h2 id="format-1"><a class="header" href="#format-1">Format</a></h2>
-<p><code>DEC value</code></p>
-<h2 id="variations-1"><a class="header" href="#variations-1">Variations</a></h2>
-<pre><code>DEC.B (R) (I) (A)
-DEC.W (E) (I) (A)
-</code></pre>
-<h4 id="decb"><a class="header" href="#decb">DEC.B</a></h4>
-<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th></tr></thead><tbody>
-<tr><td>2C</td><td>Register</td><td>2</td></tr>
-<tr><td>2C</td><td>Indirect</td><td>6</td></tr>
-<tr><td>2E</td><td>Address</td><td>2</td></tr>
-</tbody></table>
-<h4 id="decw"><a class="header" href="#decw">DEC.W</a></h4>
-<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th></tr></thead><tbody>
-<tr><td>2D</td><td>Ext. Register</td><td>4</td></tr>
-<tr><td>2D</td><td>Indirect</td><td>8</td></tr>
-<tr><td>2F</td><td>Address</td><td>4</td></tr>
-</tbody></table>
-<h2 id="flags-1"><a class="header" href="#flags-1">Flags</a></h2>
-<p>No changes</p>
-<h2 id="code-equivalent-1"><a class="header" href="#code-equivalent-1">Code equivalent</a></h2>
-<pre><code>value++
-</code></pre>
-<h2 id="examples-1"><a class="header" href="#examples-1">Examples</a></h2>
-<pre><code>DEC.B AL      # Decrease AL by 1
-DEC.B $6003   # Decrease value at 6003 by 1
-DEC.B (AX)    # Decrease value at address in AX by 1
-DEC.W AX      # Decrease AX by 1
-DEC.W $6700   # Decrease value at [6700,6701] by 1
-</code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="swap"><a class="header" href="#swap">SWAP</a></h1>
-<p>Swap values in registers or values at memory addresses in pointers.</p>
-<h2 id="format-2"><a class="header" href="#format-2">Format</a></h2>
-<p><code>SWAP lhs, rhs</code></p>
-<h2 id="variations-2"><a class="header" href="#variations-2">Variations</a></h2>
-<pre><code>SWAP.B (RR) (RI) (IR) (II)
-SWAP.W (EE) (EI) (IE) (II)
-</code></pre>
-<h4 id="swapb"><a class="header" href="#swapb">SWAP.B</a></h4>
-<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th></tr></thead><tbody>
-<tr><td>06</td><td>Register, Register</td><td>1</td></tr>
-<tr><td>06</td><td>Register, Indirect</td><td>8</td></tr>
-<tr><td>06</td><td>Indirect, Register</td><td>8</td></tr>
-<tr><td>06</td><td>Indirect, Indirect</td><td>12</td></tr>
-</tbody></table>
-<h4 id="incw-1"><a class="header" href="#incw-1">INC.W</a></h4>
-<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th></tr></thead><tbody>
-<tr><td>07</td><td>Ext. Register, Ext. Register</td><td>1</td></tr>
-<tr><td>07</td><td>Ext. Register, Indirect</td><td>12</td></tr>
-<tr><td>07</td><td>Indirect, Ext. Register</td><td>12</td></tr>
-<tr><td>07</td><td>Ext. Register, Ext. Register</td><td>16</td></tr>
-</tbody></table>
-<h2 id="flags-2"><a class="header" href="#flags-2">Flags</a></h2>
-<p>No changes</p>
-<h2 id="code-equivalent-2"><a class="header" href="#code-equivalent-2">Code equivalent</a></h2>
-<pre><code>temp = lhs
-lhs = rhs
-rhs = temp
-</code></pre>
-<h2 id="examples-2"><a class="header" href="#examples-2">Examples</a></h2>
-<pre><code>SWAP.B AL, AH    # Swap values in AL and AH
-SWAP.W AX, BX    # Swap values in AX and BX
-SWAP.B (AX), DH  # Swap values in DH and at memory address in AX
-</code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="add"><a class="header" href="#add">ADD</a></h1>
-<p>Add values from destination and source together and store result in destination.</p>
-<h2 id="format-3"><a class="header" href="#format-3">Format</a></h2>
-<p><code>ADD dst, src</code></p>
-<h2 id="variations-3"><a class="header" href="#variations-3">Variations</a></h2>
-<pre><code>ADD.B (R, B) (R, R) (R, I) (I, R) (I, I) (A, I) (A, R) (A, A) (A, B) (I, A) (R, A) (I, B)
-ADD.W (E, W) (E, E) (E, I) (I, E) (I, I) (A, I) (A, E) (A, A) (A, W) (I, A) (E, A) (I, W)
-</code></pre>
-<h4 id="incb-1"><a class="header" href="#incb-1">INC.B</a></h4>
-<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th></tr></thead><tbody>
-<tr><td>22</td><td>Register, Byte</td><td>2</td></tr>
-<tr><td>20</td><td>Register, Register</td><td>3</td></tr>
-<tr><td>20</td><td>Register, Indirect</td><td>5</td></tr>
-<tr><td>20</td><td>Indirect, Register</td><td>7</td></tr>
-<tr><td>20</td><td>Indirect, Indirect</td><td>9</td></tr>
-<tr><td>26</td><td>Address, Indirect</td><td>5</td></tr>
-<tr><td>26</td><td>Address, Register</td><td>3</td></tr>
-<tr><td>2A</td><td>Address, Address</td><td>3</td></tr>
-<tr><td>28</td><td>Address, Byte</td><td>2</td></tr>
-<tr><td>24</td><td>Indirect, Address</td><td>7</td></tr>
-<tr><td>22</td><td>Indirect, Byte</td><td>6</td></tr>
-<tr><td>24</td><td>Register, Address</td><td>3</td></tr>
-</tbody></table>
-<h4 id="incw-2"><a class="header" href="#incw-2">INC.W</a></h4>
-<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th></tr></thead><tbody>
-<tr><td>23</td><td>Ext. Register, Word</td><td>4</td></tr>
-<tr><td>21</td><td>Ext. Register, Ext. Register</td><td>6</td></tr>
-<tr><td>21</td><td>Ext. Register, Indirect</td><td>8</td></tr>
-<tr><td>21</td><td>Indirect, Ext. Register</td><td>10</td></tr>
-<tr><td>21</td><td>Indirect, Indirect</td><td>12</td></tr>
-<tr><td>27</td><td>Address, Indirect</td><td>8</td></tr>
-<tr><td>27</td><td>Address, Ext. Register</td><td>6</td></tr>
-<tr><td>2B</td><td>Address, Address</td><td>6</td></tr>
-<tr><td>29</td><td>Address, Word</td><td>4</td></tr>
-<tr><td>25</td><td>Indirect, Address</td><td>10</td></tr>
-<tr><td>23</td><td>Indirect, Word</td><td>8</td></tr>
-<tr><td>25</td><td>Ext. Register, Address</td><td>6</td></tr>
-</tbody></table>
-<h2 id="flags-3"><a class="header" href="#flags-3">Flags</a></h2>
-<table><thead><tr><th>Flag</th><th>Update condition</th></tr></thead><tbody>
-<tr><td>Zero</td><td>Set if result is 0, otherwise cleared</td></tr>
-<tr><td>Signed</td><td>Matches first bit of result</td></tr>
-<tr><td>Carry</td><td>Set if result is greater 255 for <code>.B</code> or 65535 for <code>.W</code>, otherwise cleared</td></tr>
-<tr><td>Less than</td><td>Always cleared</td></tr>
-<tr><td>Greater than</td><td>Always cleared</td></tr>
-<tr><td>Overflow</td><td>Set if the dst and result first bit are different, otherwise cleared</td></tr>
-<tr><td>Interrupts</td><td>-</td></tr>
-</tbody></table>
-<h2 id="code-equivalent-3"><a class="header" href="#code-equivalent-3">Code equivalent</a></h2>
-<pre><code>result = lhs + rhs
-</code></pre>
-<h2 id="examples-3"><a class="header" href="#examples-3">Examples</a></h2>
-<pre><code>ADD.B AL, 5       # Store result of AL + 5 in AL
-ADD.W (BX), $500  # Store the result of adding the values at the address in BX and at 500 at the address stored in BX 
-</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="maikor-asm-basics"><a class="header" href="#maikor-asm-basics">Maikor ASM Basics</a></h1>
 <h2 id="add-two-numbers"><a class="header" href="#add-two-numbers">Add two numbers</a></h2>
 <pre><code>cpy.b ah, 5   # set AH to 5
@@ -406,7 +193,7 @@ loop: 	cpy.b al, (dx)+   # set AL to value at address in DX, then increment DX b
 <p>At the end <code>bx</code> will be set to 1200. </p>
 <p>Normally there's no way to add a byte to a word, but by loading the byte into a lower register (e.g. AL) and setting the higher (AH) to 0, then the extended register (AX) allows the byte to be used a word.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="bytes"><a class="header" href="#bytes">Bytes</a></h1>
-<h2 id="instructions-1"><a class="header" href="#instructions-1">Instructions</a></h2>
+<h2 id="instructions"><a class="header" href="#instructions">Instructions</a></h2>
 <table><thead><tr><th></th><th align="center">x0</th><th align="center">x1</th><th align="center">x2</th><th align="center">x3</th><th align="center">x4</th><th align="center">x5</th><th align="center">x6</th><th align="center">x7</th><th align="center">x8</th><th align="center">x9</th><th align="center">xA</th><th align="center">xB</th><th align="center">xC</th><th align="center">xD</th><th align="center">xE</th><th align="center">xF</th></tr></thead><tbody>
 <tr><td>0x</td><td align="center">NOP</td><td align="center">HALT</td><td align="center">CALL<br>(A)</td><td align="center">CALL<br>(E) (I)</td><td align="center">RET</td><td align="center">RETI</td><td align="center">SWAP.B<br>(R,R)</td><td align="center">SWAP.W<br>(R,R)</td><td align="center">MCPY<br>(A,A,B)</td><td align="center">MCPY<br>(A,E,B) (A,I,B)</td><td align="center">MCPY<br>(E,A,B) (I,A,B)</td><td align="center">MCPY<br>(E,E,B) (I,E,B) (E,I,C) (I,I,C)</td><td align="center">MCPY<br>(A,A,R)</td><td align="center">MCPY<br>(A,E,R) (A,I,R)</td><td align="center">MCPY<br>(E,A,R) (I,A,R)</td><td align="center">MCPY<br>(E,E,R) (I,E,R) (E,I,R) (I,I,R)</td></tr>
 <tr><td>1x</td><td align="center">CPY.B<br>(R,R) (I,R) (R,I) (I,I)</td><td align="center">CPY.W<br>(E,E) (E,I) (I,E) (I,I)</td><td align="center">CPY.B<br>(A,R) (A,I)</td><td align="center">CPY.W<br>(A,E) (A,I)</td><td align="center">CPY.B<br>(R,A) (I,A)</td><td align="center">CPY.W<br>(E,A) (I,A)</td><td align="center">CPY.B<br>(A,A)</td><td align="center">CPY.W<br>(A,A)</td><td align="center">CPY.B<br>(R,B) (I,B)</td><td align="center">CPY.W<br>(E,W) (I,w)</td><td align="center">CPY.B<br>(A,B)</td><td align="center">CPY.W<br>(A,W)</td><td align="center">CMP.B<br>(R,A) (I,A)</td><td align="center">CMP.W<br>(E,A) (I,A)</td><td align="center">CMPS.B<br>(R,A) (I,A)</td><td align="center">CMPS.W<br>(E,A) (I,A)</td></tr>
@@ -441,7 +228,7 @@ loop: 	cpy.b al, (dx)+   # set AL to value at address in DX, then increment DX b
 <tr><td>CX</td><td>11</td><td>0B</td><td>4</td><td>2</td></tr>
 <tr><td>dX</td><td>12</td><td>0C</td><td>6</td><td>2</td></tr>
 </tbody></table>
-<h2 id="ppid-1"><a class="header" href="#ppid-1">PPID</a></h2>
+<h2 id="ppid"><a class="header" href="#ppid">PPID</a></h2>
 <table><thead><tr><th>Value</th><th>Hex</th><th>Indirect</th><th>Pre</th><th>Post</th><th>Inc</th><th>Dec</th></tr></thead><tbody>
 <tr><td>0</td><td>00</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
 <tr><td>128</td><td>80</td><td>x</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
@@ -453,6 +240,14 @@ loop: 	cpy.b al, (dx)+   # set AL to value at address in DX, then increment DX b
 <tr><td>208</td><td>D0</td><td>x</td><td>-</td><td>x</td><td>-</td><td>x</td></tr>
 <tr><td>224</td><td>E0</td><td>x</td><td>x</td><td>-</td><td>x</td><td>-</td></tr>
 <tr><td>240</td><td>F0</td><td>x</td><td>x</td><td>-</td><td>-</td><td>x</td></tr>
+</tbody></table>
+<h2 id="byte-order"><a class="header" href="#byte-order">Byte Order</a></h2>
+<p>Each instruction must be written in the following order:</p>
+<p><code>OP ARG1 ARG2.. ARG1_OFFSET ARG2_OFFSET..</code></p>
+<p>For example:</p>
+<table><thead><tr><th>Instruction</th><th>Order</th><th>Bytes</th></tr></thead><tbody>
+<tr><td><code>INC.B AL</code></td><td><code>OP ARG1</code></td><td><code>2C 01</code></td></tr>
+<tr><td><code>ADD.W $200 (AX+10)</code></td><td><code>OP ARG1 ARG2 ARG2_OFFSET</code></td><td><code>27 00 C8 B9 00 0A</code></td></tr>
 </tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="memory"><a class="header" href="#memory">Memory</a></h1>
 <h2 id="interrupt-addresses"><a class="header" href="#interrupt-addresses">Interrupt Addresses</a></h2>
@@ -688,6 +483,418 @@ This has to be polled, to get an interrupt set the input bit in <a href="mem.htm
 <tr><td align="center">CX</td><td align="center">0B</td><td align="center">8B</td><td align="center">7B</td><td align="center">6B</td><td align="center">5B</td><td align="center">4B</td><td align="center">FB</td><td align="center">EB</td><td align="center">DB</td><td align="center">CB</td><td align="center">9B</td><td align="center">AB</td><td align="center">BB</td></tr>
 <tr><td align="center">DX</td><td align="center">0C</td><td align="center">8C</td><td align="center">7C</td><td align="center">6C</td><td align="center">5C</td><td align="center">4C</td><td align="center">FC</td><td align="center">EC</td><td align="center">DC</td><td align="center">CC</td><td align="center">9C</td><td align="center">AC</td><td align="center">BC</td></tr>
 </tbody></table>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="instructions-1"><a class="header" href="#instructions-1">Instructions</a></h1>
+<blockquote>
+<p>Also called commands, operations and ops</p>
+</blockquote>
+<h2 id="arguments"><a class="header" href="#arguments">Arguments</a></h2>
+<blockquote>
+<p>Also called args and params, operands</p>
+</blockquote>
+<table><thead><tr><th>Key</th><th>Name</th><th>Examples</th><th>Bytes</th></tr></thead><tbody>
+<tr><td><code>R</code></td><td>Register</td><td><code>AL</code>, <code>CH</code></td><td>1</td></tr>
+<tr><td><code>E</code></td><td>Extended Register</td><td><code>BX</code>, <code>CX</code></td><td>1</td></tr>
+<tr><td><code>I</code></td><td>Indirect Register</td><td><code>(AX)</code>, <code>(BX)</code></td><td>1</td></tr>
+<tr><td><code>B</code></td><td>Byte</td><td><code>45</code>, <code>xF1</code></td><td>1</td></tr>
+<tr><td><code>W</code></td><td>Word</td><td><code>451</code>, <code>x3A0</code></td><td>2</td></tr>
+<tr><td><code>A</code></td><td>Address</td><td><code>$1102</code>,<code>$xFF12</code></td><td>2</td></tr>
+</tbody></table>
+<h3 id="ppid-1"><a class="header" href="#ppid-1">PPID</a></h3>
+<blockquote>
+<p>Pre/Post Inc/Dec</p>
+</blockquote>
+<p>PPID allowed you to increment decrement a register before or after using that register in an op.</p>
+<p>Registers are changed by 1 and extended/indirect registers are changed by 2.</p>
+<p>For example, with</p>
+<pre><code>CPY.W AX 1000
+INC.B -(AX)
+</code></pre>
+<ul>
+<li><code>AX</code> is set to 1000</li>
+<li><code>AX</code> is set to 998</li>
+<li>The value at <code>$998</code> is incremented </li>
+</ul>
+<p>and with</p>
+<pre><code>CPY.B AL 5
+CPY.B AH AL-
+</code></pre>
+<ul>
+<li><code>AL</code> is set to 5</li>
+<li><code>AH</code> is set to 5</li>
+<li><code>AL</code> is set to 4</li>
+</ul>
+<p>PPID works on any <code>R</code>, <code>E</code>, or <code>I</code> args in any instruction. Increments and decrements are wrapping, and the flags are set based on the result of an operation before the post inc/dec changes.</p>
+<h2 id="cycles"><a class="header" href="#cycles">Cycles</a></h2>
+<p>Each instruction has a base time cost shown below and on the instruction pages. Using index addressing adds the following cost:</p>
+<table><thead><tr><th>Variant</th><th>Cost</th><th>Example</th></tr></thead><tbody>
+<tr><td>with reg</td><td>1</td><td><code>(ax+al)</code></td></tr>
+<tr><td>with ext reg</td><td>2</td><td><code>(ax+bx)</code></td></tr>
+<tr><td>with num</td><td>0</td><td><code>(ax+10)</code></td></tr>
+</tbody></table>
+<p>The cycles can be calculated by adding the cost of the arguments:</p>
+<table><thead><tr><th>Argument type</th><th>Size</th></tr></thead><tbody>
+<tr><td>Register</td><td>1</td></tr>
+<tr><td>Ext. Register</td><td>2</td></tr>
+<tr><td>Indirect Register</td><td>3</td></tr>
+<tr><td>Byte</td><td>1</td></tr>
+<tr><td>Word</td><td>2</td></tr>
+<tr><td>Address</td><td>2</td></tr>
+</tbody></table>
+<p>Note that these apply when reading and writing, so <code>INC.B AL</code> costs 2 as it has to read and write <code>AL</code>.</p>
+<p>As this is a VM the costs are approximated based on instruction execution duration. </p>
+<h2 id="size"><a class="header" href="#size">Size</a></h2>
+<p>Each instruction also has a base size in bytes, shown each page. Using index addressing adds the following size:</p>
+<table><thead><tr><th>Variant</th><th>Size</th></tr></thead><tbody>
+<tr><td>with reg</td><td>1</td></tr>
+<tr><td>with ext reg</td><td>1</td></tr>
+<tr><td>with num</td><td>2</td></tr>
+</tbody></table>
+<p>The size can be calculated by adding the size of the arguments:</p>
+<table><thead><tr><th>Argument type</th><th>Size</th></tr></thead><tbody>
+<tr><td>Register</td><td>1</td></tr>
+<tr><td>Ext. Register</td><td>1</td></tr>
+<tr><td>Indirect Register</td><td>1</td></tr>
+<tr><td>Byte</td><td>1</td></tr>
+<tr><td>Word</td><td>2</td></tr>
+<tr><td>Address</td><td>2</td></tr>
+</tbody></table>
+<p>The instruction is always 1 byte.</p>
+<p><strong>Examples</strong></p>
+<table><thead><tr><th>Example</th><th>Size</th><th>Cycles</th></tr></thead><tbody>
+<tr><td><code>INC.B AL</code></td><td>2</td><td>2</td></tr>
+<tr><td><code>ADD.W AX, 30</code></td><td>4</td><td>4</td></tr>
+<tr><td><code>SWAP.B (AX+1), (BX+AL)</code></td><td>6</td><td>20</td></tr>
+</tbody></table>
+<h2 id="instruction-list"><a class="header" href="#instruction-list">Instruction List</a></h2>
+<table><thead><tr><th>Name</th><th>Size variants</th><th>Args</th><th>Base cycles</th></tr></thead><tbody>
+<tr><td><a href="./ops/inc.html">INC</a></td><td><code>B</code>, <code>W</code></td><td><code>(R)</code>, <code>(E)</code>, <code>(I)</code>, <code>(A)</code></td><td>2-8</td></tr>
+<tr><td><a href="./ops/dec.html">DEC</a></td><td><code>B</code>, <code>W</code></td><td><code>(R)</code>, <code>(E)</code>, <code>(I)</code>, <code>(A)</code></td><td>2-8</td></tr>
+<tr><td><a href="./ops/swap.html">SWAP</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code></td><td>1-16</td></tr>
+<tr><td><a href="./ops/add.html">ADD</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
+<tr><td><a href="./ops/sub.html">SUB</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
+<tr><td><a href="./ops/mul.html">MUL</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
+<tr><td><a href="./ops/div.html">DIV</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
+<tr><td><a href="./ops/muls.html">MULS</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
+<tr><td><a href="./ops/divs.html">DIVS</a></td><td><code>B</code>, <code>W</code></td><td><code>(R,B)</code>, <code>(R,R)</code>, <code>(R,I)</code>, <code>(I,R)</code>, <code>(I,I)</code>, <code>(R,A)</code>, <code>(I,A)</code>, <code>(A,I)</code>, <code>(A,R)</code>, <code>(A,B)</code>, <code>(E,W)</code>, <code>(E,E)</code>, <code>(E,I)</code>, <code>(I,E)</code>, <code>(A,E)</code>, <code>(A,A)</code>, <code>(A,W)</code>, <code>(E,A)</code>, <code>(I,B)</code>, <code>(I,W)</code></td><td>2-12</td></tr>
+</tbody></table>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="inc"><a class="header" href="#inc">INC</a></h1>
+<p>Increases value in register or value at memory address in pointer by 1.</p>
+<h2 id="format"><a class="header" href="#format">Format</a></h2>
+<p><code>INC value</code></p>
+<h2 id="variations"><a class="header" href="#variations">Variations</a></h2>
+<pre><code>INC.B (R) (I) (A)
+INC.W (E) (I) (A)
+</code></pre>
+<h4 id="incb"><a class="header" href="#incb">INC.B</a></h4>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th><th>Size</th><th>Byte order</th></tr></thead><tbody>
+<tr><td>2C</td><td>Register</td><td>2</td><td>1</td><td>reg(1)</td></tr>
+<tr><td>2C</td><td>Indirect</td><td>6</td><td>1 - 3</td><td>reg(1) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>2E</td><td>Address</td><td>2</td><td>2</td><td>addr(2)</td></tr>
+</tbody></table>
+<h4 id="incw"><a class="header" href="#incw">INC.W</a></h4>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th><th>Size</th><th>Byte order</th></tr></thead><tbody>
+<tr><td>2D</td><td>Ext. Register</td><td>4</td><td>1</td><td>reg(1)</td></tr>
+<tr><td>2D</td><td>Indirect</td><td>8</td><td>1 - 3</td><td>reg(1) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>2F</td><td>Address</td><td>4</td><td>2</td><td>addr(2)</td></tr>
+</tbody></table>
+<h2 id="flags"><a class="header" href="#flags">Flags</a></h2>
+<p>No changes</p>
+<h2 id="code-equivalent"><a class="header" href="#code-equivalent">Code equivalent</a></h2>
+<pre><code>value++
+</code></pre>
+<h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
+<pre><code>INC.B AL      # Increase AL by 1
+INC.B $6003   # Increase value at 6003 by 1
+INC.B (AX)    # Increase value at address in AX by 1
+INC.W AX      # Increase AX by 1
+INC.W $6700   # Increase value at [6700,6701] by 1
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="dec"><a class="header" href="#dec">DEC</a></h1>
+<p>Decreases value in register or value at memory address in pointer by 1.</p>
+<h2 id="format-1"><a class="header" href="#format-1">Format</a></h2>
+<p><code>DEC value</code></p>
+<h2 id="variations-1"><a class="header" href="#variations-1">Variations</a></h2>
+<pre><code>DEC.B (R) (I) (A)
+DEC.W (E) (I) (A)
+</code></pre>
+<h4 id="decb"><a class="header" href="#decb">DEC.B</a></h4>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th><th>Size</th><th>Byte order</th></tr></thead><tbody>
+<tr><td>2C</td><td>Register</td><td>2</td><td>1</td><td>reg(1)</td></tr>
+<tr><td>2C</td><td>Indirect</td><td>6</td><td>1 - 3</td><td>reg(1) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>2E</td><td>Address</td><td>2</td><td>2</td><td>addr(2)</td></tr>
+</tbody></table>
+<h4 id="decw"><a class="header" href="#decw">DEC.W</a></h4>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th><th>Size</th><th>Byte order</th></tr></thead><tbody>
+<tr><td>2D</td><td>Ext. Register</td><td>4</td><td>1</td><td>reg(1)</td></tr>
+<tr><td>2D</td><td>Indirect</td><td>8</td><td>1 - 3</td><td>reg(1) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>2F</td><td>Address</td><td>4</td><td>2</td><td>addr(2)</td></tr>
+</tbody></table>
+<h2 id="flags-1"><a class="header" href="#flags-1">Flags</a></h2>
+<p>No changes</p>
+<h2 id="code-equivalent-1"><a class="header" href="#code-equivalent-1">Code equivalent</a></h2>
+<pre><code>value++
+</code></pre>
+<h2 id="examples-1"><a class="header" href="#examples-1">Examples</a></h2>
+<pre><code>DEC.B AL      # Decrease AL by 1
+DEC.B $6003   # Decrease value at 6003 by 1
+DEC.B (AX)    # Decrease value at address in AX by 1
+DEC.W AX      # Decrease AX by 1
+DEC.W $6700   # Decrease value at [6700,6701] by 1
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="swap"><a class="header" href="#swap">SWAP</a></h1>
+<p>Swap values in registers or values at memory addresses in pointers.</p>
+<h2 id="format-2"><a class="header" href="#format-2">Format</a></h2>
+<p><code>SWAP lhs, rhs</code></p>
+<h2 id="variations-2"><a class="header" href="#variations-2">Variations</a></h2>
+<pre><code>SWAP.B (RR) (RI) (IR) (II)
+SWAP.W (EE) (EI) (IE) (II)
+</code></pre>
+<h4 id="swapb"><a class="header" href="#swapb">SWAP.B</a></h4>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th><th>Size</th><th>Byte order</th></tr></thead><tbody>
+<tr><td>06</td><td>Register, Register</td><td>1</td><td>2</td><td>lhs(1) rhs(1)</td></tr>
+<tr><td>06</td><td>Register, Indirect</td><td>8</td><td>2 - 4</td><td>lhs(1) rhs(1)  &lt;rhs offset&gt;(1-2)</td></tr>
+<tr><td>06</td><td>Indirect, Register</td><td>8</td><td>2 - 4</td><td>lhs(1) rhs(1) &lt;lhs offset&gt;(1-2)</td></tr>
+<tr><td>06</td><td>Indirect, Indirect</td><td>12</td><td>2 - 6</td><td>lhs(1) rhs(1) &lt;lhs offset&gt;(1-2) &lt;rhs offset&gt;(1-2)</td></tr>
+</tbody></table>
+<h4 id="incw-1"><a class="header" href="#incw-1">INC.W</a></h4>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th><th>Size</th><th>Byte order</th></tr></thead><tbody>
+<tr><td>07</td><td>Ext. Register, Ext. Register</td><td>1</td><td>2</td><td>lhs(1) rhs(1)</td></tr>
+<tr><td>07</td><td>Ext. Register, Indirect</td><td>12</td><td>2 - 4</td><td>lhs(1) rhs(1)  &lt;rhs offset&gt;(1-2)</td></tr>
+<tr><td>07</td><td>Indirect, Ext. Register</td><td>12</td><td>2 - 4</td><td>lhs(1) rhs(1) &lt;lhs offset&gt;(1-2)</td></tr>
+<tr><td>07</td><td>Ext. Register, Ext. Register</td><td>16</td><td>2 - 6</td><td>lhs(1) rhs(1) &lt;lhs offset&gt;(1-2) &lt;rhs offset&gt;(1-2)</td></tr>
+</tbody></table>
+<h2 id="flags-2"><a class="header" href="#flags-2">Flags</a></h2>
+<p>No changes</p>
+<h2 id="code-equivalent-2"><a class="header" href="#code-equivalent-2">Code equivalent</a></h2>
+<pre><code>temp = lhs
+lhs = rhs
+rhs = temp
+</code></pre>
+<h2 id="examples-2"><a class="header" href="#examples-2">Examples</a></h2>
+<pre><code>SWAP.B AL, AH    # Swap values in AL and AH
+SWAP.W AX, BX    # Swap values in AX and BX
+SWAP.B (AX), DH  # Swap values in DH and at memory address in AX
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="add"><a class="header" href="#add">ADD</a></h1>
+<p>Add values from destination and source together and store result in destination.</p>
+<h2 id="format-3"><a class="header" href="#format-3">Format</a></h2>
+<p><code>ADD dst, src</code></p>
+<h2 id="variations-3"><a class="header" href="#variations-3">Variations</a></h2>
+<pre><code>ADD.B (R, B) (R, R) (R, I) (I, R) (I, I) (A, I) (A, R) (A, A) (A, B) (I, A) (R, A) (I, B)
+ADD.W (E, W) (E, E) (E, I) (I, E) (I, I) (A, I) (A, E) (A, A) (A, W) (I, A) (E, A) (I, W)
+</code></pre>
+<h4 id="incb-1"><a class="header" href="#incb-1">INC.B</a></h4>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th><th>Size</th><th>Byte order</th></tr></thead><tbody>
+<tr><td>22</td><td>Register, Byte</td><td>2</td><td>2</td><td>reg(1) byte(1)</td></tr>
+<tr><td>20</td><td>Register, Register</td><td>3</td><td>2</td><td>reg(1) reg(1)</td></tr>
+<tr><td>20</td><td>Register, Indirect</td><td>5</td><td>2 - 4</td><td>reg(1) reg(1) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>20</td><td>Indirect, Register</td><td>7</td><td>2 - 4</td><td>reg(1) reg(1) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>20</td><td>Indirect, Indirect</td><td>9</td><td>2 - 6</td><td>reg(1) reg(1) &lt;offset&gt;(1-2) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>26</td><td>Address, Indirect</td><td>5</td><td>3 - 5</td><td>addr(2) reg(1) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>26</td><td>Address, Register</td><td>3</td><td>3</td><td>addr(2) reg(1)</td></tr>
+<tr><td>2A</td><td>Address, Address</td><td>3</td><td>4</td><td>addr(2) addr(2)</td></tr>
+<tr><td>28</td><td>Address, Byte</td><td>2</td><td>3</td><td>addr(2) byte(1)</td></tr>
+<tr><td>24</td><td>Indirect, Address</td><td>7</td><td>3-5</td><td>reg(1) addr(2) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>22</td><td>Indirect, Byte</td><td>6</td><td>2-4</td><td>reg(1) byte(1) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>24</td><td>Register, Address</td><td>3</td><td>3</td><td>reg(1) addr(2)</td></tr>
+</tbody></table>
+<h4 id="incw-2"><a class="header" href="#incw-2">INC.W</a></h4>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th><th>Size</th><th>Byte order</th></tr></thead><tbody>
+<tr><td>23</td><td>Ext. Register, Word</td><td>4</td><td>3</td><td>reg(1) word(2)</td></tr>
+<tr><td>21</td><td>Ext. Register, Ext. Register</td><td>6</td><td>2</td><td>reg(1) reg(1)</td></tr>
+<tr><td>21</td><td>Ext. Register, Indirect</td><td>8</td><td>2 - 4</td><td>reg(1) reg(1) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>21</td><td>Indirect, Ext. Register</td><td>10</td><td>2 - 4</td><td>reg(1) reg(1) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>21</td><td>Indirect, Indirect</td><td>12</td><td>2 - 6</td><td>reg(1) reg(1) &lt;offset&gt;(1-2) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>27</td><td>Address, Indirect</td><td>8</td><td>3 - 5</td><td>addr(2) reg(1) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>27</td><td>Address, Ext. Register</td><td>6</td><td>3</td><td>addr(2) reg(1)</td></tr>
+<tr><td>2B</td><td>Address, Address</td><td>6</td><td>4</td><td>addr(2) addr(2)</td></tr>
+<tr><td>29</td><td>Address, Word</td><td>4</td><td>4</td><td>addr(2) word(2)</td></tr>
+<tr><td>25</td><td>Indirect, Address</td><td>10</td><td>3-5</td><td>reg(1) addr(2) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>23</td><td>Indirect, Word</td><td>8</td><td>3-5</td><td>reg(1) word(2) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>25</td><td>Ext. Register, Address</td><td>6</td><td>3</td><td>reg(1) addr(2)</td></tr>
+</tbody></table>
+<h2 id="flags-3"><a class="header" href="#flags-3">Flags</a></h2>
+<table><thead><tr><th>Flag</th><th>Update condition</th></tr></thead><tbody>
+<tr><td>Zero</td><td>Set if result is 0, otherwise cleared</td></tr>
+<tr><td>Signed</td><td>Matches first bit of result</td></tr>
+<tr><td>Carry</td><td>Set if result is greater 255 for <code>.B</code> or 65535 for <code>.W</code>, otherwise cleared</td></tr>
+<tr><td>Less than</td><td>Always cleared</td></tr>
+<tr><td>Greater than</td><td>Always cleared</td></tr>
+<tr><td>Overflow</td><td>Set if the dst and result first bit are different, otherwise cleared</td></tr>
+<tr><td>Interrupts</td><td>-</td></tr>
+</tbody></table>
+<h2 id="code-equivalent-3"><a class="header" href="#code-equivalent-3">Code equivalent</a></h2>
+<pre><code>result = lhs + rhs
+</code></pre>
+<h2 id="examples-3"><a class="header" href="#examples-3">Examples</a></h2>
+<pre><code>ADD.B AL, 5       # Store result of AL + 5 in AL
+ADD.W (BX), $500  # Store the result of adding the values at the address in BX and at 500 at the address stored in BX 
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sub"><a class="header" href="#sub">SUB</a></h1>
+<p>Subtract source from destination and store result in destination.</p>
+<h2 id="format-4"><a class="header" href="#format-4">Format</a></h2>
+<p><code>SUB dst, src</code></p>
+<h2 id="variations-4"><a class="header" href="#variations-4">Variations</a></h2>
+<pre><code>SUB.B (R, B) (R, R) (R, I) (I, R) (I, I) (A, I) (A, R) (A, A) (A, B) (I, A) (R, A) (I, B)
+SUB.W (E, W) (E, E) (E, I) (I, E) (I, I) (A, I) (A, E) (A, A) (A, W) (I, A) (E, A) (I, W)
+</code></pre>
+<h4 id="incb-2"><a class="header" href="#incb-2">INC.B</a></h4>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th><th>Size</th><th>Byte order</th></tr></thead><tbody>
+<tr><td>32</td><td>Register, Byte</td><td>2</td><td>2</td><td>reg(1) byte(1)</td></tr>
+<tr><td>30</td><td>Register, Register</td><td>3</td><td>2</td><td>reg(1) reg(1)</td></tr>
+<tr><td>30</td><td>Register, Indirect</td><td>5</td><td>2 - 4</td><td>reg(1) reg(1) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>30</td><td>Indirect, Register</td><td>7</td><td>2 - 4</td><td>reg(1) reg(1) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>30</td><td>Indirect, Indirect</td><td>9</td><td>2 - 6</td><td>reg(1) reg(1) &lt;offset&gt;(1-2) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>36</td><td>Address, Indirect</td><td>5</td><td>3 - 5</td><td>addr(2) reg(1) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>36</td><td>Address, Register</td><td>3</td><td>3</td><td>addr(2) reg(1)</td></tr>
+<tr><td>3A</td><td>Address, Address</td><td>3</td><td>4</td><td>addr(2) addr(2)</td></tr>
+<tr><td>38</td><td>Address, Byte</td><td>2</td><td>3</td><td>addr(2) byte(1)</td></tr>
+<tr><td>34</td><td>Indirect, Address</td><td>7</td><td>3-5</td><td>reg(1) addr(2) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>32</td><td>Indirect, Byte</td><td>6</td><td>2-4</td><td>reg(1) byte(1) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>34</td><td>Register, Address</td><td>3</td><td>3</td><td>reg(1) addr(2)</td></tr>
+</tbody></table>
+<h4 id="incw-3"><a class="header" href="#incw-3">INC.W</a></h4>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th><th>Size</th><th>Byte order</th></tr></thead><tbody>
+<tr><td>33</td><td>Ext. Register, Word</td><td>4</td><td>3</td><td>reg(1) word(2)</td></tr>
+<tr><td>31</td><td>Ext. Register, Ext. Register</td><td>6</td><td>2</td><td>reg(1) reg(1)</td></tr>
+<tr><td>31</td><td>Ext. Register, Indirect</td><td>8</td><td>2 - 4</td><td>reg(1) reg(1) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>31</td><td>Indirect, Ext. Register</td><td>10</td><td>2 - 4</td><td>reg(1) reg(1) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>31</td><td>Indirect, Indirect</td><td>12</td><td>2 - 6</td><td>reg(1) reg(1) &lt;offset&gt;(1-2) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>37</td><td>Address, Indirect</td><td>8</td><td>3 - 5</td><td>addr(2) reg(1) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>37</td><td>Address, Ext. Register</td><td>6</td><td>3</td><td>addr(2) reg(1)</td></tr>
+<tr><td>3B</td><td>Address, Address</td><td>6</td><td>4</td><td>addr(2) addr(2)</td></tr>
+<tr><td>39</td><td>Address, Word</td><td>4</td><td>4</td><td>addr(2) word(2)</td></tr>
+<tr><td>35</td><td>Indirect, Address</td><td>10</td><td>3-5</td><td>reg(1) addr(2) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>33</td><td>Indirect, Word</td><td>8</td><td>3-5</td><td>reg(1) word(2) &lt;offset&gt;(1-2)</td></tr>
+<tr><td>35</td><td>Ext. Register, Address</td><td>6</td><td>3</td><td>reg(1) addr(2)</td></tr>
+</tbody></table>
+<h2 id="flags-4"><a class="header" href="#flags-4">Flags</a></h2>
+<table><thead><tr><th>Flag</th><th>Update condition</th></tr></thead><tbody>
+<tr><td>Zero</td><td>Set if result is 0, otherwise cleared</td></tr>
+<tr><td>Signed</td><td>Matches first bit of result</td></tr>
+<tr><td>Carry</td><td>Set if result is greater 255 for <code>.B</code> or 65535 for <code>.W</code>, otherwise cleared</td></tr>
+<tr><td>Less than</td><td>Always cleared</td></tr>
+<tr><td>Greater than</td><td>Always cleared</td></tr>
+<tr><td>Overflow</td><td>Set if the dst and result first bit are different, otherwise cleared</td></tr>
+<tr><td>Interrupts</td><td>-</td></tr>
+</tbody></table>
+<h2 id="code-equivalent-4"><a class="header" href="#code-equivalent-4">Code equivalent</a></h2>
+<pre><code>result = lhs - rhs
+</code></pre>
+<h2 id="examples-4"><a class="header" href="#examples-4">Examples</a></h2>
+<pre><code>SUB.B AL, 5       # Store result of AL - 5 in AL
+SUB.W (BX), $500  # Store the result of subtracting the value at 500 from the value at the address in BX and store the result at the address in BX 
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="mul"><a class="header" href="#mul">MUL</a></h1>
+<p>Multiply values from destination and source together and store result in destination.</p>
+<h2 id="format-5"><a class="header" href="#format-5">Format</a></h2>
+<p><code>MUL dst, src</code></p>
+<h2 id="variations-5"><a class="header" href="#variations-5">Variations</a></h2>
+<pre><code>MUL.B (R, B) (R, R) (R, I) (I, R) (I, I) (A, I) (A, R) (A, A) (A, B) (I, A) (R, A) (I, B)
+MUL.W (E, W) (E, E) (E, I) (I, E) (I, I) (A, I) (A, E) (A, A) (A, W) (I, A) (E, A) (I, W)
+</code></pre>
+<h4 id="incb-3"><a class="header" href="#incb-3">INC.B</a></h4>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th></tr></thead><tbody>
+<tr><td>82</td><td>Register, Byte</td><td>2</td></tr>
+<tr><td>80</td><td>Register, Register</td><td>3</td></tr>
+<tr><td>80</td><td>Register, Indirect</td><td>5</td></tr>
+<tr><td>80</td><td>Indirect, Register</td><td>7</td></tr>
+<tr><td>80</td><td>Indirect, Indirect</td><td>9</td></tr>
+<tr><td>86</td><td>Address, Indirect</td><td>5</td></tr>
+<tr><td>86</td><td>Address, Register</td><td>3</td></tr>
+<tr><td>8A</td><td>Address, Address</td><td>3</td></tr>
+<tr><td>88</td><td>Address, Byte</td><td>2</td></tr>
+<tr><td>84</td><td>Indirect, Address</td><td>7</td></tr>
+<tr><td>82</td><td>Indirect, Byte</td><td>6</td></tr>
+<tr><td>84</td><td>Register, Address</td><td>3</td></tr>
+</tbody></table>
+<h4 id="incw-4"><a class="header" href="#incw-4">INC.W</a></h4>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th></tr></thead><tbody>
+<tr><td>83</td><td>Ext. Register, Word</td><td>4</td></tr>
+<tr><td>81</td><td>Ext. Register, Ext. Register</td><td>6</td></tr>
+<tr><td>81</td><td>Ext. Register, Indirect</td><td>8</td></tr>
+<tr><td>81</td><td>Indirect, Ext. Register</td><td>10</td></tr>
+<tr><td>81</td><td>Indirect, Indirect</td><td>12</td></tr>
+<tr><td>87</td><td>Address, Indirect</td><td>8</td></tr>
+<tr><td>87</td><td>Address, Ext. Register</td><td>6</td></tr>
+<tr><td>8B</td><td>Address, Address</td><td>6</td></tr>
+<tr><td>89</td><td>Address, Word</td><td>4</td></tr>
+<tr><td>85</td><td>Indirect, Address</td><td>10</td></tr>
+<tr><td>83</td><td>Indirect, Word</td><td>8</td></tr>
+<tr><td>85</td><td>Ext. Register, Address</td><td>6</td></tr>
+</tbody></table>
+<h2 id="flags-5"><a class="header" href="#flags-5">Flags</a></h2>
+<table><thead><tr><th>Flag</th><th>Update condition</th></tr></thead><tbody>
+<tr><td>Zero</td><td>Set if result is 0, otherwise cleared</td></tr>
+<tr><td>Signed</td><td>Matches first bit of result</td></tr>
+<tr><td>Carry</td><td>Set if result is greater 255 for <code>.B</code> or 65535 for <code>.W</code>, otherwise cleared</td></tr>
+<tr><td>Less than</td><td>Always cleared</td></tr>
+<tr><td>Greater than</td><td>Always cleared</td></tr>
+<tr><td>Overflow</td><td>Set if the dst and result first bit are different, otherwise cleared</td></tr>
+<tr><td>Interrupts</td><td>-</td></tr>
+</tbody></table>
+<h2 id="code-equivalent-5"><a class="header" href="#code-equivalent-5">Code equivalent</a></h2>
+<pre><code>result = lhs * rhs
+</code></pre>
+<h2 id="examples-5"><a class="header" href="#examples-5">Examples</a></h2>
+<pre><code>MUL.B AL, 5       # Store result of AL * 5 in AL
+MUL.W (BX), $500  # Store the result of multiplying the values at the address in BX and at 500 at the address stored in BX 
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="div"><a class="header" href="#div">DIV</a></h1>
+<p>Divide destination by source and store result in destination.</p>
+<h2 id="format-6"><a class="header" href="#format-6">Format</a></h2>
+<p><code>DIV dst, src</code></p>
+<h2 id="variations-6"><a class="header" href="#variations-6">Variations</a></h2>
+<pre><code>DIV.B (R, B) (R, R) (R, I) (I, R) (I, I) (A, I) (A, R) (A, A) (A, B) (I, A) (R, A) (I, B)
+DIV.W (E, W) (E, E) (E, I) (I, E) (I, I) (A, I) (A, E) (A, A) (A, W) (I, A) (E, A) (I, W)
+</code></pre>
+<h4 id="incb-4"><a class="header" href="#incb-4">INC.B</a></h4>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th></tr></thead><tbody>
+<tr><td>9A</td><td>Register, Byte</td><td>2</td></tr>
+<tr><td>98</td><td>Register, Register</td><td>3</td></tr>
+<tr><td>98</td><td>Register, Indirect</td><td>5</td></tr>
+<tr><td>98</td><td>Indirect, Register</td><td>7</td></tr>
+<tr><td>98</td><td>Indirect, Indirect</td><td>9</td></tr>
+<tr><td>9E</td><td>Address, Indirect</td><td>5</td></tr>
+<tr><td>9E</td><td>Address, Register</td><td>3</td></tr>
+<tr><td>A2</td><td>Address, Address</td><td>3</td></tr>
+<tr><td>A0</td><td>Address, Byte</td><td>2</td></tr>
+<tr><td>9C</td><td>Indirect, Address</td><td>7</td></tr>
+<tr><td>9A</td><td>Indirect, Byte</td><td>6</td></tr>
+<tr><td>9C</td><td>Register, Address</td><td>3</td></tr>
+</tbody></table>
+<h4 id="incw-5"><a class="header" href="#incw-5">INC.W</a></h4>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th></tr></thead><tbody>
+<tr><td>9B</td><td>Ext. Register, Word</td><td>4</td></tr>
+<tr><td>99</td><td>Ext. Register, Ext. Register</td><td>6</td></tr>
+<tr><td>99</td><td>Ext. Register, Indirect</td><td>8</td></tr>
+<tr><td>99</td><td>Indirect, Ext. Register</td><td>10</td></tr>
+<tr><td>99</td><td>Indirect, Indirect</td><td>12</td></tr>
+<tr><td>9F</td><td>Address, Indirect</td><td>8</td></tr>
+<tr><td>9F</td><td>Address, Ext. Register</td><td>6</td></tr>
+<tr><td>A3</td><td>Address, Address</td><td>6</td></tr>
+<tr><td>A1</td><td>Address, Word</td><td>4</td></tr>
+<tr><td>9D</td><td>Indirect, Address</td><td>10</td></tr>
+<tr><td>9B</td><td>Indirect, Word</td><td>8</td></tr>
+<tr><td>9D</td><td>Ext. Register, Address</td><td>6</td></tr>
+</tbody></table>
+<h2 id="flags-6"><a class="header" href="#flags-6">Flags</a></h2>
+<table><thead><tr><th>Flag</th><th>Update condition</th></tr></thead><tbody>
+<tr><td>Zero</td><td>Set if result is 0, otherwise cleared</td></tr>
+<tr><td>Signed</td><td>Matches first bit of result</td></tr>
+<tr><td>Carry</td><td>Set if result is greater 255 for <code>.B</code> or 65535 for <code>.W</code>, otherwise cleared</td></tr>
+<tr><td>Less than</td><td>Always cleared</td></tr>
+<tr><td>Greater than</td><td>Always cleared</td></tr>
+<tr><td>Overflow</td><td>Set if the dst and result first bit are different, otherwise cleared</td></tr>
+<tr><td>Interrupts</td><td>-</td></tr>
+</tbody></table>
+<h2 id="code-equivalent-6"><a class="header" href="#code-equivalent-6">Code equivalent</a></h2>
+<pre><code>result = lhs / rhs
+</code></pre>
+<h2 id="examples-6"><a class="header" href="#examples-6">Examples</a></h2>
+<pre><code>DIV.B AL, 5       # Store result of AL / 5 in AL
+DIV.W (BX), $500  # Store the result of dividing the value at 500 from the value at the address in BX and store the result at the address in BX 
+</code></pre>
 
                     </main>
 

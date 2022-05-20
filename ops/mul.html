@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>ADD - Maikor Docs</title>
+        <title>MUL - Maikor Docs</title>
                 
 
         <!-- Custom HTML head -->
@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="../basics.html"><strong aria-hidden="true">1.</strong> Maikor ASM Basics</a></li><li class="chapter-item expanded "><a href="../bytes.html"><strong aria-hidden="true">2.</strong> Bytes</a></li><li class="chapter-item expanded "><a href="../mem.html"><strong aria-hidden="true">3.</strong> Memory</a></li><li class="chapter-item expanded "><a href="../reg_values.html"><strong aria-hidden="true">4.</strong> Register values</a></li><li class="chapter-item expanded "><a href="../ops.html"><strong aria-hidden="true">5.</strong> Instructions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../ops/inc.html"><strong aria-hidden="true">5.1.</strong> INC</a></li><li class="chapter-item expanded "><a href="../ops/dec.html"><strong aria-hidden="true">5.2.</strong> DEC</a></li><li class="chapter-item expanded "><a href="../ops/swap.html"><strong aria-hidden="true">5.3.</strong> SWAP</a></li><li class="chapter-item expanded "><a href="../ops/add.html" class="active"><strong aria-hidden="true">5.4.</strong> ADD</a></li><li class="chapter-item expanded "><a href="../ops/sub.html"><strong aria-hidden="true">5.5.</strong> SUB</a></li><li class="chapter-item expanded "><a href="../ops/mul.html"><strong aria-hidden="true">5.6.</strong> MUL</a></li><li class="chapter-item expanded "><a href="../ops/div.html"><strong aria-hidden="true">5.7.</strong> DIV</a></li></ol></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="../basics.html"><strong aria-hidden="true">1.</strong> Maikor ASM Basics</a></li><li class="chapter-item expanded "><a href="../bytes.html"><strong aria-hidden="true">2.</strong> Bytes</a></li><li class="chapter-item expanded "><a href="../mem.html"><strong aria-hidden="true">3.</strong> Memory</a></li><li class="chapter-item expanded "><a href="../reg_values.html"><strong aria-hidden="true">4.</strong> Register values</a></li><li class="chapter-item expanded "><a href="../ops.html"><strong aria-hidden="true">5.</strong> Instructions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../ops/inc.html"><strong aria-hidden="true">5.1.</strong> INC</a></li><li class="chapter-item expanded "><a href="../ops/dec.html"><strong aria-hidden="true">5.2.</strong> DEC</a></li><li class="chapter-item expanded "><a href="../ops/swap.html"><strong aria-hidden="true">5.3.</strong> SWAP</a></li><li class="chapter-item expanded "><a href="../ops/add.html"><strong aria-hidden="true">5.4.</strong> ADD</a></li><li class="chapter-item expanded "><a href="../ops/sub.html"><strong aria-hidden="true">5.5.</strong> SUB</a></li><li class="chapter-item expanded "><a href="../ops/mul.html" class="active"><strong aria-hidden="true">5.6.</strong> MUL</a></li><li class="chapter-item expanded "><a href="../ops/div.html"><strong aria-hidden="true">5.7.</strong> DIV</a></li></ol></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -143,43 +143,43 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="add"><a class="header" href="#add">ADD</a></h1>
-<p>Add values from destination and source together and store result in destination.</p>
+                        <h1 id="mul"><a class="header" href="#mul">MUL</a></h1>
+<p>Multiply values from destination and source together and store result in destination.</p>
 <h2 id="format"><a class="header" href="#format">Format</a></h2>
-<p><code>ADD dst, src</code></p>
+<p><code>MUL dst, src</code></p>
 <h2 id="variations"><a class="header" href="#variations">Variations</a></h2>
-<pre><code>ADD.B (R, B) (R, R) (R, I) (I, R) (I, I) (A, I) (A, R) (A, A) (A, B) (I, A) (R, A) (I, B)
-ADD.W (E, W) (E, E) (E, I) (I, E) (I, I) (A, I) (A, E) (A, A) (A, W) (I, A) (E, A) (I, W)
+<pre><code>MUL.B (R, B) (R, R) (R, I) (I, R) (I, I) (A, I) (A, R) (A, A) (A, B) (I, A) (R, A) (I, B)
+MUL.W (E, W) (E, E) (E, I) (I, E) (I, I) (A, I) (A, E) (A, A) (A, W) (I, A) (E, A) (I, W)
 </code></pre>
 <h4 id="incb"><a class="header" href="#incb">INC.B</a></h4>
-<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th><th>Size</th><th>Byte order</th></tr></thead><tbody>
-<tr><td>22</td><td>Register, Byte</td><td>2</td><td>2</td><td>reg(1) byte(1)</td></tr>
-<tr><td>20</td><td>Register, Register</td><td>3</td><td>2</td><td>reg(1) reg(1)</td></tr>
-<tr><td>20</td><td>Register, Indirect</td><td>5</td><td>2 - 4</td><td>reg(1) reg(1) &lt;offset&gt;(1-2)</td></tr>
-<tr><td>20</td><td>Indirect, Register</td><td>7</td><td>2 - 4</td><td>reg(1) reg(1) &lt;offset&gt;(1-2)</td></tr>
-<tr><td>20</td><td>Indirect, Indirect</td><td>9</td><td>2 - 6</td><td>reg(1) reg(1) &lt;offset&gt;(1-2) &lt;offset&gt;(1-2)</td></tr>
-<tr><td>26</td><td>Address, Indirect</td><td>5</td><td>3 - 5</td><td>addr(2) reg(1) &lt;offset&gt;(1-2)</td></tr>
-<tr><td>26</td><td>Address, Register</td><td>3</td><td>3</td><td>addr(2) reg(1)</td></tr>
-<tr><td>2A</td><td>Address, Address</td><td>3</td><td>4</td><td>addr(2) addr(2)</td></tr>
-<tr><td>28</td><td>Address, Byte</td><td>2</td><td>3</td><td>addr(2) byte(1)</td></tr>
-<tr><td>24</td><td>Indirect, Address</td><td>7</td><td>3-5</td><td>reg(1) addr(2) &lt;offset&gt;(1-2)</td></tr>
-<tr><td>22</td><td>Indirect, Byte</td><td>6</td><td>2-4</td><td>reg(1) byte(1) &lt;offset&gt;(1-2)</td></tr>
-<tr><td>24</td><td>Register, Address</td><td>3</td><td>3</td><td>reg(1) addr(2)</td></tr>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th></tr></thead><tbody>
+<tr><td>82</td><td>Register, Byte</td><td>2</td></tr>
+<tr><td>80</td><td>Register, Register</td><td>3</td></tr>
+<tr><td>80</td><td>Register, Indirect</td><td>5</td></tr>
+<tr><td>80</td><td>Indirect, Register</td><td>7</td></tr>
+<tr><td>80</td><td>Indirect, Indirect</td><td>9</td></tr>
+<tr><td>86</td><td>Address, Indirect</td><td>5</td></tr>
+<tr><td>86</td><td>Address, Register</td><td>3</td></tr>
+<tr><td>8A</td><td>Address, Address</td><td>3</td></tr>
+<tr><td>88</td><td>Address, Byte</td><td>2</td></tr>
+<tr><td>84</td><td>Indirect, Address</td><td>7</td></tr>
+<tr><td>82</td><td>Indirect, Byte</td><td>6</td></tr>
+<tr><td>84</td><td>Register, Address</td><td>3</td></tr>
 </tbody></table>
 <h4 id="incw"><a class="header" href="#incw">INC.W</a></h4>
-<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th><th>Size</th><th>Byte order</th></tr></thead><tbody>
-<tr><td>23</td><td>Ext. Register, Word</td><td>4</td><td>3</td><td>reg(1) word(2)</td></tr>
-<tr><td>21</td><td>Ext. Register, Ext. Register</td><td>6</td><td>2</td><td>reg(1) reg(1)</td></tr>
-<tr><td>21</td><td>Ext. Register, Indirect</td><td>8</td><td>2 - 4</td><td>reg(1) reg(1) &lt;offset&gt;(1-2)</td></tr>
-<tr><td>21</td><td>Indirect, Ext. Register</td><td>10</td><td>2 - 4</td><td>reg(1) reg(1) &lt;offset&gt;(1-2)</td></tr>
-<tr><td>21</td><td>Indirect, Indirect</td><td>12</td><td>2 - 6</td><td>reg(1) reg(1) &lt;offset&gt;(1-2) &lt;offset&gt;(1-2)</td></tr>
-<tr><td>27</td><td>Address, Indirect</td><td>8</td><td>3 - 5</td><td>addr(2) reg(1) &lt;offset&gt;(1-2)</td></tr>
-<tr><td>27</td><td>Address, Ext. Register</td><td>6</td><td>3</td><td>addr(2) reg(1)</td></tr>
-<tr><td>2B</td><td>Address, Address</td><td>6</td><td>4</td><td>addr(2) addr(2)</td></tr>
-<tr><td>29</td><td>Address, Word</td><td>4</td><td>4</td><td>addr(2) word(2)</td></tr>
-<tr><td>25</td><td>Indirect, Address</td><td>10</td><td>3-5</td><td>reg(1) addr(2) &lt;offset&gt;(1-2)</td></tr>
-<tr><td>23</td><td>Indirect, Word</td><td>8</td><td>3-5</td><td>reg(1) word(2) &lt;offset&gt;(1-2)</td></tr>
-<tr><td>25</td><td>Ext. Register, Address</td><td>6</td><td>3</td><td>reg(1) addr(2)</td></tr>
+<table><thead><tr><th>Opcode</th><th>Operands</th><th>Cycles</th></tr></thead><tbody>
+<tr><td>83</td><td>Ext. Register, Word</td><td>4</td></tr>
+<tr><td>81</td><td>Ext. Register, Ext. Register</td><td>6</td></tr>
+<tr><td>81</td><td>Ext. Register, Indirect</td><td>8</td></tr>
+<tr><td>81</td><td>Indirect, Ext. Register</td><td>10</td></tr>
+<tr><td>81</td><td>Indirect, Indirect</td><td>12</td></tr>
+<tr><td>87</td><td>Address, Indirect</td><td>8</td></tr>
+<tr><td>87</td><td>Address, Ext. Register</td><td>6</td></tr>
+<tr><td>8B</td><td>Address, Address</td><td>6</td></tr>
+<tr><td>89</td><td>Address, Word</td><td>4</td></tr>
+<tr><td>85</td><td>Indirect, Address</td><td>10</td></tr>
+<tr><td>83</td><td>Indirect, Word</td><td>8</td></tr>
+<tr><td>85</td><td>Ext. Register, Address</td><td>6</td></tr>
 </tbody></table>
 <h2 id="flags"><a class="header" href="#flags">Flags</a></h2>
 <table><thead><tr><th>Flag</th><th>Update condition</th></tr></thead><tbody>
@@ -192,22 +192,22 @@ ADD.W (E, W) (E, E) (E, I) (I, E) (I, I) (A, I) (A, E) (A, A) (A, W) (I, A) (E, 
 <tr><td>Interrupts</td><td>-</td></tr>
 </tbody></table>
 <h2 id="code-equivalent"><a class="header" href="#code-equivalent">Code equivalent</a></h2>
-<pre><code>result = lhs + rhs
+<pre><code>result = lhs * rhs
 </code></pre>
 <h2 id="examples"><a class="header" href="#examples">Examples</a></h2>
-<pre><code>ADD.B AL, 5       # Store result of AL + 5 in AL
-ADD.W (BX), $500  # Store the result of adding the values at the address in BX and at 500 at the address stored in BX 
+<pre><code>MUL.B AL, 5       # Store result of AL * 5 in AL
+MUL.W (BX), $500  # Store the result of multiplying the values at the address in BX and at 500 at the address stored in BX 
 </code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                                                    <a rel="prev" href="../ops/swap.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                                    <a rel="prev" href="../ops/sub.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
-                                                    <a rel="next" href="../ops/sub.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                                    <a rel="next" href="../ops/div.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -217,11 +217,11 @@ ADD.W (BX), $500  # Store the result of adding the values at the address in BX a
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                                    <a rel="prev" href="../ops/swap.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                    <a rel="prev" href="../ops/sub.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
-                                    <a rel="next" href="../ops/sub.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                    <a rel="next" href="../ops/div.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                             </nav>

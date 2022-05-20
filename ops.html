@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="ops.html" class="active"><strong aria-hidden="true">1.</strong> Instructions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ops/inc.html"><strong aria-hidden="true">1.1.</strong> INC</a></li><li class="chapter-item expanded "><a href="ops/dec.html"><strong aria-hidden="true">1.2.</strong> DEC</a></li><li class="chapter-item expanded "><a href="ops/swap.html"><strong aria-hidden="true">1.3.</strong> SWAP</a></li><li class="chapter-item expanded "><a href="ops/add.html"><strong aria-hidden="true">1.4.</strong> ADD</a></li></ol></li><li class="chapter-item expanded "><a href="basics.html"><strong aria-hidden="true">2.</strong> Maikor ASM Basics</a></li><li class="chapter-item expanded "><a href="bytes.html"><strong aria-hidden="true">3.</strong> Bytes</a></li><li class="chapter-item expanded "><a href="mem.html"><strong aria-hidden="true">4.</strong> Memory</a></li><li class="chapter-item expanded "><a href="reg_values.html"><strong aria-hidden="true">5.</strong> Register values</a></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="basics.html"><strong aria-hidden="true">1.</strong> Maikor ASM Basics</a></li><li class="chapter-item expanded "><a href="bytes.html"><strong aria-hidden="true">2.</strong> Bytes</a></li><li class="chapter-item expanded "><a href="mem.html"><strong aria-hidden="true">3.</strong> Memory</a></li><li class="chapter-item expanded "><a href="reg_values.html"><strong aria-hidden="true">4.</strong> Register values</a></li><li class="chapter-item expanded "><a href="ops.html" class="active"><strong aria-hidden="true">5.</strong> Instructions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ops/inc.html"><strong aria-hidden="true">5.1.</strong> INC</a></li><li class="chapter-item expanded "><a href="ops/dec.html"><strong aria-hidden="true">5.2.</strong> DEC</a></li><li class="chapter-item expanded "><a href="ops/swap.html"><strong aria-hidden="true">5.3.</strong> SWAP</a></li><li class="chapter-item expanded "><a href="ops/add.html"><strong aria-hidden="true">5.4.</strong> ADD</a></li><li class="chapter-item expanded "><a href="ops/sub.html"><strong aria-hidden="true">5.5.</strong> SUB</a></li><li class="chapter-item expanded "><a href="ops/mul.html"><strong aria-hidden="true">5.6.</strong> MUL</a></li><li class="chapter-item expanded "><a href="ops/div.html"><strong aria-hidden="true">5.7.</strong> DIV</a></li></ol></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -189,9 +189,43 @@ CPY.B AH AL-
 <table><thead><tr><th>Variant</th><th>Cost</th><th>Example</th></tr></thead><tbody>
 <tr><td>with reg</td><td>1</td><td><code>(ax+al)</code></td></tr>
 <tr><td>with ext reg</td><td>2</td><td><code>(ax+bx)</code></td></tr>
-<tr><td>with num</td><td>1</td><td><code>(ax+10)</code></td></tr>
+<tr><td>with num</td><td>0</td><td><code>(ax+10)</code></td></tr>
 </tbody></table>
-<h2 id="list"><a class="header" href="#list">List</a></h2>
+<p>The cycles can be calculated by adding the cost of the arguments:</p>
+<table><thead><tr><th>Argument type</th><th>Size</th></tr></thead><tbody>
+<tr><td>Register</td><td>1</td></tr>
+<tr><td>Ext. Register</td><td>2</td></tr>
+<tr><td>Indirect Register</td><td>3</td></tr>
+<tr><td>Byte</td><td>1</td></tr>
+<tr><td>Word</td><td>2</td></tr>
+<tr><td>Address</td><td>2</td></tr>
+</tbody></table>
+<p>Note that these apply when reading and writing, so <code>INC.B AL</code> costs 2 as it has to read and write <code>AL</code>.</p>
+<p>As this is a VM the costs are approximated based on instruction execution duration. </p>
+<h2 id="size"><a class="header" href="#size">Size</a></h2>
+<p>Each instruction also has a base size in bytes, shown each page. Using index addressing adds the following size:</p>
+<table><thead><tr><th>Variant</th><th>Size</th></tr></thead><tbody>
+<tr><td>with reg</td><td>1</td></tr>
+<tr><td>with ext reg</td><td>1</td></tr>
+<tr><td>with num</td><td>2</td></tr>
+</tbody></table>
+<p>The size can be calculated by adding the size of the arguments:</p>
+<table><thead><tr><th>Argument type</th><th>Size</th></tr></thead><tbody>
+<tr><td>Register</td><td>1</td></tr>
+<tr><td>Ext. Register</td><td>1</td></tr>
+<tr><td>Indirect Register</td><td>1</td></tr>
+<tr><td>Byte</td><td>1</td></tr>
+<tr><td>Word</td><td>2</td></tr>
+<tr><td>Address</td><td>2</td></tr>
+</tbody></table>
+<p>The instruction is always 1 byte.</p>
+<p><strong>Examples</strong></p>
+<table><thead><tr><th>Example</th><th>Size</th><th>Cycles</th></tr></thead><tbody>
+<tr><td><code>INC.B AL</code></td><td>2</td><td>2</td></tr>
+<tr><td><code>ADD.W AX, 30</code></td><td>4</td><td>4</td></tr>
+<tr><td><code>SWAP.B (AX+1), (BX+AL)</code></td><td>6</td><td>20</td></tr>
+</tbody></table>
+<h2 id="instruction-list"><a class="header" href="#instruction-list">Instruction List</a></h2>
 <table><thead><tr><th>Name</th><th>Size variants</th><th>Args</th><th>Base cycles</th></tr></thead><tbody>
 <tr><td><a href="./ops/inc.html">INC</a></td><td><code>B</code>, <code>W</code></td><td><code>(R)</code>, <code>(E)</code>, <code>(I)</code>, <code>(A)</code></td><td>2-8</td></tr>
 <tr><td><a href="./ops/dec.html">DEC</a></td><td><code>B</code>, <code>W</code></td><td><code>(R)</code>, <code>(E)</code>, <code>(I)</code>, <code>(A)</code></td><td>2-8</td></tr>
@@ -208,7 +242,7 @@ CPY.B AH AL-
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                                                    <a rel="prev" href="intro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                                    <a rel="prev" href="reg_values.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
@@ -222,7 +256,7 @@ CPY.B AH AL-
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                                    <a rel="prev" href="intro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                    <a rel="prev" href="reg_values.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
