@@ -24,8 +24,10 @@ Also see [Interrupt control](#interrupt-control)
 | [Sound](#sound)                                     | Sound control bytes                                                | 34802 | 87F2 | `SOUND`          | 30     |
 | [Save Bank ID](#save-bank-id)                       | Controls which save data bank is loaded at [Save Bank](#save-bank) | 34832 | 8810 | `SAVE_BANK_ID`   | 1      |
 | [Save Bank](#save-bank)                             | Banked save data, also see [Save Control](#save-control)           | 34833 | 8811 | `SAVE_BANK`      | 4096   |
-| [Atlas 1](#atlas-1)                                 | Atlas Bank 1, controlled by [Atlas 1 Bank ID](#atlas-1-bank-id)    | 38929 | 9811 | `ATLAS1`         | 8000   |
-| [Atlas 2](#atlas-2)                                 | Atlas Bank 2, controlled by [Atlas 2 Bank ID](#atlas-2-bank-id)    | 46929 | B751 | `ATLAS2`         | 8000   |
+| [Atlas 1](#atlas-1)                                 | Atlas Bank 1, controlled by [Atlas 1 Bank ID](#atlas-1-bank-id)    | 38929 | 9811 | `ATLAS1`         | 4000   |
+| [Atlas 2](#atlas-2)                                 | Atlas Bank 2, controlled by [Atlas 2 Bank ID](#atlas-2-bank-id)    | 42929 | B751 | `ATLAS2`         | 4000   |
+| [Atlas 3](#atlas-3)                                 | Atlas Bank 3, controlled by [Atlas 3 Bank ID](#atlas-3-bank-id)    | 46929 | 9811 | `ATLAS3`         | 4000   |
+| [Atlas 4](#atlas-4)                                 | Atlas Bank 4, controlled by [Atlas 4 Bank ID](#atlas-4-bank-id)    | 50929 | B751 | `ATLAS4`         | 4000   |
 | [Palettes](#palettes)                               | 4 palettes, each made of 15 colors (3 bytes)                       | 54929 | D691 | `PALETTES`       | 180    |
 | [Sprite Table](#sprite-table)                       | Table of 255 sprites, made of 5 bytes each                         | 55121 | D751 | `SPRITE_TABLE`   | 1275   |
 | [Layer Headers](#layer-headers)                     | Headers for the 3 background layers                                | 56396 | DC4C | `LAYER_HEADERS`  | 9      |
@@ -34,15 +36,17 @@ Also see [Interrupt control](#interrupt-control)
 | [RAM Bank ID](#ram-bank-id)                         | Controls which RAM bank is loaded at [Banked RAM](#banked-ram)     | 64326 | FB46 | `RAM_BANK_ID`    | 1      |
 | [Atlas 1 Bank ID](#atlas-1-bank-id)                 | Controls which atlas bank is loaded at [Atlas 1](#atlas-1)         | 64327 | FB47 | `ATLAS1_BANK_ID` | 1      |
 | [Atlas 2 Bank ID](#atlas-2-bank-id)                 | Controls which atlas bank is loaded at [Atlas 2](#atlas-2)         | 64328 | FB48 | `ATLAS2_BANK_ID` | 1      |
-| [SP](#sp)                                           | Stack Pointer                                                      | 64329 | FB49 | `SP`             | 2      |
-| [FP](#fp)                                           | Frame Pointer                                                      | 64331 | FB4B | `FP`             | 2      |
-| [Timer Control](#timer-control)                     | Control bytes for timers                                           | 64333 | FB4D | `TIMER_CONTROL`  | 2      |
-| [Timer 1](#timer-1)                                 | Value of timer 1                                                   | 64335 | FB4F | `TIMER1`         | 1      |
-| [Timer 2](#timer-2)                                 | Value of timer 2                                                   | 64336 | FB50 | `TIMER2`         | 1      |
-| [Timer 3](#timer-3)                                 | Value of timer 3                                                   | 64337 | FB51 | `TIMER3`         | 1      |
-| [Timer 4](#timer-4)                                 | Value of timer 4                                                   | 64338 | FB52 | `TIMER4`         | 1      |
-| [VLine](#vline)                                     | Next line to be drawn                                              | 64349 | FB5D | `VLINE`          | 1      |
-| [Controller Type](#controller-type)                 | Active controller type ID                                          | 64350 | FB5E | `INPUT_TYPE`     | 1      |
+| [Atlas 3 Bank ID](#atlas-3-bank-id)                 | Controls which atlas bank is loaded at [Atlas 3](#atlas-3)         | 64329 | FB49 | `ATLAS3_BANK_ID` | 1      |
+| [Atlas 4 Bank ID](#atlas-4-bank-id)                 | Controls which atlas bank is loaded at [Atlas 4](#atlas-4)         | 64330 | FB4A | `ATLAS4_BANK_ID` | 1      |
+| [SP](#sp)                                           | Stack Pointer                                                      | 64331 | FB4B | `SP`             | 2      |
+| [FP](#fp)                                           | Frame Pointer                                                      | 64333 | FB4D | `FP`             | 2      |
+| [Timer Control](#timer-control)                     | Control bytes for timers                                           | 64335 | FB4F | `TIMER_CONTROL`  | 2      |
+| [Timer 1](#timer-1)                                 | Value of timer 1                                                   | 64337 | FB50 | `TIMER1`         | 1      |
+| [Timer 2](#timer-2)                                 | Value of timer 2                                                   | 64338 | FB51 | `TIMER2`         | 1      |
+| [Timer 3](#timer-3)                                 | Value of timer 3                                                   | 64339 | FB52 | `TIMER3`         | 1      |
+| [Timer 4](#timer-4)                                 | Value of timer 4                                                   | 64340 | FB53 | `TIMER4`         | 1      |
+| [VLine](#vline)                                     | Next line to be drawn                                              | 64341 | FB54 | `VLINE`          | 1      |
+| [Controller Type](#controller-type)                 | Active controller type ID                                          | 64350 | FB55 | `INPUT_TYPE`     | 1      |
 | [Controller Graphics](#controller-graphics)         | Graphics for controller buttons                                    | 64351 | FB5F | `INPUT_GRAPHICS` | 88     |
 | [Controller Palette](#controller-palette)           | Palette used when drawing controller buttons                       | 64439 | FBB7 | `INPUT_PALETTE`  | 12     |
 | [Controller Sprite Table](#controller-sprite-table) | Sprite table for controller buttons                                | 64451 | FBC3 | `INPUT_TABLE`    | 24     |
@@ -120,13 +124,20 @@ See [Save Control](#save-control)
 
 ## Atlas 1
 
-`38929` `x9811` `ATLAS1` 8000 bytes
+`38929` `x9811` `ATLAS1` 4000 bytes
 
 ## Atlas 2
 
-`46929` `xB751` `ATLAS2` 8000 bytes
+`42929` `xB751` `ATLAS2` 4000 bytes
 
-Background tiles must come from this atlas.
+## Atlas 3
+
+`46929` `x9811` `ATLAS3` 4000 bytes
+
+## Atlas 4
+
+`50929` `xB751` `ATLAS4` 4000 bytes
+
 
 ## Palettes
 

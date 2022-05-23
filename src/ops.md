@@ -62,11 +62,13 @@ The cycles can be calculated by adding the cost of the arguments:
 | Indirect Register | 3    |
 | Byte              | 1    |
 | Word              | 2    |
-| Address           | 2    |
+| Address           | 2*    |
 
 Note that these apply when reading and writing, so `INC.B AL` costs 2 as it has to read and write `AL`.
 
 As this is a VM the costs are approximated based on instruction execution duration. 
+
+* if the address is a bank controller, etc then this cost is 20.
 
 ## Size
 
