@@ -1,5 +1,7 @@
 # SUB
 
+> Subtract
+
 Subtract source from destination and store result in destination.
 
 ## Format 

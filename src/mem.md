@@ -14,59 +14,95 @@ Also see [Interrupt control](#interrupt-control)
 
 ## Addresses
 
-| Name                                                | Description                                                        | Int   | Hex  | ASM Constant     | Length |
-|-----------------------------------------------------|--------------------------------------------------------------------|:------|:-----|------------------|:-------|
-| [Code](#code)                                       | Main game code                                                     | 0     | 0    | `MAIN_CODE`      | 8700   |
-| [Banked Code](#banked-code)                         | Switchable game code, controlled via [Code Bank ID](#code-bank-id) | 8700  | 21FC | `BANK_CODE`      | 8700   |
-| [RAM](#ram)                                         | Main RAM                                                           | 17400 | 43F8 | `RAM`            | 8700   |
-| [Banked RAM](#banked-ram)                           | Banked RAM, controlled via [RAM Bank ID](#ram-bank-id)             | 26100 | 65F4 | `RAM`            | 8700   |
-| [Input](#input)                                     | 12 bits in 2 bytes to check if buttons are pressed                 | 34800 | 87F0 | `INPUT`          | 2      |
-| [Sound](#sound)                                     | Sound control bytes                                                | 34802 | 87F2 | `SOUND`          | 30     |
-| [Save Bank ID](#save-bank-id)                       | Controls which save data bank is loaded at [Save Bank](#save-bank) | 34832 | 8810 | `SAVE_BANK_ID`   | 1      |
-| [Save Bank](#save-bank)                             | Banked save data, also see [Save Control](#save-control)           | 34833 | 8811 | `SAVE_BANK`      | 4096   |
-| [Atlas 1](#atlas-1)                                 | Atlas Bank 1, controlled by [Atlas 1 Bank ID](#atlas-1-bank-id)    | 38929 | 9811 | `ATLAS1`         | 8000   |
-| [Atlas 2](#atlas-2)                                 | Atlas Bank 2, controlled by [Atlas 2 Bank ID](#atlas-2-bank-id)    | 46929 | B751 | `ATLAS2`         | 8000   |
-| [Palettes](#palettes)                               | 4 palettes, each made of 15 colors (3 bytes)                       | 54929 | D691 | `PALETTES`       | 180    |
-| [Sprite Table](#sprite-table)                       | Table of 255 sprites, made of 5 bytes each                         | 55121 | D751 | `SPRITE_TABLE`   | 1275   |
-| [Layer Headers](#layer-headers)                     | Headers for the 3 background layers                                | 56396 | DC4C | `LAYER_HEADERS`  | 9      |
-| [Layer Contents](#layer-contents)                   | Contents for the 3 background layers                               | 56405 | DC55 | `LAYER_CONTENTS` | 7920   |
-| [Code Bank ID](#code-bank-id)                       | Controls which code bank is loaded at [Banked Code](#banked-code)  | 64325 | FB45 | `CODE_BANK_ID`   | 1      |
-| [RAM Bank ID](#ram-bank-id)                         | Controls which RAM bank is loaded at [Banked RAM](#banked-ram)     | 64326 | FB46 | `RAM_BANK_ID`    | 1      |
-| [Atlas 1 Bank ID](#atlas-1-bank-id)                 | Controls which atlas bank is loaded at [Atlas 1](#atlas-1)         | 64327 | FB47 | `ATLAS1_BANK_ID` | 1      |
-| [Atlas 2 Bank ID](#atlas-2-bank-id)                 | Controls which atlas bank is loaded at [Atlas 2](#atlas-2)         | 64328 | FB48 | `ATLAS2_BANK_ID` | 1      |
-| [SP](#sp)                                           | Stack Pointer                                                      | 64329 | FB49 | `SP`             | 2      |
-| [FP](#fp)                                           | Frame Pointer                                                      | 64331 | FB4B | `FP`             | 2      |
-| [Timer Control](#timer-control)                     | Control bytes for timers                                           | 64333 | FB4D | `TIMER_CONTROL`  | 2      |
-| [Timer 1](#timer-1)                                 | Value of timer 1                                                   | 64335 | FB4F | `TIMER1`         | 1      |
-| [Timer 2](#timer-2)                                 | Value of timer 2                                                   | 64336 | FB50 | `TIMER2`         | 1      |
-| [Timer 3](#timer-3)                                 | Value of timer 3                                                   | 64337 | FB51 | `TIMER3`         | 1      |
-| [Timer 4](#timer-4)                                 | Value of timer 4                                                   | 64338 | FB52 | `TIMER4`         | 1      |
-| [VLine](#vline)                                     | Next line to be drawn                                              | 64349 | FB5D | `VLINE`          | 1      |
-| [Controller Type](#controller-type)                 | Active controller type ID                                          | 64350 | FB5E | `INPUT_TYPE`     | 1      |
-| [Controller Graphics](#controller-graphics)         | Graphics for controller buttons                                    | 64351 | FB5F | `INPUT_GRAPHICS` | 88     |
-| [Controller Palette](#controller-palette)           | Palette used when drawing controller buttons                       | 64439 | FBB7 | `INPUT_PALETTE`  | 12     |
-| [Controller Sprite Table](#controller-sprite-table) | Sprite table for controller buttons                                | 64451 | FBC3 | `INPUT_TABLE`    | 24     |
-| [Interrupt Control](#interrupt-control)             | Control byte for interrupts                                        | 64475 | FBDB | `IRQ_CONTROL`    | 1      |
-| [Save Control](#save-control)                       | Control byte for save data                                         | 64476 | FBDC | `SAVE_CONTROL`   | 1      |
-| [Date time](#date-time)                             | Date time in bytes                                                 | 64477 | FBDD | `DATETIME`       | 6      |
-| [Rand](#rand)                                       | Regularly changing random value                                    | 64483 | FBE3 | `RAND`           | 1      |
-| [Stack](#stack)                                     | The Stack                                                          | 64635 | FC7B | `STACK`          | 900    |
+| Name                                                | Description                                                            | Int   | Hex  | ASM Constant     | Length |
+|-----------------------------------------------------|------------------------------------------------------------------------|:------|:-----|------------------|:-------|
+| [Code](#code)                                       | Main game code                                                         | 0     | 0    | `MAIN_CODE`      | 9000   |
+| [Banked Code 1](#banked-code-1)                     | Switchable game code, controlled via [Code Bank 1 ID](#code-bank-1-id) | 9000  | 2328 | `CODE_BANK_1`    | 4200   |
+| [Banked Code 2](#banked-code-2)                     | Switchable game code, controlled via [Code Bank 2 ID](#code-bank-2-id) | 13200 | 3390 | `CODE_BANK_2`    | 4200   |
+| [RAM](#ram)                                         | Main RAM                                                               | 17400 | 43F8 | `RAM`            | 9000   |
+| [Banked RAM 1](#banked-ram-1)                       | Switchable RAM, controlled via [RAM Bank 1 ID](#ram-bank-1-id)         | 26400 | 6720 | `RAM_BANK_1`     | 4200   |
+| [Banked RAM 2](#banked-ram-2)                       | Switchable RAM, controlled via [RAM Bank 2 ID](#ram-bank-2-id)         | 30600 | 7788 | `RAM_BANK_2`     | 4200   |
+| [Input](#input)                                     | 12 bits in 2 bytes to check if buttons are pressed                     | 34800 | 87F0 | `INPUT`          | 2      |
+| [Sound](#sound)                                     | Sound control bytes                                                    | 34802 | 87F2 | `SOUND`          | 30     |
+| [Save Bank ID](#save-bank-id)                       | Controls which save data bank is loaded at [Save Bank](#save-bank)     | 34832 | 8810 | `SAVE_BANK_ID`   | 1      |
+| [Save Bank](#save-bank)                             | Switchable save data, also see [Save Control](#save-control)           | 34833 | 8811 | `SAVE_BANK`      | 4096   |
+| [Atlas 1](#atlas-1)                                 | Atlas Bank 1, controlled by [Atlas 1 Bank ID](#atlas-1-bank-id)        | 38929 | 9811 | `ATLAS1`         | 4000   |
+| [Atlas 2](#atlas-2)                                 | Atlas Bank 2, controlled by [Atlas 2 Bank ID](#atlas-2-bank-id)        | 42929 | A7B1 | `ATLAS2`         | 4000   |
+| [Atlas 3](#atlas-3)                                 | Atlas Bank 3, controlled by [Atlas 3 Bank ID](#atlas-3-bank-id)        | 46929 | B751 | `ATLAS3`         | 4000   |
+| [Atlas 4](#atlas-4)                                 | Atlas Bank 4, controlled by [Atlas 4 Bank ID](#atlas-4-bank-id)        | 50929 | C6F1 | `ATLAS4`         | 4000   |
+| [Palettes](#palettes)                               | 4 palettes, each made of 15 colors (3 bytes)                           | 54929 | D691 | `PALETTES`       | 180    |
+| [Sprite Table](#sprite-table)                       | Table of 255 sprites, made of 5 bytes each                             | 55121 | D751 | `SPRITE_TABLE`   | 1275   |
+| [Layer Headers](#layer-headers)                     | Headers for the 3 background layers                                    | 56396 | DC4C | `LAYER_HEADERS`  | 9      |
+| [Layer Contents](#layer-contents)                   | Contents for the 3 background layers                                   | 56405 | DC55 | `LAYER_CONTENTS` | 7920   |
+| [Code Bank 1 ID](#code-bank-1-id)                   | Controls which code bank is loaded at [Banked Code 1](#code-bank-1-id) | 64325 | FB45 | `CODE_BANK_1_ID` | 1      |
+| [RAM Bank 1 ID](#ram-bank-1-id)                     | Controls which RAM bank is loaded at [Banked RAM 2](#ram-bank-1-id)    | 64326 | FB46 | `RAM_BANK_1_ID`  | 1      |
+| [Atlas 1 Bank ID](#atlas-1-bank-id)                 | Controls which atlas bank is loaded at [Atlas 1](#atlas-1)             | 64327 | FB47 | `ATLAS1_BANK_ID` | 1      |
+| [Atlas 2 Bank ID](#atlas-2-bank-id)                 | Controls which atlas bank is loaded at [Atlas 2](#atlas-2)             | 64328 | FB48 | `ATLAS2_BANK_ID` | 1      |
+| [Atlas 3 Bank ID](#atlas-3-bank-id)                 | Controls which atlas bank is loaded at [Atlas 3](#atlas-3)             | 64329 | FB49 | `ATLAS3_BANK_ID` | 1      |
+| [Atlas 4 Bank ID](#atlas-4-bank-id)                 | Controls which atlas bank is loaded at [Atlas 4](#atlas-4)             | 64330 | FB4A | `ATLAS4_BANK_ID` | 1      |
+| [SP](#sp)                                           | Stack Pointer                                                          | 64331 | FB4B | `SP`             | 2      |
+| [FP](#fp)                                           | Frame Pointer                                                          | 64333 | FB4D | `FP`             | 2      |
+| [Timer Control](#timer-control)                     | Control bytes for timers                                               | 64335 | FB4F | `TIMER_CONTROL`  | 2      |
+| [Timer 1](#timer-1)                                 | Value of timer 1                                                       | 64337 | FB51 | `TIMER1`         | 1      |
+| [Timer 2](#timer-2)                                 | Value of timer 2                                                       | 64338 | FB52 | `TIMER2`         | 1      |
+| [Timer 3](#timer-3)                                 | Value of timer 3                                                       | 64339 | FB53 | `TIMER3`         | 1      |
+| [Timer 4](#timer-4)                                 | Value of timer 4                                                       | 64340 | FB54 | `TIMER4`         | 1      |
+| [VLine](#vline)                                     | Next line to be drawn                                                  | 64351 | FB5F | `VLINE`          | 1      |
+| [Controller Type](#controller-type)                 | Active controller type ID                                              | 64352 | FB60 | `INPUT_TYPE`     | 1      |
+| [Controller Graphics](#controller-graphics)         | Graphics for controller buttons                                        | 64353 | FB61 | `INPUT_GRAPHICS` | 88     |
+| [Controller Palette](#controller-palette)           | Palette used when drawing controller buttons                           | 64441 | FBB9 | `INPUT_PALETTE`  | 12     |
+| [Controller Sprite Table](#controller-sprite-table) | Sprite table for controller buttons                                    | 64453 | FBC5 | `INPUT_TABLE`    | 27     |
+| [Interrupt Control](#interrupt-control)             | Control byte for interrupts                                            | 64480 | FBE0 | `IRQ_CONTROL`    | 1      |
+| [Save Control](#save-control)                       | Control byte for save data                                             | 64481 | FBE1 | `SAVE_CONTROL`   | 1      |
+| [Date time](#date-time)                             | Date time in bytes                                                     | 64482 | FBE2 | `DATETIME`       | 6      |
+| [Rand](#rand)                                       | Regularly changing random value                                        | 64488 | FBE8 | `RAND`           | 1      |
+| [Wave Table](#wave_table)                           | Sound wave table                           				                        | 64489 | FBE9 | `WAVE_TABLE`     | 16     |
+| [Code Bank 2 ID](#code-bank-2-id)                   | Controls which code bank is loaded at [Banked Code 2](#code-bank-2-id) | 64505 | FBF9 | `CODE_BANK_2_ID` | 1      |
+| [RAM Bank 2 ID](#ram-bank-2-id)                     | Controls which RAM bank is loaded at [Banked RAM 2](#ram-bank-2-id)    | 64506 | FBFA | `RAM_BANK_2_ID`  | 1      |
+| [Stack](#stack)                                     | The Stack                                                              | 64536 | FC18 | `STACK`          | 1000   |
 
 ## Code
 
-`0` `x0` `MAIN_CODE` 8700 bytes
+`0` `x0` `MAIN_CODE` 9000 bytes
 
-## Banked Code
+Interrupts call in this section, at these addresses:
 
-`8700` `x21FC` `BANK_CODE` 8700 bytes
+| Called when..                           | ASM               | Address |
+|-----------------------------------------|-------------------|---------|
+| a button is pressed/released            | `IRQ_INPUT`       | `$x200` |
+| after screen drawn                      | `IRQ_SCREEN_DRAW` | `$x240` |
+| when a timer overflows                  | `IRQ_TIMER`       | `$x260` |
+| controller changes                      | `IRQ_CONTROLLER`  | `$x280` |
+| date time changes by more than 1 second | `IRQ_DATETIME`    | `$x2A0` |
+
+
+## Banked Code 1
+
+`9000` `x2328` `CODE_BANK_1` 4200 bytes
+
+Controlled with [Code Bank 1 ID](#code-bank-1-id)
+
+## Banked Code 2
+
+`13200` `x3390` `CODE_BANK_2` 4200 bytes
+
+Controlled with [Code Bank 2 ID](#code-bank-2-id)
 
 ## RAM
 
-`17400` `x43F8` `RAM` 8700 bytes
+`17400` `x43F8` `RAM` 9000 bytes
 
-## Banked RAM
+## Banked RAM 1
 
-`26100` `x65F4` `BANK_RAM` 8700 bytes
+`26400` `x6720` `RAM_BANK_1` 4200 bytes
+
+Controlled with [RAM Bank 1 ID](#ram-bank-1-id)
+
+## Banked RAM 2
+
+`30600` `x7788` `RAM_BANK_2` 4200 bytes
+
+Controlled with [RAM Bank 2 ID](#ram-bank-2-id)
 
 ## Input
 
@@ -102,6 +138,50 @@ This has to be polled, to get an interrupt set the input bit in [Interrupt contr
 
 `34802` `x87F2` `SOUND` 30 bytes
 
+Maikor is mostly compatible with the Gameboy sound system.
+
+**Square 1**
+
+| Name    | Address | Format      | Description                                            | Gameboy reg |
+|---------|---------|-------------|--------------------------------------------------------|-------------|
+| `SQ1_0` | `87F2`  | `-PPP NSSS` | Sweep **p**eriod, **N**egate, **S**hift                | NR10        |
+| `SQ1_1` | `87F3`  | `DDLL LLLL` | **D**uty, **L**ength load                              | NR11        |
+| `SQ1_2` | `87F4`  | `VVVV APPP` | Starting **V**olume, Envelope **a**dd mode, **p**eriod | NR12        |
+| `SQ1_3` | `87F5`  | `FFFF FFFF` | **F**requency LSB                                      | NR13        |
+| `SQ1_4` | `87F6`  | `TL-- -FFF` | **T**rigger, **L**ength enable, **F**requency MSB      | NR14        |
+
+**Square 2**
+
+| Name    | Address | Format      | Description                                            | Gameboy reg |
+|---------|---------|-------------|--------------------------------------------------------|-------------|
+| `SQ2_1` | `87F8`  | `DDLL LLLL` | **D**uty, **L**ength load                              | NR21        |
+| `SQ2_2` | `87F9`  | `VVVV APPP` | Starting **V**olume, Envelope **a**dd mode, **p**eriod | NR22        |
+| `SQ2_3` | `87FA`  | `FFFF FFFF` | **F**requency LSB                                      | NR23        |
+| `SQ2_4` | `87FB`  | `TL-- -FFF` | **T**rigger, **L**ength enable, **F**requency MSB      | NR24        |
+
+
+**Wave**
+
+| Name   | Address | Format      | Description | Gameboy reg |
+|--------|---------|-------------|-------------|-------------|
+| `WC_0` | `87FC`  | `E--- ----` | **E**nable  | NR30        |
+
+**Noise**
+
+| Name   | Address | Format      | Description     | Gameboy reg |
+|--------|---------|-------------|-----------------|-------------|
+| `NC_0` | `8802`  | `--LL LLLL` | **L**ength load | NR41        |
+
+**Control**
+
+| Name    | Address | Format      | Description                       | Gameboy reg |
+|---------|---------|-------------|-----------------------------------|-------------|
+| `SND_V` | `8806`  | `-LLL -RRR` | **L**eft volume, **R**ight volume | NR50        |
+| `SND_B` | `8807`  | `LLLL RRRR` | **L**eft balance, **R** balance   | NR51        |
+| `SND_P` | `8808`  | `P--- ????` | **P**ower                         | NR52        |
+
+
+
 ## Save Bank ID
 
 `34832` `x8810` `SAVE_BANK_ID` 1 byte
@@ -120,13 +200,20 @@ See [Save Control](#save-control)
 
 ## Atlas 1
 
-`38929` `x9811` `ATLAS1` 8000 bytes
+`38929` `x9811` `ATLAS1` 4000 bytes
 
 ## Atlas 2
 
-`46929` `xB751` `ATLAS2` 8000 bytes
+`42929` `xB751` `ATLAS2` 4000 bytes
 
-Background tiles must come from this atlas.
+## Atlas 3
+
+`46929` `x9811` `ATLAS3` 4000 bytes
+
+## Atlas 4
+
+`50929` `xB751` `ATLAS4` 4000 bytes
+
 
 ## Palettes
 
@@ -153,21 +240,21 @@ Each palette is made of 16 3 byte RGB colors.
 
 `56405` `xDC55` `LAYER_CONTENTS` 7920 bytes
 
-## Code Bank ID
+## Code Bank 1 ID
 
-`64325` `xFB45` `CODE_BANK_ID` 1 byte
+`64325` `xFB45` `CODE_BANK_1_ID` 1 byte
 
-Controls which code bank is loaded at [Banked code](#banked-code). Changing this value immediately loads the code.
+Controls which code bank is loaded at [Code bank 1](#code-bank-1). Changing this value immediately loads the code; this is done by copying data from the bank into main memory, it takes several milliseconds.
 
 Valid values are the number of code banks included in the game.
 
-## RAM Bank ID
+## RAM Bank 1 ID
 
-`64326` `xFB46` `RAM_BANK_ID` 1 byte
+`64326` `xFB46` `RAM_BANK_1_ID` 1 byte
 
-Controls which RAM bank is loaded at [Banked RAM](#banked-ram). Changing this value immediately loads the data.
+Controls which RAM bank is loaded at [RAM bank 1](#ram-bank-1). Changing this value immediately loads the data; this is done by copying data from the bank into main memory, it takes several milliseconds.
 
-Valid values are the number of rAM banks requested by the game.
+Valid values are the number of RAM banks requested by the game.
 
 ## Atlas 1 Bank ID
 
@@ -298,6 +385,22 @@ This updates during each second and so may be up to 1 second off.
 `64483` `xFBE3` `RAND` 1 byte
 
 This byte contains a random value that updates regularly. It should not be used for secure/cryptographic purposes.
+
+## Code Bank 2 ID
+
+`64325` `xFB45` `CODE_BANK_2_ID` 1 byte
+
+Controls which code bank is loaded at [Code bank 2](#code-bank-2). Changing this value immediately loads the code; this is done by copying data from the bank into main memory, it takes several milliseconds.
+
+Valid values are the number of code banks included in the game.
+
+## RAM Bank 2 ID
+
+`64326` `xFB46` `RAM_BANK_2_ID` 1 byte
+
+Controls which RAM bank is loaded at [RAM bank 2](#ram-bank-2). Changing this value immediately loads the data; this is done by copying data from the bank into main memory, it takes several milliseconds.
+
+Valid values are the number of RAM banks requested by the game.
 
 ## Stack
 

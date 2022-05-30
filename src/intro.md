@@ -2,6 +2,8 @@
 
 > A cross-platform 16-bit style game platform
 
+**Work in progress**
+
 ## Links
 
 [Website](https://maikor.app)

@@ -1,0 +1,3 @@
+# NOT
+
+> Bitwise not

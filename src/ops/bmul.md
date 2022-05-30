@@ -1,6 +1,6 @@
-# MUL
+# BMUL
 
-> Multiply
+> Byte multiply
 
 Multiply values from destination and source together and store result in destination.
 

@@ -1,0 +1,3 @@
+# EHALT
+
+> Halt with error
