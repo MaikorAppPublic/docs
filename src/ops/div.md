@@ -1,5 +1,7 @@
 # DIV
 
+> Divide
+
 Divide destination by source and store result in destination.
 
 ## Format 

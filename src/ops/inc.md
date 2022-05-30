@@ -1,5 +1,7 @@
 # INC
 
+> Increment
+
 Increases value in register or value at memory address in pointer by 1.
 
 ## Format 

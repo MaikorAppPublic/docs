@@ -6,6 +6,8 @@
 - [Graphics](./graphics.md)
 - [Bytes](./bytes.md)
 - [Memory](./mem.md)
+- [Stack](./stack.md)
+- [Game File](./game_file.md)
 - [Register values](./reg_values.md)
 - [Instructions](./ops.md)
   - [INC](./ops/inc.md)

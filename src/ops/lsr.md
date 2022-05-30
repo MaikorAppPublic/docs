@@ -1,1 +1,3 @@
 # LSR
+
+> Logical shift right

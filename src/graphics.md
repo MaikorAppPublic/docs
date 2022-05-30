@@ -5,6 +5,8 @@ It has 3 background layers, each one stores 44x30 tiles (although only 30x20 can
 
 Tile data is stored in the 4 atlas banks, each one can store up to 250 tiles. As each pixel can only be 1 of 16 colors, the pixels are stored 2 per byte. So, tiles take up 32 bytes in the atlas.
 
+> **Important** The first on screen pixel is at 8,8. If the first two bytes are 0 then the sprite will be drawn entirely off screen, except for the last two pixels on the last row.
+
 Although a sprite may only use 16 colors, it has choice of up to 4 palettes to use for color.
 Sprites are controlled via the sprite table which sets their position, palette, etc.
 
